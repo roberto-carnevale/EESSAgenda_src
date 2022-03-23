@@ -17,6 +17,7 @@ export interface Corso {
 }
 
 export interface Utente {
+    uid: string,
     nome : string,
     ruolo : boolean,
     corso: string,
