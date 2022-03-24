@@ -13,12 +13,12 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 
-
+import { MatButtonModule } from '@angular/material/button'
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataComponent
+    DataComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +26,7 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    MatButtonModule
   ],
   providers: [ DataService ],
   bootstrap: [AppComponent]

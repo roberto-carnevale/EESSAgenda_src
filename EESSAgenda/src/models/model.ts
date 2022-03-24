@@ -1,24 +1,31 @@
+import { getQueryPredicate } from "@angular/compiler/src/render3/view/util";
+
 export interface Slots{
-    data: string,
-    ora:string,
-    occupato:boolean,
-    date?: Date
+    guida:string,
+    occupato:string,
+    inizio: Date,
+    fine: Date,
 }
 
 export interface Agenda {
-    corso: string
+    id:string,
+    corso: string,
     guida: string,
     agenda: Slots[],
     url: string,
 }
 
-export interface Corso {
-    nome: string,
-}
 
 export interface Utente {
     uid: string,
     nome : string,
-    ruolo : boolean,
+    ruolo : TipoUtenti,
     corso: string,
+}
+
+export enum TipoUtenti {
+    "amministratore" = 0,
+    "esercitante" = 1,
+    "giuda" = 2,
+    "gestore" = 3,
 }

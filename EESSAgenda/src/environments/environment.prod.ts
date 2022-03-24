@@ -1,11 +1,12 @@
 export const environment = {
   firebaseConfig : {
-    apiKey: "AIzaSyA20O7EM9Nu28Ap0Wc4xgRcBxOkUZ3mmWY",
-    authDomain: "eess-agenda.firebaseapp.com",
-    projectId: "eess-agenda",
-    storageBucket: "eess-agenda.appspot.com",
-    messagingSenderId: "296324459422",
-    appId: "1:296324459422:web:276b1f1ab852e3091ac48f"
+    apiKey: "AIzaSyBGVcJ6sidAkQggXgckVbQyKM_TkcERFP8",
+    authDomain: "eess-agendas.firebaseapp.com",
+    projectId: "eess-agendas",
+    storageBucket: "eess-agendas.appspot.com",
+    messagingSenderId: "622524642450",
+    appId: "1:622524642450:web:30e5e865c7ccf7c020224b",
+    measurementId: "G-MDW1XRJYB7"
   },
   
   production: true
