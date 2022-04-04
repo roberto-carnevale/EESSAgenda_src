@@ -1,7 +1,48 @@
-<button mat-button (click)="newUser()"><mat-icon>person_add</mat-icon></button>
+<mat-accordion>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Nuovo Utente </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Nome" #nome>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Email" #email>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Corso</mat-label>
+      <mat-select #corso>
+        <mat-option *ngFor="let c of corsi$ | async" [value]="c.corso">{{ c.corso }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Ruolo</mat-label>
+      <mat-select #ruolo>
+        <mat-option *ngFor="let u of listaRuoliConst" [value]="u.id">{{ u.val }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button (click)="newUser(nome, email, ruolo, corso)"><mat-icon>person_add</mat-icon></button>
+  </mat-expansion-panel>
 
-<li>
-  <ul>
-    
-  </ul>
-</li>
+  <mat-expansion-panel *ngFor="let utente of utenti$ | async">
+    <mat-expansion-panel-header>
+      <mat-panel-title> {{utente.nome}} &nbsp;&nbsp;&nbsp;&nbsp; [{{utente.corso}}] </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-form-field appearance="fill">
+      <input matInput [value]="utente.nome" readonly>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <input matInput [value]="utente.email" readonly>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Corso</mat-label>
+      <mat-select #corso [value]="utente.corso" (valueChange)="cambioCorso(utente.email, $event)">
+        <mat-option *ngFor="let c of corsi$ | async" [value]="c.corso">{{ c.corso }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <input matInput [value]="listaRuoliConst[utente.ruolo].val" readonly>
+    </mat-form-field>
+  </mat-expansion-panel>
+
+</mat-accordion>

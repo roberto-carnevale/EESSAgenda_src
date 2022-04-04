@@ -21,14 +21,15 @@ export interface Agenda {
 export interface Utente {
     uid: string,
     nome : string,
-    ruolo : TipoUtenti,
+    ruolo : number,
     corso: string,
     email: string
 }
 
-export enum TipoUtenti {
-    "amministratore" = 0,
-    "esercitante" = 1,
-    "giuda" = 2,
-    "gestore" = 3,
+export enum TipoUtente {
+  Amministratore,
+  Esercitante,
+  Guida,
+  Gestore,
 }
+

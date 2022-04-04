@@ -17,6 +17,13 @@ import { environment } from '../environments/environment';
 
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core'
+
 import { CorsiComponent } from './components/admin/corsi/corsi.components';
 import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
 import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
@@ -37,7 +44,13 @@ import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtent
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [ DataService ],
   bootstrap: [AppComponent]

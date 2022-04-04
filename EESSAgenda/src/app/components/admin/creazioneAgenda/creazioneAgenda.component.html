@@ -1,1 +1,18 @@
 <h1>{{corso}}</h1>
+
+<mat-form-field appearance="outline">
+  <mat-label>Data</mat-label>
+  <input matInput [matDatepicker]="picker" (dateInput)="controlloData($event)" [value]="data">
+  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+  <mat-datepicker #picker ></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field appearance="outline">
+  <input type="number" placeholder="Ore"matInput #ore (change)="controlloOre(ore)" value="9">
+</mat-form-field>
+<mat-form-field appearance="outline">
+  <input type="number" placeholder="Minuti" matInput #minuti (change)="controlloMinuti(minuti)" value="0">
+</mat-form-field>
+
+<button mat-button (click)="conferma()" [disabled]="inibito">OK</button>
+

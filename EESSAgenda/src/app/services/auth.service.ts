@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Slots, Agenda, TipoUtenti, Utente } from 'src/models/model';
+import { Slots, Agenda, TipoUtente, Utente } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
@@ -9,7 +9,7 @@ import { Observable, Subject } from 'rxjs';
 export class AuthService {
   public changedAuth = new Subject<boolean>();
   public guardedPath: string | null;
-  private utente: Utente = { uid: '', corso: '', nome: '', ruolo: 1};
+  private utente: Utente = { uid: '', corso: '', nome: '', ruolo: TipoUtente.Esercitante, email:''};
   private isAuth: boolean = false;
 
   constructor(

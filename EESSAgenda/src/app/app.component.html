@@ -1,3 +1,9 @@
+<a [routerLink]="['/utenti']"><mat-icon>groups</mat-icon></a>
+<a [routerLink]="['/corsi']"><mat-icon>psychology</mat-icon></a>
+<a [routerLink]="['/']"><mat-icon>edit_calendar</mat-icon></a>
 
+
+<p class="userLoggedIn">{{nome}}</p>
+<mat-icon *ngIf="nome!==undefined">logout</mat-icon>
 <router-outlet></router-outlet>
 
