@@ -9,16 +9,26 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
+
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../environments/environment';
 
 import { MatButtonModule } from '@angular/material/button'
+import { MatIconModule } from '@angular/material/icon';
+import { CorsiComponent } from './components/admin/corsi/corsi.components';
+import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
+import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DataComponent,
+    PrenotazioniComponent,
+    CorsiComponent,
+    CreazioneAgendaComponent,
+    GestioneUtentiComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +36,8 @@ import { MatButtonModule } from '@angular/material/button'
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [ DataService ],
   bootstrap: [AppComponent]

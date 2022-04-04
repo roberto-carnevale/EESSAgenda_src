@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
-export class DataService {
+export class AuthService {
   public changedAuth = new Subject<boolean>();
   public guardedPath: string | null;
-  private utente: Utente = { uid: '', corso: '', nome: '', ruolo: 1 };
+  private utente: Utente = { uid: '', corso: '', nome: '', ruolo: 1};
   private isAuth: boolean = false;
 
   constructor(
@@ -29,7 +29,7 @@ export class DataService {
     this.guardedPath = null;
   }
 
-  setUser(user: AuthData | null): void {
+  setUser(user: {email:string, password:string} | null): void {
     if (user) {
       this.authFirebase.setPersistence('local').then(() => {
         this.authFirebase
