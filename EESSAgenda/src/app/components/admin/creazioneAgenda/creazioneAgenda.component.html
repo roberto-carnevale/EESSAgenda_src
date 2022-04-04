@@ -15,16 +15,22 @@
 
 <mat-form-field appearance="outline">
   <mat-label>Ore</mat-label>
-  <input type="number" placeholder="Ore"matInput #ore (change)="controlloOre(ore)" value="9">
+  <input type="number" placeholder="Ore" matInput #ore (change)="controlloOre(ore)" [value]="data_effettiva.getHours()">
 </mat-form-field>
 <mat-form-field appearance="outline">
   <mat-label>Minuti</mat-label>
-  <input type="number" placeholder="Minuti" matInput #minuti (change)="controlloMinuti(minuti)" value="0">
+  <input type="number" placeholder="Minuti" matInput #minuti (change)="controlloMinuti(minuti)" [value]="data_effettiva.getMinutes()">
 </mat-form-field>
 <mat-form-field appearance="outline">
   <mat-label>Durata</mat-label>
-  <input type="number" placeholder="Durata" matInput #durata (change)="controlloDurata(durata)" value="15">
+  <input type="number" placeholder="Durata" matInput #durata (change)="controlloDurata(durata)" [value]="durata_colloquio">
 </mat-form-field>
 
 <button mat-button (click)="conferma()" [disabled]="inibito">OK</button>
+
+<li>
+  <ul *ngFor="let l of lista$ | async">
+    {{l.guida}} {{l.inizio}} {{l.fine}} {{l.occupato}}
+  </ul>
+</li>
 

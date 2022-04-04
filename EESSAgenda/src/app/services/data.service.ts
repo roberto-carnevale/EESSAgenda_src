@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
 
+
 @Injectable({ providedIn: 'root' })
 export class DataService {
   public changedAuth = new Subject<boolean>();
@@ -110,10 +111,15 @@ export class DataService {
       });
   }
 
-  creaSlot(guida:string, inizio: Date, fine:Date) {
-
+  creaSlot(corso:string, guida:string, inizio: Date, fine:Date) {
+    const s : Slots = {corso:corso, guida:guida, inizio: inizio, fine: fine, occupato:""};
+    console.log(s);
+    this.firestore.collection<Slots>('/agenda').add(s).then();
   }
 
+  leggiSlot(corso:string):Observable<Slots[]> {
+    return this.firestore.collection<Slots>('/agenda', ref => ref.where('corso','==',corso)).valueChanges();
+  }
 
 
 

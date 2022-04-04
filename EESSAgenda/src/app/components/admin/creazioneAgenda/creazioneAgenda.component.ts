@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, Timestamp } from 'rxjs';
 import { Corso, Slots, Utente } from 'src/models/model'
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { MatSelectChange } from '@angular/material/select';
+import { tap } from 'rxjs/operators'
 
 
 @Component({
@@ -21,13 +22,16 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   data = new Date();
   guide$ = new Observable<Utente[]>();
   guida = "";
-  lista = new Observable<Slots[]>();
+  lista$ = new Observable<Slots[]>();
+  data_effettiva = new Date(new Date().setHours(9,0,0,0));
+  durata_colloquio = 15;
 
   componentSubscriptions = new Subscription()
   ngOnInit() {
     this.componentSubscriptions.add(this.route.params.subscribe( params => {
       this.corso = params['id'];
       this.guide$ = this.firestore.leggiGuide(this.corso);
+      this.lista$ = this.firestore.leggiSlot(this.corso);
     }));
 
   }
@@ -47,7 +51,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
     this.controlla();
   }
   controlloDurata(durata:HTMLInputElement) {
-    this.minuti = Number.parseInt(durata.value);
+    this.durata_colloquio = Number.parseInt(durata.value);
     this.controlla();
   }
 
@@ -55,13 +59,17 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
     this.data = picker.value;
     this.controlla();
   }
-  controlloGuida(evento:MatSelectChange) {
-    this.guida = evento.value;
+
+  controlloGuida(evento:unknown) {
+    this.guida = evento as string;
     this.controlla();
   }
 
   conferma() {
-    this.firestore.creaSlot("guida", new Date(), new Date());
+    const fine = new Date(this.data_effettiva.getTime()+this.durata_colloquio*60000)
+    console.log(this.data_effettiva)
+    this.firestore.creaSlot(this.corso ,this.guida, this.data_effettiva, fine);
+    this.data_effettiva = fine;
   }
 
   controlla() {

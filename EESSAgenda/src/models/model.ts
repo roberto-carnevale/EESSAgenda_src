@@ -3,6 +3,7 @@ export interface Corso {
 }
 
 export interface Slots{
+    corso:string,
     guida:string,
     occupato:string,
     inizio: Date,
