@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Slots, Agenda, Utente, TipoUtente, Corso } from 'src/models/model';
+import { Slots, Utente, TipoUtente, Corso } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
@@ -17,13 +17,7 @@ export class DataService {
     nome: '',
     ruolo: TipoUtente.Esercitante,
   };
-  private agenda: Agenda = {
-    id: '',
-    slot: [],
-    corso: '',
-    guida: '',
-    url: '',
-  };
+
   private isAuth: boolean = false;
 
   constructor(
@@ -53,6 +47,10 @@ export class DataService {
       .valueChanges({ idFields: 'id' });
   }
 
+  leggiGuide(corso:string): Observable<Utente[]> {
+    return this.firestore.collection<Utente>('/utenti', ref => ref.where('corso','==',corso).where('ruolo','==',2)).valueChanges();
+  }
+
   creaGuida(nome: string, corso: string, email: string, password: string) {
     let utente: Utente = {
       uid: '',
@@ -65,7 +63,18 @@ export class DataService {
       .createUserWithEmailAndPassword(email, password)
       .then((cred) => {
         utente.uid = cred.user?.uid!;
-        this.firestore.collection('/utenti').add(utente).then().catch();
+        this.firestore
+          .collection('/utenti')
+          .add(utente)
+          .then(() => {
+            this.authFirebase
+              .sendPasswordResetEmail(email)
+              .then(() => this.authFirebase.signOut());
+          })
+          .catch();
+      })
+      .catch((err) => {
+        window.alert(err);
       });
   }
 
@@ -100,6 +109,14 @@ export class DataService {
         window.alert(err);
       });
   }
+
+  creaSlot(guida:string, inizio: Date, fine:Date) {
+
+  }
+
+
+
+
 
   cambiaCorso(email: string, corso:string) {
     const id = this.firestore.collection("/utenti", ref => ref.where('email','==',email) ).get().forEach(

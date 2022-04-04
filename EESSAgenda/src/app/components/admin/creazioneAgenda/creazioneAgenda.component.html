@@ -1,4 +1,10 @@
 <h1>{{corso}}</h1>
+<mat-form-field appearance="outline">
+  <mat-label>Guida</mat-label>
+  <mat-select #guida (valueChange)="controlloGuida($event)">
+    <mat-option *ngFor="let u of guide$ | async " [value]="u.email">{{ u.nome }}</mat-option>
+  </mat-select>
+</mat-form-field>
 
 <mat-form-field appearance="outline">
   <mat-label>Data</mat-label>
@@ -8,10 +14,16 @@
 </mat-form-field>
 
 <mat-form-field appearance="outline">
+  <mat-label>Ore</mat-label>
   <input type="number" placeholder="Ore"matInput #ore (change)="controlloOre(ore)" value="9">
 </mat-form-field>
 <mat-form-field appearance="outline">
+  <mat-label>Minuti</mat-label>
   <input type="number" placeholder="Minuti" matInput #minuti (change)="controlloMinuti(minuti)" value="0">
+</mat-form-field>
+<mat-form-field appearance="outline">
+  <mat-label>Durata</mat-label>
+  <input type="number" placeholder="Durata" matInput #durata (change)="controlloDurata(durata)" value="15">
 </mat-form-field>
 
 <button mat-button (click)="conferma()" [disabled]="inibito">OK</button>

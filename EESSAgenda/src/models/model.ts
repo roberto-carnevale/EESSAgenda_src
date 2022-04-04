@@ -9,21 +9,13 @@ export interface Slots{
     fine: Date,
 }
 
-export interface Agenda {
-    id:string,
-    corso: string,
-    guida: string,
-    slot: Slots[],
-    url: string,
-}
-
-
 export interface Utente {
     uid: string,
     nome : string,
     ruolo : number,
     corso: string,
-    email: string
+    email: string,
+    url?:string
 }
 
 export enum TipoUtente {

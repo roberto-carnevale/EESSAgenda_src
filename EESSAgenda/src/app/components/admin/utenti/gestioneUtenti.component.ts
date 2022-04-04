@@ -25,6 +25,8 @@ export class GestioneUtentiComponent implements OnInit {
   newUser(nome: HTMLInputElement, email: HTMLInputElement, ruolo: MatSelect, corso:MatSelect):void{
     if (ruolo.value == TipoUtente.Esercitante)
       this.dataService.creaEsercitante(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
+      if (ruolo.value == TipoUtente.Guida)
+      this.dataService.creaGuida(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
   }
 
   listaRuoli():{id:number, val:string}[]{

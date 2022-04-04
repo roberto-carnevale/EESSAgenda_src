@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Agenda } from 'src/models/model';
 import { DataService } from 'src/app/services/data.service';
 
 @Component({
@@ -8,10 +7,10 @@ import { DataService } from 'src/app/services/data.service';
 })
 export class PrenotazioniComponent implements OnInit {
   constructor(private dataService: DataService) {}
-  
-  agendaList : Agenda[] = [{ id: '1', corso: '1', guida: '1', slot: [], url: '1' }]
+
+
   //agenda: Agenda = { id: '', corso: '', guida: '', agenda: [], url: '' };
-  
+
   ngOnInit() {
 
   }

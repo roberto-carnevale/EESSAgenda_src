@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Slots, Agenda, TipoUtente, Utente } from 'src/models/model';
+import { Slots, TipoUtente, Utente } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
