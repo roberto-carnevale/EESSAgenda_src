@@ -1,4 +1,30 @@
 {
-  "indexes": [],
+  "indexes": [
+    {
+      "collectionGroup": "agenda",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "corso", "order": "ASCENDING" },
+        { "fieldPath": "guida", "order": "ASCENDING" },
+        { "fieldPath": "inizio", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "agenda",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "corso", "order": "ASCENDING" },
+        { "fieldPath": "inizio", "order": "ASCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "utenti",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "uid", "order": "ASCENDING" }
+      ]
+    }
+   ],
   "fieldOverrides": []
 }
