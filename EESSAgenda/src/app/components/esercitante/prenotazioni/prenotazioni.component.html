@@ -1,1 +1,5 @@
-
+<li>
+  <ul *ngFor="let slot of slots$ | async">
+    {{slot.inizio | date:'EE dd MMM h:mm':'it-IT'}} &RightArrowBar; {{slot.fine | date:'h:mm'}}
+  </ul>
+</li>

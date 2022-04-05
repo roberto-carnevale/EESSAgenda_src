@@ -19,7 +19,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   inibito = true;
   ore = 9;
   minuti = 0;
-  data = new Date();
+  //data = new Date();
   guide$ = new Observable<Utente[]>();
   guida = "";
   lista$ = new Observable<Slots[]>();
@@ -56,7 +56,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   }
 
   controlloData(picker:MatDatepickerInputEvent<any, any>) {
-    this.data = picker.value;
+    this.data_effettiva = picker.value;
     this.controlla();
   }
 
@@ -68,13 +68,21 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   conferma() {
     const fine = new Date(this.data_effettiva.getTime()+this.durata_colloquio*60000)
     console.log(this.data_effettiva)
-    this.firestore.creaSlot(this.corso ,this.guida, this.data_effettiva, fine);
+    this.firestore.creaSlot(this.corso ,this.guida, this.data_effettiva.toISOString(), fine.toISOString());
     this.data_effettiva = fine;
   }
 
   controlla() {
-    console.log(this.ore, this.minuti, this.data);
-    if ( this.ore >= 0 && this.ore < 23 && this.minuti>=0 && this.minuti < 59 && this.data.setHours(this.ore, this.minuti,0,0) > new Date().getTime() && this.guida !== "") {this.inibito = false} else {this.inibito=true}
+    console.log(this.ore, this.minuti, this.data_effettiva);
+    if ( this.ore >= 0 && this.ore < 23 && this.minuti>=0 && this.minuti < 59 && this.data_effettiva.setHours(this.ore, this.minuti,0,0) > new Date().getTime() && this.guida !== "") {this.inibito = false} else {this.inibito=true}
+  }
+
+  tasnformData(l: Slots):Slots {
+    return l;
+  }
+
+  cancellaSlot(id:string) {
+    this.firestore.cancellaSlot(id);
   }
 
 

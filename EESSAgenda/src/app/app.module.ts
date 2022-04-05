@@ -27,6 +27,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core'
 import { CorsiComponent } from './components/admin/corsi/corsi.components';
 import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
 import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtent
     PrenotazioniComponent,
     CorsiComponent,
     CreazioneAgendaComponent,
-    GestioneUtentiComponent
+    GestioneUtentiComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

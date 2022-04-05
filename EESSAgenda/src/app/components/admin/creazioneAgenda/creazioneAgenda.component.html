@@ -8,7 +8,7 @@
 
 <mat-form-field appearance="outline">
   <mat-label>Data</mat-label>
-  <input matInput [matDatepicker]="picker" (dateInput)="controlloData($event)" [value]="data">
+  <input matInput [matDatepicker]="picker" (dateInput)="controlloData($event)" [value]="data_effettiva">
   <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
   <mat-datepicker #picker ></mat-datepicker>
 </mat-form-field>
@@ -30,7 +30,8 @@
 
 <li>
   <ul *ngFor="let l of lista$ | async">
-    {{l.guida}} {{l.inizio}} {{l.fine}} {{l.occupato}}
+    {{l.guida}} {{l.inizio | date:'EE dd MMM h:mm':'it-IT'}} &RightArrowBar; {{l.fine | date:'EE dd MMM h:mm'}} {{l.occupato}}
+    <button mat-icon-button (click)="cancellaSlot(l.id)"><mat-icon>delete</mat-icon></button>
   </ul>
 </li>
 

@@ -111,14 +111,18 @@ export class DataService {
       });
   }
 
-  creaSlot(corso:string, guida:string, inizio: Date, fine:Date) {
-    const s : Slots = {corso:corso, guida:guida, inizio: inizio, fine: fine, occupato:""};
+  creaSlot(corso:string, guida:string, inizio: string, fine:string) {
+    const s : Slots = {corso:corso, guida:guida, inizio: inizio, fine: fine, occupato:"", id:""};
     console.log(s);
     this.firestore.collection<Slots>('/agenda').add(s).then();
   }
 
+  cancellaSlot(slotId:string) {
+    this.firestore.collection<Slots>('/agenda').doc(slotId).delete();
+  }
+
   leggiSlot(corso:string):Observable<Slots[]> {
-    return this.firestore.collection<Slots>('/agenda', ref => ref.where('corso','==',corso)).valueChanges();
+    return this.firestore.collection<Slots>('/agenda', ref => ref.where('corso','==',corso).orderBy('guida','asc').orderBy('inizio','asc')).valueChanges({idField:'id'});
   }
 
 

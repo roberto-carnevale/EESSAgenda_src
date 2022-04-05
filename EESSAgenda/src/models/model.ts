@@ -3,11 +3,12 @@ export interface Corso {
 }
 
 export interface Slots{
+    id : string,
     corso:string,
     guida:string,
     occupato:string,
-    inizio: Date,
-    fine: Date,
+    inizio: string,
+    fine: string,
 }
 
 export interface Utente {

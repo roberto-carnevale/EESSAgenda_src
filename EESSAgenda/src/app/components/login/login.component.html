@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-label>Login</mat-label>
+  <input matInput id="login" #login />
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Passord</mat-label>
+  <input matInput id="password" #password type="password" />
+</mat-form-field>
+<button mat-raised-button (click)="onSubmit(login.value, password.value)">
+  Login
+</button>
+
+th1s1sAqu1teStr0ng!!
