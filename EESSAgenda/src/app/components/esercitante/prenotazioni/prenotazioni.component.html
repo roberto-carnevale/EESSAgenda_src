@@ -1,3 +1,7 @@
+<span *ngFor="let aggregazione_guida of slot_aggregati">
+  <app-semaforo [guida]="aggregazione_guida.guida"></app-semaforo>
+</span>
+
 <mat-accordion
   displayMode="default"
   [multi]="true"
@@ -10,7 +14,7 @@
     <div style="padding-left: 2em">
       <div *ngFor="let slot of aggregazione_guida.slots">
         <span [ngStyle]="stileSlot(slot.occupato)">
-          {{ slot.inizio | date: "EE dd MMM h:mm":"it-IT" }}
+          {{ slot.inizio | date: 'EE dd MMM h:mm' }}
           &RightArrowBar;
           {{ slot.fine | date: "h:mm" }}</span>
           <button

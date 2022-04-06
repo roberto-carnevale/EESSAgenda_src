@@ -23,6 +23,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     nome: '',
     ruolo: TipoUtente.Esercitante,
     uid: '',
+    id:''
   };
 
   ngOnInit(): void {

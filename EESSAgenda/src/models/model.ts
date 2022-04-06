@@ -17,7 +17,9 @@ export interface Utente {
     ruolo : number,
     corso: string,
     email: string,
-    url?:string
+    url?:string,
+    in_colloquio?:boolean,
+    id:string;
 }
 
 export enum TipoUtente {

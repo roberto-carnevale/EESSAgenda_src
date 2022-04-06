@@ -5,6 +5,7 @@ import { NotFound404Component } from './404.component';
 import { CorsiComponent } from './components/admin/corsi/corsi.components';
 import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
 import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
+import { GuidaComponent } from './components/guida/guida.component';
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [{ path:"" , component: PrenotazioniComponent },
@@ -13,6 +14,7 @@ const routes: Routes = [{ path:"" , component: PrenotazioniComponent },
 {path:'utenti', component:GestioneUtentiComponent},
 {path:'creazioneAgenda/:id', component:CreazioneAgendaComponent},
 {path:'login', component:LoginComponent},
+{path:'guida', component:GuidaComponent},
 {path:'**', component:NotFound404Component},
 ];
 

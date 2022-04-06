@@ -18,6 +18,23 @@
       ]
     },
     {
+      "collectionGroup": "agenda",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "corso", "order": "ASCENDING" },
+        { "fieldPath": "inizio", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "agenda",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "corso", "order": "ASCENDING" },
+        { "fieldPath": "email", "order": "ASCENDING" },
+        { "fieldPath": "inizio", "order": "DESCENDING" }
+      ]
+    },
+    {
       "collectionGroup": "utenti",
       "queryScope": "COLLECTION",
       "fields": [

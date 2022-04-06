@@ -1,0 +1,10 @@
+<button mat-fab (click)="switch()">
+    <mat-icon #fab_icon>chair</mat-icon>
+</button>
+<div style="padding-top: 2%;"></div>
+<table style="padding:1em">
+<tr *ngFor="let slot of agendaGuida$ | async">
+  <td style="text-align: right;" [ngStyle]="libero(slot.esercitante)"><span>{{slot.ora}}</span></td><td>{{slot.esercitante}}</td>
+</tr>
+</table>
+

@@ -16,6 +16,7 @@ export class AuthService {
     nome: '',
     ruolo: TipoUtente.Esercitante,
     email: '',
+    id:''
   };
   private isAuth: boolean = false;
   private uid: string = '';
@@ -100,7 +101,7 @@ export class AuthService {
         .get()
         .forEach((qs) => {
           qs.docs.forEach((d) => {
-            resolve(d.data() as Utente);
+            resolve({...d.data() as Utente, id:d.id});
           })
         });
     });

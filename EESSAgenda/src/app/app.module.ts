@@ -28,7 +28,11 @@ import { CorsiComponent } from './components/admin/corsi/corsi.components';
 import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
 import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
 import { LoginComponent } from './components/login/login.component';
+import { GuidaComponent } from './components/guida/guida.component';
+import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
+
 import { AuthService } from './services/auth.service';
+
 
 @NgModule({
   declarations: [
@@ -39,6 +43,8 @@ import { AuthService } from './services/auth.service';
     CreazioneAgendaComponent,
     GestioneUtentiComponent,
     LoginComponent,
+    GuidaComponent,
+    SemaforoComponent,
   ],
   imports: [
     BrowserModule,
