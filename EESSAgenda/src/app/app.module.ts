@@ -22,12 +22,13 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core'
+import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core'
 
 import { CorsiComponent } from './components/admin/corsi/corsi.components';
 import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
 import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
 import { LoginComponent } from './components/login/login.component';
+import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,7 @@ import { LoginComponent } from './components/login/login.component';
     MatDatepickerModule,
     MatNativeDateModule,
   ],
-  providers: [ DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
+  providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -3,6 +3,7 @@ import { Utente,  TipoUtente, Corso} from 'src/models/model';
 import { DataService } from 'src/app/services/data.service';
 import { Observable } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -11,7 +12,7 @@ import { MatSelect } from '@angular/material/select';
 })
 
 export class GestioneUtentiComponent implements OnInit {
-  constructor(private dataService:DataService) { }
+  constructor(private dataService:DataService, private auth:AuthService) { }
   utenti$ = new Observable<Utente[]>();
   listaRuoliConst : {id:number, val:string}[] = [];
   corsi$ = new Observable<Corso[]>();
@@ -44,7 +45,11 @@ export class GestioneUtentiComponent implements OnInit {
     console.log(corso);
     this.dataService.cambiaCorso(email, corso);
   }
+  resetPassword(email:string):void {
+    this.auth.resetUser(email);
+  }
 }
+
 
 
 /* export interface Utente {

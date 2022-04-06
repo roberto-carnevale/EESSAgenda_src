@@ -13,5 +13,9 @@ export class LoginComponent implements OnInit {
   onSubmit(login:string, password:string) {
     this.authService.setUser({email:login, password:password});
   }
+  
+  onReset(email:string) {
+    this.authService.resetUser(email);
+  }
 
 }

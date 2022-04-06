@@ -109,4 +109,8 @@ export class AuthService {
   getUserData(): Utente {
     return this.utente;
   }
+
+  resetUser(email:string):void{
+    this.authFirebase.sendPasswordResetEmail(email)
+  }
 }

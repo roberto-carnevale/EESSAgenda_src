@@ -43,6 +43,7 @@
     <mat-form-field appearance="fill">
       <input matInput [value]="listaRuoliConst[utente.ruolo].val" readonly>
     </mat-form-field>
+      <button mat-button color="accent" (click)="resetPassword(utente.email)">Reset</button>
   </mat-expansion-panel>
 
 </mat-accordion>

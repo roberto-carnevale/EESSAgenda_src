@@ -125,6 +125,9 @@ export class DataService {
     return this.firestore.collection<Slots>('/agenda', ref => ref.where('corso','==',corso).orderBy('guida','asc').orderBy('inizio','asc')).valueChanges({idField:'id'});
   }
 
+  prenotaSlot(slot:Slots) {
+    this.firestore.collection('agenda').doc(slot.id).update(slot).then();
+  }
 
 
 
@@ -134,6 +137,5 @@ export class DataService {
           d => this.firestore.collection("/utenti").doc(d.id).update({corso:corso}).then()
         )
     );
-
   }
 }
