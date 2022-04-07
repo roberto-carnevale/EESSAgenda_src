@@ -14,7 +14,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private changeDetectorRef: ChangeDetectorRef
   ) {}
-  slots : Slots[] = [];
+  slots: Slots[] = [];
   subscription_componenet = new Subscription();
   slot_aggregati: { guida: string; slots: Slots[] }[] = [];
   myself: Utente = {
@@ -23,45 +23,51 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     nome: '',
     ruolo: TipoUtente.Esercitante,
     uid: '',
-    id:''
+    id: '',
   };
 
   ngOnInit(): void {
+    if (this.authService.getUserId() !== '') {
+      this.preparaDati();
+    } else {
+        this.subscription_componenet.add(
+          this.authService.subscribeAuth().subscribe((isLoggedIn) => {
+            if (isLoggedIn) {
+              this.preparaDati();
+            }
+          })
+        );
+    }
+  }
+
+  preparaDati() {
+    this.myself = this.authService.getUserData();
     this.subscription_componenet.add(
-      this.authService.subscribeAuth().subscribe((isLoggedIn) => {
-        if (isLoggedIn) {
-          this.myself = this.authService.getUserData();
-          this.subscription_componenet.add(
-            this.dataService
-              .leggiSlot(this.authService.getUserData().corso)
-              .subscribe((ls) => {
-                if (this.slot_aggregati.length > 0) {
-                  this.slots = ls;
-                  this.changeDetectorRef.markForCheck();
-                } else {
-                  this.slots = ls;
-                  let guida_temp = '';
-                  let current_guida_index = -1;
-                  console.log(ls);
-                  for (let i = 0; i < ls.length; i++) {
-                    if (guida_temp != ls[i].guida) {
-                      this.slot_aggregati.push({
-                        guida: ls[i].guida,
-                        slots: [ls[i]],
-                      });
-                      guida_temp = ls[i].guida;
-                      current_guida_index++;
-                    } else {
-                      this.slot_aggregati[current_guida_index].slots.push(
-                        ls[i]
-                      );
-                    }
-                  }
-                }
-              })
-          );
-        }
-      })
+      this.dataService
+        .leggiSlot(this.authService.getUserData().corso)
+        .subscribe((ls) => {
+          if (this.slot_aggregati.length > 0) {
+            this.slots = ls;
+            this.changeDetectorRef.markForCheck();
+          } else {
+            this.slots = ls;
+            let guida_temp = '';
+            let current_guida_index = -1;
+            console.log(ls);
+            for (let i = 0; i < ls.length; i++) {
+              if (guida_temp != ls[i].guida) {
+                this.slot_aggregati.push({
+                  guida: ls[i].guida,
+                  slots: [ls[i]],
+                });
+                guida_temp = ls[i].guida;
+                current_guida_index++;
+              } else {
+                this.slot_aggregati[current_guida_index].slots.push(ls[i]);
+              }
+            }
+          }
+        })
     );
   }
 
@@ -69,20 +75,26 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     this.subscription_componenet.unsubscribe();
   }
 
-  prenota(slot: Slots) { slot.occupato = this.myself.email; this.dataService.prenotaSlot(slot);}
-  libera(slot: Slots) { slot.occupato = ""; this.dataService.prenotaSlot(slot);}
-
-  statoSlot(slotId:string):string {
-    return this.slots.find( (s) => s.id === slotId)?.occupato!;
+  prenota(slot: Slots) {
+    slot.occupato = this.myself.email;
+    this.dataService.prenotaSlot(slot);
   }
-  stileSlot(occupato:string):any {
+  libera(slot: Slots) {
+    slot.occupato = '';
+    this.dataService.prenotaSlot(slot);
+  }
+
+  statoSlot(slotId: string): string {
+    return this.slots.find((s) => s.id === slotId)?.occupato!;
+  }
+  stileSlot(occupato: string): any {
     switch (occupato) {
       case this.myself.email:
-        return {"color":"green", "font-weight":"bold" };
+        return { color: 'green', 'font-weight': 'bold' };
       case '':
         return {};
-      default:
-        return {"color":"light-gray", "text-decoration":"line-through" };
+      default : if (occupato!= '' && occupato!= this.myself.email)
+        return { color: 'light-gray', 'text-decoration': 'line-through' };
     }
   }
 }

@@ -58,7 +58,7 @@ export class DataService {
 
   leggiAgendaGuida(guida: Utente): Observable<{ora:string, esercitante:string}[]> {
     let qs = this.firestore.collection<Slots>('/agenda', (ref) =>
-      ref.where('corso', '==', guida.corso).where('email','==',guida.email).orderBy('inizio', 'asc')
+      ref.where('corso', '==', guida.corso).where('guida','==',guida.email).orderBy('inizio', 'asc')
     );
     return qs.valueChanges().pipe(
       map((l) => {

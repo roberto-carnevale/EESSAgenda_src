@@ -90,7 +90,7 @@ export class AuthService {
     return this.changedAuth.asObservable();
   }
 
-  getUserId(): string | undefined {
+  getUserId(): string {
     return this.utente.uid;
   }
 

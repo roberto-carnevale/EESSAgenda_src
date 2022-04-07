@@ -14,32 +14,32 @@
     <div style="padding-left: 2em">
       <div *ngFor="let slot of aggregazione_guida.slots">
         <span [ngStyle]="stileSlot(slot.occupato)">
-          {{ slot.inizio | date: 'EE dd MMM h:mm' }}
+          {{ slot.inizio | date: "EE dd MMM h:mm" }}
           &RightArrowBar;
-          {{ slot.fine | date: "h:mm" }}</span>
-          <button
-            mat-icon-button
-            (click)="prenota(slot)"
-            *ngIf="statoSlot(slot.id) === ''"
-          >
-            <mat-icon>schedule</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            (click)="libera(slot)"
-            *ngIf="statoSlot(slot.id) === myself.email"
-          >
-            <mat-icon>alarm_off</mat-icon>
-          </button>
-          <button
-            mat-icon-button
-            *ngIf="
-              statoSlot(slot.id) !== myself.email && statoSlot(slot.id) !== ''
-            "
-          >
-            <mat-icon></mat-icon>
-          </button>
-
+          {{ slot.fine | date: "h:mm" }}</span
+        >
+        <button
+          mat-icon-button
+          (click)="prenota(slot)"
+          *ngIf="statoSlot(slot.id) === ''"
+        >
+          <mat-icon>schedule</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="libera(slot)"
+          *ngIf="statoSlot(slot.id) === myself.email"
+        >
+          <mat-icon>alarm_off</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          *ngIf="
+            statoSlot(slot.id) !== myself.email && statoSlot(slot.id) !== ''
+          "
+        >
+          <mat-icon></mat-icon>
+        </button>
       </div>
     </div>
   </mat-expansion-panel>

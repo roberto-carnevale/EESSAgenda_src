@@ -1,7 +1,9 @@
 <a [routerLink]="['/utenti']"><mat-icon>groups</mat-icon></a>
 <a [routerLink]="['/corsi']"><mat-icon>psychology</mat-icon></a>
-<a [routerLink]="['/']"><mat-icon>edit_calendar</mat-icon></a>
+<a [routerLink]="['']"><mat-icon>edit_calendar</mat-icon></a>
+<a [routerLink]="['/guida']"><mat-icon>follow_the_signs</mat-icon></a>
 <a [routerLink]="['/login']" *ngIf="nome===undefined"><mat-icon>login</mat-icon></a>
+
 <button mat-icon-button (click)="logOut()" *ngIf="nome!==undefined"><mat-icon>logout</mat-icon></button>
 <span class="userLoggedIn">{{nome}}</span>
 <div>
