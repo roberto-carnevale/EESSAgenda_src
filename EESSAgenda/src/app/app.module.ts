@@ -23,25 +23,22 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core'
+import { MatToolbarModule } from '@angular/material/toolbar';
 
-import { CorsiComponent } from './components/admin/corsi/corsi.components';
-import { CreazioneAgendaComponent } from './components/admin/creazioneAgenda/creazioneAgenda.component';
-import { GestioneUtentiComponent } from './components/admin/utenti/gestioneUtenti.component';
+import { AdminModule } from './components/admin/admin.module';
+
 import { LoginComponent } from './components/login/login.component';
 import { GuidaComponent } from './components/guida/guida.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
 
 import { AuthService } from './services/auth.service';
-
+import { RouterModule, Routes } from '@angular/router';
 
 @NgModule({
   declarations: [
     AppComponent,
     DataComponent,
     PrenotazioniComponent,
-    CorsiComponent,
-    CreazioneAgendaComponent,
-    GestioneUtentiComponent,
     LoginComponent,
     GuidaComponent,
     SemaforoComponent,
@@ -60,6 +57,9 @@ import { AuthService } from './services/auth.service';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatToolbarModule,
+    //RouterModule.forRoot(routes)
+    AdminModule,
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]

@@ -1,0 +1,25 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+mat-icon {
+  font-size:x-large;
+  padding: 1ex;
+}
+
+a {
+  color: #515fb4;
+}
+
+span.userLoggedIn {
+  color: #515fb4;
+}
+
+.alert {
+  color:#d9204a;
+}
+
+
+.background-alert {
+  background-color:#d9204a;
+}

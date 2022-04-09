@@ -1,11 +1,19 @@
-<a [routerLink]="['/utenti']"><mat-icon>groups</mat-icon></a>
-<a [routerLink]="['/corsi']"><mat-icon>psychology</mat-icon></a>
+<mat-toolbar style="background-color: #aea04b;">
+<mat-toolbar-row>
+  <span class="userLoggedIn">{{nome}}</span>
+</mat-toolbar-row>
+<mat-toolbar-row>
+<span class="example-spacer"></span>
+<a [routerLink]="['/utenti']" *ngIf="ruolo == 0 || ruolo == 3"><mat-icon>groups</mat-icon></a>
+<a [routerLink]="['/corsi']" *ngIf="ruolo == 0"><mat-icon>psychology</mat-icon></a>
 <a [routerLink]="['']"><mat-icon>edit_calendar</mat-icon></a>
-<a [routerLink]="['/guida']"><mat-icon>follow_the_signs</mat-icon></a>
+<a [routerLink]="['/guida']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>follow_the_signs</mat-icon></a>
+<a [routerLink]="['/guida']"><mat-icon>assignment</mat-icon></a>
 <a [routerLink]="['/login']" *ngIf="nome===undefined"><mat-icon>login</mat-icon></a>
+<button mat-icon-button (click)="logOut()" *ngIf="nome!==undefined"><mat-icon style="color:#515fb4;">logout</mat-icon></button>
+</mat-toolbar-row>
+</mat-toolbar>
 
-<button mat-icon-button (click)="logOut()" *ngIf="nome!==undefined"><mat-icon>logout</mat-icon></button>
-<span class="userLoggedIn">{{nome}}</span>
-<div>
+<div style="background-color: #f3eee0;">
 <router-outlet></router-outlet>
 </div>
