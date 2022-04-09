@@ -26,9 +26,9 @@ import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS } from '@
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { AdminModule } from './components/admin/admin.module';
+import { GuidaModule } from './components/guida/guida.module';
 
 import { LoginComponent } from './components/login/login.component';
-import { GuidaComponent } from './components/guida/guida.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
 
 import { AuthService } from './services/auth.service';
@@ -40,7 +40,6 @@ import { RouterModule, Routes } from '@angular/router';
     DataComponent,
     PrenotazioniComponent,
     LoginComponent,
-    GuidaComponent,
     SemaforoComponent,
   ],
   imports: [
@@ -58,8 +57,8 @@ import { RouterModule, Routes } from '@angular/router';
     MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    //RouterModule.forRoot(routes)
     AdminModule,
+    GuidaModule,
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]
