@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 
+import { AdminRoutingModule } from './admin.router';
+
 import { CorsiComponent } from './corsi/corsi.components';
 import { CreazioneAgendaComponent } from './creazioneAgenda/creazioneAgenda.component';
 import { GestioneUtentiComponent } from './utenti/gestioneUtenti.component';
@@ -25,6 +27,8 @@ const Components = [
   GestioneUtentiComponent,
 ];
 const Modules = [
+  CommonModule,
+  AdminRoutingModule,
   AngularFirestoreModule,
   MatButtonModule,
   MatIconModule,
@@ -39,7 +43,7 @@ const Modules = [
 
 @NgModule({
   imports: Modules,
-  exports: Components,
+  exports: [Components, CommonModule],
   declarations: Components,
   providers: [AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'}],
 })

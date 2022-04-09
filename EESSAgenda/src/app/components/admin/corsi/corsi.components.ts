@@ -7,7 +7,7 @@ import { Corso } from 'src/models/model';
   template: `<input #corso /> <button (click)="creaCorso(corso)">OK</button>
     <li *ngFor="let corso of lista$ | async">
       <ul>
-        <a [routerLink]="['/creazioneAgenda', corso.corso]">{{
+        <a [routerLink]="['/admin', 'creazioneAgenda', corso.corso]">{{
           corso.corso
         }}</a>
         <button mat-icon-button (click)="cancellaCorso(corso.corso)">

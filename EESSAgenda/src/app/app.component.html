@@ -4,8 +4,8 @@
 </mat-toolbar-row>
 <mat-toolbar-row>
 <span class="example-spacer"></span>
-<a [routerLink]="['/utenti']" *ngIf="ruolo == 0 || ruolo == 3"><mat-icon>groups</mat-icon></a>
-<a [routerLink]="['/corsi']" *ngIf="ruolo == 0"><mat-icon>psychology</mat-icon></a>
+<a [routerLink]="['/admin/utenti']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>groups</mat-icon></a>
+<a [routerLink]="['/admin/corsi']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>psychology</mat-icon></a>
 <a [routerLink]="['']"><mat-icon>edit_calendar</mat-icon></a>
 <a [routerLink]="['/guida']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>follow_the_signs</mat-icon></a>
 <a [routerLink]="['/guida']"><mat-icon>assignment</mat-icon></a>
