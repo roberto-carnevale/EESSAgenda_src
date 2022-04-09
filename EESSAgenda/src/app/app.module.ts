@@ -32,7 +32,6 @@ import { LoginComponent } from './components/login/login.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
 
 import { AuthService } from './services/auth.service';
-import { RouterModule, Routes } from '@angular/router';
 
 @NgModule({
   declarations: [

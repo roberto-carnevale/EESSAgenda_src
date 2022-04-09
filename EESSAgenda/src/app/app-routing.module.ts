@@ -9,7 +9,7 @@ const routes: Routes = [{ path:"" , component: PrenotazioniComponent },
   { path:"prenotazioni/:id" , component: PrenotazioniComponent },
 {path:'admin', loadChildren: ()=>import('./components/admin/admin.module').then(m => m.AdminModule)},
 {path:'login', component:LoginComponent},
-{path:'guida', component:GuidaComponent},
+{path:'guida', loadChildren: ()=>import('./components/guida/guida.module').then(m=>m.GuidaModule)},
 {path:'**', component:NotFound404Component},
 ];
 
