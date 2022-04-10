@@ -16,7 +16,7 @@ export class DataService {
     corso: '',
     nome: '',
     ruolo: TipoUtente.Esercitante,
-    id:''
+    id: '',
   };
 
   private isAuth: boolean = false;
@@ -56,26 +56,56 @@ export class DataService {
       .valueChanges({ idFields: 'id' });
   }
 
-  leggiAgendaGuida(guida: Utente): Observable<{ora:string, esercitante:string}[]> {
+  nomeGuida(email: string): Promise<string> {
+    return new Promise((resolve) => {
+      return this.firestore
+        .collection<Utente>('/utenti', (ref) => ref.where('email', '==', email))
+        .valueChanges()
+        .pipe(
+          take(1),
+          map((lu) => {
+            return lu[0].nome;
+          })
+        )
+        .subscribe((n) => {
+          resolve(n);
+        });
+    });
+  }
+
+  leggiAgendaGuida(
+    guida: Utente
+  ): Observable<{ ora: string; esercitante: string }[]> {
     let qs = this.firestore.collection<Slots>('/agenda', (ref) =>
-      ref.where('corso', '==', guida.corso).where('guida','==',guida.email).orderBy('inizio', 'asc')
+      ref
+        .where('corso', '==', guida.corso)
+        .where('guida', '==', guida.email)
+        .orderBy('inizio', 'asc')
     );
     return qs.valueChanges().pipe(
       map((l) => {
         return l.map((s) => {
-          let res = {ora: new Date(s.inizio).toLocaleString("it-IT"), esercitante:""};
-          if (s.occupato != "") {res.esercitante = s.occupato};
+          let res = {
+            ora: new Date(s.inizio).toLocaleString('it-IT'),
+            esercitante: '',
+          };
+          if (s.occupato != '') {
+            res.esercitante = s.occupato;
+          }
           return res;
         });
       })
     );
   }
 
-  statoGuida(guida:string):Observable<boolean> {
-    return this.firestore.collection<Utente>('utenti', ref => ref.where('email','==',guida)).valueChanges().pipe( map((u)=> u[0].in_colloquio!));
+  statoGuida(guida: string): Observable<boolean> {
+    return this.firestore
+      .collection<Utente>('utenti', (ref) => ref.where('email', '==', guida))
+      .valueChanges()
+      .pipe(map((u) => u[0].in_colloquio!));
   }
 
-  cambiaStato(utente:Utente) {
+  cambiaStato(utente: Utente) {
     this.firestore.collection('utenti').doc(utente.id).update(utente);
   }
   creaGuida(nome: string, corso: string, email: string, password: string) {
@@ -85,7 +115,7 @@ export class DataService {
       nome: nome,
       ruolo: TipoUtente.Guida,
       email: email,
-      id:''
+      id: '',
     };
     this.authFirebase
       .createUserWithEmailAndPassword(email, password)
@@ -118,7 +148,7 @@ export class DataService {
       nome: nome,
       ruolo: TipoUtente.Esercitante,
       email: email,
-      id:''
+      id: '',
     };
     this.authFirebase
       .createUserWithEmailAndPassword(email, password)

@@ -14,7 +14,7 @@ import { TipoUtente, Utente } from 'src/models/model';
 
 @Component({
   selector: 'app-semaforo',
-  template: `<div [ngClass]="classeCSS">{{guida}}</div>`,
+  template: `<div [ngClass]="classeCSS">{{prendiNomeGuida(guida)}}</div>`,
   styleUrls: ['semaforo.component.css'],
 })
 export class SemaforoComponent implements OnInit, OnDestroy, OnChanges {
@@ -34,6 +34,7 @@ export class SemaforoComponent implements OnInit, OnDestroy, OnChanges {
 
   classeCSS = 'green';
   loggedIn = false;
+  nomi_guide: {email:string, nome:string}[] = [];
 
   @Input() guida: string = '';
 
@@ -42,6 +43,7 @@ export class SemaforoComponent implements OnInit, OnDestroy, OnChanges {
   ngOnChanges(changes: SimpleChanges): void {
     this.componemntSubcriptions.add(
       this.data.statoGuida(this.guida).subscribe((s) => {
+        this.data.nomeGuida(this.guida).then(g => {this.nomi_guide.push({email:this.guida, nome:g})})
         console.log(s);
         s ? (this.classeCSS = 'red') : (this.classeCSS = 'green');
       })
@@ -50,5 +52,10 @@ export class SemaforoComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy(): void {
     this.componemntSubcriptions.unsubscribe();
+  }
+
+  prendiNomeGuida(email:string):string {
+    let nome="";
+    return this.nomi_guide.filter( g => g.email == email)[0].nome;
   }
 }

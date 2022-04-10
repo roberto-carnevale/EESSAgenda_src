@@ -20,6 +20,23 @@ export interface Utente {
     url?:string,
     in_colloquio?:boolean,
     id:string;
+    bacheca?: string[],
+}
+
+export interface Bacheca {
+  corso: string,
+  contenuto: string[],
+  top:[]
+}
+
+export interface ListaFile {
+  corso:string,
+  lista: File[],
+}
+
+export interface File {
+  nome: string,
+  url: string,
 }
 
 export enum TipoUtente {

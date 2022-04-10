@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { Slots, TipoUtente, Utente } from 'src/models/model';
@@ -17,6 +17,8 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
   slots: Slots[] = [];
   subscription_componenet = new Subscription();
   slot_aggregati: { guida: string; slots: Slots[] }[] = [];
+  nomi_guide: {email:string, nome:string}[] = [];
+
   myself: Utente = {
     corso: '',
     email: '',
@@ -56,6 +58,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
             console.log(ls);
             for (let i = 0; i < ls.length; i++) {
               if (guida_temp != ls[i].guida) {
+                this.dataService.nomeGuida(ls[i].guida).then(g => {this.nomi_guide.push({email:ls[i].guida, nome:g})})
                 this.slot_aggregati.push({
                   guida: ls[i].guida,
                   slots: [ls[i]],
@@ -69,6 +72,11 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
           }
         })
     );
+  }
+
+  prendiNomeGuida(email:string):string {
+    let nome="";
+    return this.nomi_guide.filter( g => g.email == email)[0].nome;
   }
 
   ngOnDestroy(): void {

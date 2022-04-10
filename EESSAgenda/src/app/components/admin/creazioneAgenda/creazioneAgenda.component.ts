@@ -1,11 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription, Timestamp } from 'rxjs';
-import { Corso, Slots, Utente } from 'src/models/model'
+import { Observable, Subscription} from 'rxjs';
+import { Slots, Utente } from 'src/models/model'
 import { DataService } from 'src/app/services/data.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MatDatepicker, MatDatepickerInputEvent} from '@angular/material/datepicker';
-import { MatSelectChange } from '@angular/material/select';
-import { tap } from 'rxjs/operators'
+import { ActivatedRoute, } from '@angular/router';
+import { MatDatepickerInputEvent} from '@angular/material/datepicker';
+
 
 
 @Component({

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrenotazioniComponent } from 'src/app/components/esercitante/prenotazioni/prenotazioni.component'
 import { NotFound404Component } from './404.component';
-import { GuidaComponent } from './components/guida/guida.component';
+import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [{ path:"" , component: PrenotazioniComponent },
@@ -10,6 +10,7 @@ const routes: Routes = [{ path:"" , component: PrenotazioniComponent },
 {path:'admin', loadChildren: ()=>import('./components/admin/admin.module').then(m => m.AdminModule)},
 {path:'login', component:LoginComponent},
 {path:'guida', loadChildren: ()=>import('./components/guida/guida.module').then(m=>m.GuidaModule)},
+{path:'bacheca', component:BachecaComponent},
 {path:'**', component:NotFound404Component},
 ];
 

@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Slots, TipoUtente, Utente } from 'src/models/model';
+import { TipoUtente, Utente } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -16,10 +15,11 @@ export class AuthService {
     nome: '',
     ruolo: TipoUtente.Esercitante,
     email: '',
-    id:''
+    id: '',
   };
   private isAuth: boolean = false;
   private uid: string = '';
+  subscribeUserChanges = new Subject<Utente>()
 
   constructor(
     private authFirebase: AngularFireAuth,
@@ -100,18 +100,21 @@ export class AuthService {
         .collection('utenti', (ref) => ref.where('uid', '==', this.uid))
         .get()
         .forEach((qs) => {
-          qs.docs.forEach((d) => {
-            resolve({...d.data() as Utente, id:d.id});
-          })
+          resolve({ ...(qs.docs[0].data() as Utente), id: qs.docs[0].id });
         });
     });
+  }
+
+  updateOnUserData(): Observable<Utente[]> {
+      return this.firestore
+        .collection<Utente>('utenti', (ref) => ref.where('uid', '==', this.uid)).valueChanges({ idField: 'id'});
   }
 
   getUserData(): Utente {
     return this.utente;
   }
 
-  resetUser(email:string):void{
-    this.authFirebase.sendPasswordResetEmail(email)
+  resetUser(email: string): void {
+    this.authFirebase.sendPasswordResetEmail(email);
   }
 }

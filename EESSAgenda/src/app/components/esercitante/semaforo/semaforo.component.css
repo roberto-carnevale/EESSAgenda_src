@@ -5,6 +5,8 @@
   -moz-border-radius: 25px;
   border-radius: 25px;
   background: rgba(255, 0, 0, 0.3);
+  color:red;
+  text-align: center;
 }
 
 .green {
@@ -14,4 +16,6 @@
   -moz-border-radius: 25px;
   border-radius: 25px;
   background: rgba(12, 252, 32, 0.3);
+  color:darkgreen;
+  text-align: center;
 }

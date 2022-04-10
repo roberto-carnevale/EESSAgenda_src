@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { DataComponent } from './components/data.component';
-
 import { DataService } from './services/data.service';
+import { AuthService } from './services/auth.service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -20,26 +17,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule, MAT_DATE_LOCALE, MAT_NATIVE_DATE_FORMATS } from '@angular/material/core'
+import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import { MatToolbarModule } from '@angular/material/toolbar';
-
-import { AdminModule } from './components/admin/admin.module';
-import { GuidaModule } from './components/guida/guida.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { LoginComponent } from './components/login/login.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
+import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
+import { BachecaComponent } from './components/bacheca/bacheca.component';
 
-import { AuthService } from './services/auth.service';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    DataComponent,
     PrenotazioniComponent,
     LoginComponent,
     SemaforoComponent,
+    BachecaComponent
   ],
   imports: [
     BrowserModule,
@@ -52,12 +48,10 @@ import { AuthService } from './services/auth.service';
     MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule,
-    MatDatepickerModule,
     MatNativeDateModule,
     MatToolbarModule,
-    AdminModule,
-    GuidaModule,
+    MatCardModule,
+    MatBadgeModule
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]

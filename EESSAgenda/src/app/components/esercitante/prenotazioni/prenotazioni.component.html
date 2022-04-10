@@ -1,15 +1,12 @@
-<span *ngFor="let aggregazione_guida of slot_aggregati">
+<span *ngFor="let aggregazione_guida of slot_aggregati" style="display:inline-flex;padding-left: 2em;padding-top: 1em;padding-bottom: 1em;">
   <app-semaforo [guida]="aggregazione_guida.guida"></app-semaforo>
 </span>
 
-<mat-accordion
-  displayMode="default"
-  [multi]="true"
-  *ngFor="let aggregazione_guida of slot_aggregati"
->
+<mat-accordion>
+  <ng-container *ngFor="let aggregazione_guida of slot_aggregati">
   <mat-expansion-panel>
     <mat-expansion-panel-header>{{
-      aggregazione_guida.guida
+      prendiNomeGuida(aggregazione_guida.guida)
     }}</mat-expansion-panel-header>
     <div style="padding-left: 2em">
       <div *ngFor="let slot of aggregazione_guida.slots">
@@ -43,4 +40,6 @@
       </div>
     </div>
   </mat-expansion-panel>
+  </ng-container>
 </mat-accordion>
+

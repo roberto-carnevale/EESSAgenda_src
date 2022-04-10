@@ -1,7 +1,6 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { Utente, TipoUtente } from 'src/models/model';
+import { Utente } from 'src/models/model';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -14,6 +13,7 @@ export class AppComponent implements OnInit {
   title = 'EESSAgenda';
   nome: string | undefined = undefined;
   ruolo : number | undefined = undefined;
+  messaggi: number = 0
   private utente : Utente | undefined = undefined;
 
   ngOnInit(): void {
@@ -22,6 +22,8 @@ export class AppComponent implements OnInit {
         this.utente = this.auth.getUserData();
         this.nome = this.utente.nome;
         this.ruolo = this.utente.ruolo;
+        this.utente.bacheca?this.messaggi = this.utente.bacheca?.length:this.messaggi=0;
+        this.auth.updateOnUserData().subscribe(u => { this.utente = u[0]; this.utente.bacheca?this.messaggi = this.utente.bacheca?.length:this.messaggi=0;});
       } else {
         this.utente = undefined;
         this.ruolo = undefined;
