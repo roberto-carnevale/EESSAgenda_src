@@ -29,6 +29,7 @@ export class DataService {
 
   creaCorso(nome: string) {
     this.firestore.collection('/corsi').add({ corso: nome }).then().catch();
+    this.firestore.collection('bacheche').doc(nome).set({info:[]})
   }
 
   cancellaCorso(corso: string) {
@@ -45,6 +46,12 @@ export class DataService {
   leggiUtenti(): Observable<Utente[]> {
     return this.firestore
       .collection<Utente>('/utenti')
+      .valueChanges({ idFields: 'id' });
+  }
+
+  leggiUtentiCorso(corso:string): Observable<Utente[]> {
+    return this.firestore
+      .collection<Utente>('/utenti', ref=>ref.where('corso', '==', corso))
       .valueChanges({ idFields: 'id' });
   }
 
@@ -96,6 +103,10 @@ export class DataService {
         });
       })
     );
+  }
+
+  leggiBachecaCorso(corso:string):Observable<string[][]> {
+    return this.firestore.collection<string[]>('bacheche', ref => ref.where('corso','==',corso)).valueChanges();
   }
 
   statoGuida(guida: string): Observable<boolean> {

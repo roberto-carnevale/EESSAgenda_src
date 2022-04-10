@@ -12,25 +12,32 @@ export class BachecaComponent implements OnInit {
   constructor(private dataService: DataService, private authService:AuthService) { }
   subscription_componenet:Subscription= new Subscription();
   bachecaPersonale : string[] = [];
+  bacheca_corso$ : Observable<string[][]> | undefined = undefined;
+  corso:string = "";
 
   ngOnInit() {
     if (this.authService.getUserId() !== '') {
-      this.preparaDati(this.authService.getUserData());
-      this.subscription_componenet.add(this.authService.updateOnUserData().subscribe( u => {this.preparaDati(u[0])}));
+      this.preparaBachecaPersonale(this.authService.getUserData());
+      this.subscription_componenet.add(this.authService.updateOnUserData().subscribe( u => {
+        this.preparaBachecaPersonale(u[0]);
+        if (!this.bacheca_corso$){ this.bacheca_corso$ = this.dataService.leggiBachecaCorso(u[0].corso)};
+      }));
     } else {
         this.subscription_componenet.add(
           this.authService.subscribeAuth().subscribe((isLoggedIn) => {
             if (isLoggedIn) {
-              this.preparaDati(this.authService.getUserData());
-              this.subscription_componenet.add(this.authService.updateOnUserData().subscribe( u => {this.preparaDati(u[0])}));
+              this.preparaBachecaPersonale(this.authService.getUserData());
+              this.subscription_componenet.add(this.authService.updateOnUserData().subscribe( u => {this.preparaBachecaPersonale(u[0])}));
             }
           })
         );
     }
    }
 
-   preparaDati(utente: Utente){
-     if (utente.bacheca) this.bachecaPersonale = utente.bacheca;
+   preparaBachecaPersonale(utente: Utente){
+    //aggiornamento bacheca personale
+    utente.bacheca?this.bachecaPersonale = utente.bacheca:this.bachecaPersonale=[];
+    this.corso=utente.corso;
    }
 
 

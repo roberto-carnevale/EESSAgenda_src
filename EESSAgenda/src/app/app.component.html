@@ -1,6 +1,8 @@
 <mat-toolbar style="background-color: #aea04b;">
 <mat-toolbar-row>
   <span class="userLoggedIn">{{nome}}</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button (click)="logOut()" *ngIf="nome!==undefined"><mat-icon style="color:#515fb4;">logout</mat-icon></button>
 </mat-toolbar-row>
 <mat-toolbar-row>
 <span class="example-spacer"></span>
@@ -10,7 +12,7 @@
 <a [routerLink]="['/guida']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>follow_the_signs</mat-icon></a>
 <a [routerLink]="['/bacheca']" *ngIf="messaggi>0"><span matBadge="{{messaggi}}"><mat-icon>assignment</mat-icon></span></a>
 <a [routerLink]="['/login']" *ngIf="nome===undefined"><mat-icon>login</mat-icon></a>
-<button mat-icon-button (click)="logOut()" *ngIf="nome!==undefined"><mat-icon style="color:#515fb4;">logout</mat-icon></button>
+
 </mat-toolbar-row>
 </mat-toolbar>
 

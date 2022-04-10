@@ -1,4 +1,4 @@
-<h1>Bacheca Personale</h1>
+<h1 *ngIf="bachecaPersonale.length > 0">Bacheca Personale</h1>
 <ng-container *ngFor="let card of bachecaPersonale">
 <mat-card>
     <mat-card-content>
@@ -6,6 +6,16 @@
     </mat-card-content>
 </mat-card>
 </ng-container>
+
+<ng-container *ngFor="let bacheca of bacheca_corso$ | async">
+  <ng-container *ngFor="let card of bacheca">
+<h1 *ngIf="bacheca.length > 0" >Bacheca {{corso}}</h1>
+<mat-card>
+    <mat-card-content>
+        {{card}}
+    </mat-card-content>
+</mat-card>
+</ng-container></ng-container>
 
 
 

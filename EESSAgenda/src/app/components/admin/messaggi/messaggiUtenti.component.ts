@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
-  template: ``
+  templateUrl: 'messaggi.component.html'
 })
+export class MessaggiUtentiComponent implements OnInit {
+  constructor(private data:DataService) { }
 
-export class NameComponent implements OnInit {
-  constructor() { }
-
-  ngOnInit() { }
+  ngOnInit() {
+    this.data.leggiUtentiCorso
+  }
 }
 
 

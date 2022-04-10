@@ -2,7 +2,7 @@
   <app-semaforo [guida]="aggregazione_guida.guida"></app-semaforo>
 </span>
 
-<mat-accordion>
+<mat-accordion multi="true">
   <ng-container *ngFor="let aggregazione_guida of slot_aggregati">
   <mat-expansion-panel>
     <mat-expansion-panel-header>{{
