@@ -80,6 +80,11 @@ export class DataService {
     });
   }
 
+  cercaUtente(utenteId:string):Observable<Utente | undefined> {
+    return this.firestore
+        .collection<Utente>('/utenti').doc(utenteId).valueChanges({idField:'id'});
+  }
+
   leggiAgendaGuida(
     guida: Utente
   ): Observable<{ ora: string; esercitante: string }[]> {
@@ -105,8 +110,8 @@ export class DataService {
     );
   }
 
-  leggiBachecaCorso(corso:string):Observable<string[][]> {
-    return this.firestore.collection<string[]>('bacheche', ref => ref.where('corso','==',corso)).valueChanges();
+  leggiBachecaCorso(corso:string):Observable<string[] | undefined> {
+    return this.firestore.collection<{info:string[]}>('bacheche').doc(corso).valueChanges().pipe( map(c => c?.info));
   }
 
   statoGuida(guida: string): Observable<boolean> {
@@ -134,7 +139,7 @@ export class DataService {
         utente.uid = cred.user?.uid!;
         this.firestore
           .collection('/utenti')
-          .add(utente)
+          .doc(utente.uid).set(utente)
           .then(() => {
             this.authFirebase
               .sendPasswordResetEmail(email)
@@ -167,7 +172,7 @@ export class DataService {
         utente.uid = cred.user?.uid!;
         this.firestore
           .collection('/utenti')
-          .add(utente)
+          .doc(utente.id).set(utente)
           .then(() => {
             this.authFirebase
               .sendPasswordResetEmail(email)
@@ -225,5 +230,10 @@ export class DataService {
             .then()
         )
       );
+  }
+
+
+  aggiungiMessaggio(utenteId:string,messaggio:string){
+
   }
 }

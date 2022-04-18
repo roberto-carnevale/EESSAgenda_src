@@ -1,24 +1,19 @@
 <h1 *ngIf="bachecaPersonale.length > 0">Bacheca Personale</h1>
 <ng-container *ngFor="let card of bachecaPersonale">
-<mat-card>
+  <mat-card>
     <mat-card-content>
-        {{card}}
+      {{ card }}
     </mat-card-content>
-</mat-card>
+  </mat-card>
 </ng-container>
 
-<ng-container *ngFor="let bacheca of bacheca_corso$ | async">
-  <ng-container *ngFor="let card of bacheca">
-<h1 *ngIf="bacheca.length > 0" >Bacheca {{corso}}</h1>
-<mat-card>
-    <mat-card-content>
-        {{card}}
-    </mat-card-content>
-</mat-card>
-</ng-container></ng-container>
-
-
-
-
-
-
+<ng-container *ngIf="(bacheca_corso$ | async) !== undefined">
+  <h1>Bacheca {{ corso }}</h1>
+  <ng-container *ngFor="let msg of bacheca_corso$ | async">
+    <mat-card>
+      <mat-card-content>
+        {{ msg }}
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+</ng-container>

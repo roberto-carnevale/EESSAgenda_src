@@ -16,12 +16,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'
+import { MatCardModule } from '@angular/material/card';
+import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 
 
 const Components = [
   CorsiComponent,
   CreazioneAgendaComponent,
   GestioneUtentiComponent,
+  MessaggiUtentiComponent,
 ];
 const Modules = [
   CommonModule,
@@ -34,6 +37,7 @@ const Modules = [
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatCardModule,
 ]
 
 @NgModule({

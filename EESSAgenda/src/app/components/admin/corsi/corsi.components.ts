@@ -10,6 +10,7 @@ import { Corso } from 'src/models/model';
         <a [routerLink]="['/admin', 'creazioneAgenda', corso.corso]">{{
           corso.corso
         }}</a>
+        <button mat-icon-button [routerLink]="['/admin', 'messaggi', corso.corso]">Messaggi</button>
         <button mat-icon-button (click)="cancellaCorso(corso.corso)">
           <mat-icon>delete</mat-icon>
         </button>

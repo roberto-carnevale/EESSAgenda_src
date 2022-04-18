@@ -1,0 +1,21 @@
+<h1>{{corso}}</h1>
+<ng-container *ngFor="let utente of utentiCorso$ | async">
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>{{utente.nome}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <hr>
+      <ng-container *ngFor="let msg of utente.bacheca">
+        <div>
+                {{msg}}
+        </div>
+        </ng-container>
+    </mat-card-content>
+    <mat-card-actions align="start">
+      <input matInput #in>
+      <button mat-button (click)="aggiugiBachecca(utente.id, in.value)">Invia</button>
+      <button mat-button (click)="ripulisciBacheca(utente.id)">Cancella</button>
+    </mat-card-actions>
+</mat-card>
+</ng-container>
