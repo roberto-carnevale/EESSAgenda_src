@@ -27,14 +27,11 @@ export class GuidaComponent implements OnInit, OnDestroy,AfterContentChecked {
 
   ngOnInit() {
     if (this.auth.getUserId() !== '') {
-      console.log("già");
       this.preparaDati();
     } else {
       this.componemntSubcriptions.add(
         this.auth.subscribeAuth().subscribe((isLoggedIn) => {
-          console.log("sub");
           if (isLoggedIn) {
-            console.log("in");
             this.preparaDati();
           }
         })

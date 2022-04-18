@@ -29,6 +29,7 @@ import { BachecaComponent } from './components/bacheca/bacheca.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

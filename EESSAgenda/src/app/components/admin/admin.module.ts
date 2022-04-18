@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AdminRoutingModule } from './admin.router';
+import { AdminRoutingModule } from './admin.routing';
 
 import { CorsiComponent } from './corsi/corsi.components';
 import { CreazioneAgendaComponent } from './creazioneAgenda/creazioneAgenda.component';
