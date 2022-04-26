@@ -15,9 +15,10 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef
   ) {}
   slots: Slots[] = [];
-  subscription_componenet = new Subscription();
+  subscription_component = new Subscription();
   slot_aggregati: { guida: string; slots: Slots[] }[] = [];
   nomi_guide: {email:string, nome:string}[] = [];
+  dataOK : boolean = false;
 
   myself: Utente = {
     corso: '',
@@ -30,7 +31,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     if (this.authService.getUserId() !== '') {
       this.preparaDati();
     } else {
-        this.subscription_componenet.add(
+        this.subscription_component.add(
           this.authService.subscribeAuth().subscribe((isLoggedIn) => {
             if (isLoggedIn) {
               this.preparaDati();
@@ -42,7 +43,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
 
   preparaDati() {
     this.myself = this.authService.getUserData();
-    this.subscription_componenet.add(
+    this.subscription_component.add(
       this.dataService
         .leggiSlot(this.authService.getUserData().corso)
         .subscribe((ls) => {
@@ -57,28 +58,28 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
             for (let i = 0; i < ls.length; i++) {
               if (guida_temp != ls[i].guida) {
                 this.dataService.nomeGuida(ls[i].guida).then(g => {this.nomi_guide.push({email:ls[i].guida, nome:g})})
-                this.slot_aggregati.push({
+                current_guida_index = this.slot_aggregati.push({
                   guida: ls[i].guida,
                   slots: [ls[i]],
-                });
+                })-1;
                 guida_temp = ls[i].guida;
-                current_guida_index++;
               } else {
                 this.slot_aggregati[current_guida_index].slots.push(ls[i]);
               }
             }
           }
+          console.log("COMPLETED")
+          this.dataOK = true;
         })
     );
   }
 
   prendiNomeGuida(email:string):string {
-    let nome="";
     return this.nomi_guide.filter( g => g.email == email)[0].nome;
   }
 
   ngOnDestroy(): void {
-    this.subscription_componenet.unsubscribe();
+    this.subscription_component.unsubscribe();
   }
 
   prenota(slot: Slots) {

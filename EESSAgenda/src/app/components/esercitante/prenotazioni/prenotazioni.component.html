@@ -1,4 +1,6 @@
-<span *ngFor="let aggregazione_guida of slot_aggregati" style="display:inline-flex;padding-left: 2em;padding-top: 1em;padding-bottom: 1em;">
+<ng-container *ngIf="dataOK == true">
+
+  <span *ngFor="let aggregazione_guida of slot_aggregati" style="display:inline-flex;padding-left: 2em;padding-top: 1em;padding-bottom: 1em;">
   <app-semaforo [guida]="aggregazione_guida.guida"></app-semaforo>
 </span>
 
@@ -10,7 +12,7 @@
     }}</mat-expansion-panel-header>
     <div style="padding-left: 2em">
       <div *ngFor="let slot of aggregazione_guida.slots">
-        <span [ngStyle]="stileSlot(slot.occupato)">
+        <span>
           {{ slot.inizio | date: "EE dd MMM h:mm" }}
           &RightArrowBar;
           {{ slot.fine | date: "h:mm" }}</span
@@ -43,3 +45,6 @@
   </ng-container>
 </mat-accordion>
 
+</ng-container>
+
+<ng-container *ngIf="dataOK == false">LOADING</ng-container>

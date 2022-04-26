@@ -24,33 +24,32 @@ export class SemaforoComponent implements OnInit, OnDestroy {
     url: '',
     in_colloquio: false,
   };
-  componemntSubcriptions = new Subscription();
+  componentSubcriptions = new Subscription();
   statoGuida: boolean = false;
 
   classeCSS = 'green';
   loggedIn = false;
-  nomi_guide: { email: string; nome: string }[] = [];
+  nomi_guide: { email: string; nome: string } = {email:"", nome:""};
 
   @Input() guida: string = '';
 
   ngOnInit() {
-    this.componemntSubcriptions.add(
+    this.data.nomeGuida(this.guida).then((g) => {
+          this.nomi_guide = { email: this.guida, nome: g };
+    });
+    this.componentSubcriptions.add(
       this.data.statoGuida(this.guida).subscribe((s) => {
-        this.data.nomeGuida(this.guida).then((g) => {
-          this.nomi_guide.push({ email: this.guida, nome: g });
-        });
-        console.log(s);
         s ? (this.classeCSS = 'red') : (this.classeCSS = 'green');
       })
     );
   }
 
   ngOnDestroy(): void {
-    this.componemntSubcriptions.unsubscribe();
+    this.componentSubcriptions.unsubscribe();
   }
 
   prendiNomeGuida(email: string): string {
     let nome = '';
-    return this.nomi_guide.filter((g) => g.email == email)[0].nome;
+    return this.nomi_guide.nome;
   }
 }

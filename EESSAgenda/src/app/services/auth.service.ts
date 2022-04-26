@@ -13,11 +13,11 @@ export class AuthService {
     corso: '',
     nome: '',
     ruolo: TipoUtente.Esercitante,
-    email: ''
+    email: '',
   };
   private isAuth: boolean = false;
   private email: string = '';
-  subscribeUserChanges = new Subject<Utente>()
+  subscribeUserChanges = new Subject<Utente>();
 
   constructor(
     private authFirebase: AngularFireAuth,
@@ -48,17 +48,17 @@ export class AuthService {
             this.email = userCredential.user?.email!;
             this.retrieveUserData().then((u) => {
               this.utente = u;
+              this.isAuth = true;
+              // Signed in
+              localStorage.setItem('userId', userCredential.user!.email!);
+              if (this.guardedPath) {
+                this.router.navigate([this.guardedPath]);
+                this.guardedPath = null;
+              } else {
+                this.router.navigate(['/']);
+              }
+              this.changedAuth.next(this.isAuth);
             });
-            this.isAuth = true;
-            // Signed in
-            localStorage.setItem('userId', userCredential.user!.email!);
-            if (this.guardedPath) {
-              this.router.navigate([this.guardedPath]);
-              this.guardedPath = null;
-            } else {
-              this.router.navigate(['/']);
-            }
-            this.changedAuth.next(this.isAuth);
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -73,12 +73,12 @@ export class AuthService {
         .signOut()
         .then(() => {
           this.isAuth = false;
-          this.changedAuth.next(this.isAuth);
           this.guardedPath = null;
           this.utente.email = '';
           this.utente.corso = '';
           this.utente.url = '';
           this.utente.ruolo = TipoUtente.Esercitante;
+          this.changedAuth.next(this.isAuth);
         })
         .catch((error) => {});
     }
@@ -94,7 +94,8 @@ export class AuthService {
   private retrieveUserData(): Promise<Utente> {
     return new Promise<Utente>((resolve) => {
       this.firestore
-        .collection<Utente>('utenti').doc(this.email)
+        .collection<Utente>('utenti')
+        .doc(this.email)
         .get()
         .forEach((qs) => {
           resolve({ ...(qs.data() as Utente) });
@@ -103,7 +104,10 @@ export class AuthService {
   }
 
   updateOnUserData(): Observable<Utente | undefined> {
-      return this.firestore.collection<Utente>('utenti').doc(this.email).valueChanges();
+    return this.firestore
+      .collection<Utente>('utenti')
+      .doc(this.email)
+      .valueChanges();
   }
 
   getUserData(): Utente {
