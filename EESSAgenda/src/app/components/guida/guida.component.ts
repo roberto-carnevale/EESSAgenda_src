@@ -24,10 +24,8 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
     email: '',
     nome: '',
     ruolo: TipoUtente.Guida,
-    uid: '',
     url: '',
     in_colloquio: false,
-    id: '',
   };
   agendaGuida$: Observable<{ ora: string; esercitante: string }[]> =
     new Observable<{ ora: string; esercitante: string }[]>();

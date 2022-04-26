@@ -24,8 +24,6 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
     email: '',
     nome: '',
     ruolo: TipoUtente.Esercitante,
-    uid: '',
-    id: '',
   };
 
   ngOnInit(): void {

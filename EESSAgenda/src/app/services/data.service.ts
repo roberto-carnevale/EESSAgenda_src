@@ -12,11 +12,9 @@ export class DataService {
 
   private utente: Utente = {
     email: '',
-    uid: '',
     corso: '',
     nome: '',
     ruolo: TipoUtente.Esercitante,
-    id: '',
   };
 
   private isAuth: boolean = false;
@@ -28,15 +26,16 @@ export class DataService {
   ) {}
 
   creaCorso(nome: string) {
-    this.firestore.collection('/corsi').add({ corso: nome }).then().catch();
-    this.firestore.collection('bacheche').doc(nome).set({info:[]})
+    this.firestore
+      .collection('corsi')
+      .doc(nome)
+      .set({ corso: nome, info: [] })
+      .then()
+      .catch();
   }
 
   cancellaCorso(corso: string) {
-    this.firestore
-      .collection('/corsi', (ref) => ref.where('corso', '==', corso))
-      .get()
-      .forEach((qs) => qs.docs.forEach((doc) => doc.ref.delete()));
+    this.firestore.collection('corsi').doc(corso).delete().then().catch();
   }
 
   leggiCorsi(): Observable<Corso[]> {
@@ -44,15 +43,13 @@ export class DataService {
   }
 
   leggiUtenti(): Observable<Utente[]> {
-    return this.firestore
-      .collection<Utente>('/utenti')
-      .valueChanges({ idFields: 'id' });
+    return this.firestore.collection<Utente>('/utenti').valueChanges();
   }
 
-  leggiUtentiCorso(corso:string): Observable<Utente[]> {
+  leggiUtentiCorso(corso: string): Observable<Utente[]> {
     return this.firestore
-      .collection<Utente>('/utenti', ref=>ref.where('corso', '==', corso))
-      .valueChanges({ idFields: 'id' });
+      .collection<Utente>('/utenti', (ref) => ref.where('corso', '==', corso))
+      .valueChanges();
   }
 
   leggiGuide(corso: string): Observable<Utente[]> {
@@ -60,18 +57,19 @@ export class DataService {
       .collection<Utente>('/utenti', (ref) =>
         ref.where('corso', '==', corso).where('ruolo', '==', 2)
       )
-      .valueChanges({ idFields: 'id' });
+      .valueChanges();
   }
 
   nomeGuida(email: string): Promise<string> {
     return new Promise((resolve) => {
       return this.firestore
-        .collection<Utente>('/utenti', (ref) => ref.where('email', '==', email))
+        .collection<Utente>('/utenti')
+        .doc(email)
         .valueChanges()
         .pipe(
           take(1),
           map((lu) => {
-            return lu[0].nome;
+            return lu!.nome;
           })
         )
         .subscribe((n) => {
@@ -80,9 +78,11 @@ export class DataService {
     });
   }
 
-  cercaUtente(utenteId:string):Observable<Utente | undefined> {
+  cercaUtente(utenteEmail: string): Observable<Utente | undefined> {
     return this.firestore
-        .collection<Utente>('/utenti').doc(utenteId).valueChanges({idField:'id'});
+      .collection<Utente>('/utenti')
+      .doc(utenteEmail)
+      .valueChanges();
   }
 
   leggiAgendaGuida(
@@ -110,36 +110,40 @@ export class DataService {
     );
   }
 
-  leggiBachecaCorso(corso:string):Observable<string[] | undefined> {
-    return this.firestore.collection<{info:string[]}>('bacheche').doc(corso).valueChanges().pipe( map(c => c?.info));
+  leggiBachecaCorso(corso: string): Observable<string[] | undefined> {
+    return this.firestore
+      .collection<{ corso: string; info: string[] }>('corsi')
+      .doc(corso)
+      .valueChanges()
+      .pipe(map((c) => c?.info));
   }
 
-  statoGuida(guida: string): Observable<boolean> {
+  statoGuida(guidaEmail: string): Observable<boolean> {
     return this.firestore
-      .collection<Utente>('utenti', (ref) => ref.where('email', '==', guida))
+      .collection<Utente>('utenti', (ref) =>
+        ref.where('email', '==', guidaEmail)
+      )
       .valueChanges()
       .pipe(map((u) => u[0].in_colloquio!));
   }
 
   cambiaStato(utente: Utente) {
-    this.firestore.collection('utenti').doc(utente.id).update(utente);
+    this.firestore.collection('utenti').doc(utente.email).update(utente);
   }
   creaGuida(nome: string, corso: string, email: string, password: string) {
     let utente: Utente = {
-      uid: '',
       corso: corso,
       nome: nome,
       ruolo: TipoUtente.Guida,
       email: email,
-      id: '',
     };
     this.authFirebase
       .createUserWithEmailAndPassword(email, password)
       .then((cred) => {
-        utente.uid = cred.user?.uid!;
         this.firestore
           .collection('/utenti')
-          .doc(utente.uid).set(utente)
+          .doc(utente.email)
+          .set(utente)
           .then(() => {
             this.authFirebase
               .sendPasswordResetEmail(email)
@@ -159,20 +163,44 @@ export class DataService {
     password: string
   ) {
     let utente: Utente = {
-      uid: '',
       corso: corso,
       nome: nome,
       ruolo: TipoUtente.Esercitante,
       email: email,
-      id: '',
     };
     this.authFirebase
       .createUserWithEmailAndPassword(email, password)
       .then((cred) => {
-        utente.uid = cred.user?.uid!;
         this.firestore
           .collection('/utenti')
-          .doc(utente.id).set(utente)
+          .doc(utente.email)
+          .set(utente)
+          .then(() => {
+            this.authFirebase
+              .sendPasswordResetEmail(email)
+              .then(() => this.authFirebase.signOut());
+          })
+          .catch();
+      })
+      .catch((err) => {
+        window.alert(err);
+      });
+  }
+
+  creaGestore(nome: string, corso: string, email: string, password: string) {
+    let utente: Utente = {
+      corso: corso,
+      nome: nome,
+      ruolo: TipoUtente.Gestore,
+      email: email,
+    };
+    this.authFirebase
+      .createUserWithEmailAndPassword(email, password)
+      .then((cred) => {
+        this.firestore
+          .collection('/utenti')
+          .doc(utente.email)
+          .set(utente)
           .then(() => {
             this.authFirebase
               .sendPasswordResetEmail(email)
@@ -232,8 +260,59 @@ export class DataService {
       );
   }
 
+  aggiungiMessaggio(utenteEmail: string, messaggio: string) {
+    this.firestore
+      .collection<Utente>('/utenti')
+      .doc(utenteEmail)
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((u) => {
+        u?.bacheca?.push(messaggio);
+        this.firestore
+        .collection<Utente>('/utenti')
+        .doc(utenteEmail).update(u!).then().catch()
+      });
+  }
 
-  aggiungiMessaggio(utenteId:string,messaggio:string){
+  cancellaMessaggi(utenteEmail: string) {
+    this.firestore
+      .collection<Utente>('/utenti')
+      .doc(utenteEmail)
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((u) => {
+        u!.bacheca! = [];
+        this.firestore
+        .collection<Utente>('/utenti')
+        .doc(utenteEmail).update(u!).then().catch()
+      });
+  }
 
+  aggiungiMessaggioCorso(corso: string, messaggio: string) {
+    this.firestore
+      .collection<{corso:string, info: string[]}>('/corsi')
+      .doc(corso)
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((u) => {
+        u?.info?.push(messaggio);
+        this.firestore
+        .collection<{corso:string, info: string[]}>('/corsi')
+        .doc(corso).update(u!).then().catch()
+      });
+  }
+
+  cancellaMessaggioCorso(corso: string, msg: string){
+    this.firestore
+    .collection<{corso:string, info: string[]}>('/corsi')
+    .doc(corso)
+    .valueChanges()
+    .pipe(take(1))
+    .subscribe((u) => {
+      u!.info! = u!.info!.filter( m => m !== msg);
+      this.firestore
+      .collection<{corso:string, info: string[]}>('/corsi')
+      .doc(corso).update(u!).then().catch()
+    });
   }
 }

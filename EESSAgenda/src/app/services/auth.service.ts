@@ -10,15 +10,13 @@ export class AuthService {
   public changedAuth = new Subject<boolean>();
   public guardedPath: string | null;
   private utente: Utente = {
-    uid: '',
     corso: '',
     nome: '',
     ruolo: TipoUtente.Esercitante,
-    email: '',
-    id: '',
+    email: ''
   };
   private isAuth: boolean = false;
-  private uid: string = '';
+  private email: string = '';
   subscribeUserChanges = new Subject<Utente>()
 
   constructor(
@@ -30,7 +28,7 @@ export class AuthService {
       this.authFirebase.currentUser.then((user) => {
         if (user) {
           this.isAuth = true;
-          this.uid = user?.uid;
+          this.email = user?.email!;
           this.retrieveUserData().then((u) => {
             this.utente = u;
             this.changedAuth.next(this.isAuth);
@@ -47,7 +45,7 @@ export class AuthService {
         this.authFirebase
           .signInWithEmailAndPassword(user.email, user.password)
           .then((userCredential) => {
-            this.uid = userCredential.user?.uid!;
+            this.email = userCredential.user?.email!;
             this.retrieveUserData().then((u) => {
               this.utente = u;
             });
@@ -77,7 +75,6 @@ export class AuthService {
           this.isAuth = false;
           this.changedAuth.next(this.isAuth);
           this.guardedPath = null;
-          this.utente.uid = '';
           this.utente.email = '';
           this.utente.corso = '';
           this.utente.url = '';
@@ -91,23 +88,22 @@ export class AuthService {
   }
 
   getUserId(): string {
-    return this.utente.uid;
+    return this.utente.email;
   }
 
   private retrieveUserData(): Promise<Utente> {
     return new Promise<Utente>((resolve) => {
       this.firestore
-        .collection('utenti', (ref) => ref.where('uid', '==', this.uid))
+        .collection<Utente>('utenti').doc(this.email)
         .get()
         .forEach((qs) => {
-          resolve({ ...(qs.docs[0].data() as Utente), id: qs.docs[0].id });
+          resolve({ ...(qs.data() as Utente) });
         });
     });
   }
 
-  updateOnUserData(): Observable<Utente[]> {
-      return this.firestore
-        .collection<Utente>('utenti', (ref) => ref.where('uid', '==', this.uid)).valueChanges({ idField: 'id'});
+  updateOnUserData(): Observable<Utente | undefined> {
+      return this.firestore.collection<Utente>('utenti').doc(this.email).valueChanges();
   }
 
   getUserData(): Utente {

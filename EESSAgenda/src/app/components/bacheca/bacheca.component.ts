@@ -24,7 +24,7 @@ export class BachecaComponent implements OnInit, OnDestroy {
       this.preparaBachecaPersonale(this.authService.getUserData());
       this.subscription_component.add(
         this.dataService
-          .cercaUtente(this.authService.getUserData().id)
+          .cercaUtente(this.authService.getUserData().email)
           .subscribe((u) => {
             this.preparaBachecaPersonale(u!);
               this.bacheca_corso$ = this.dataService.leggiBachecaCorso(
@@ -39,7 +39,7 @@ export class BachecaComponent implements OnInit, OnDestroy {
             this.preparaBachecaPersonale(this.authService.getUserData());
             this.subscription_component.add(
               this.dataService
-                .cercaUtente(this.authService.getUserData().id)
+                .cercaUtente(this.authService.getUserData().email)
                 .subscribe((u) => {
                   this.preparaBachecaPersonale(u!);
                   this.bacheca_corso$ = this.dataService.leggiBachecaCorso(

@@ -1,5 +1,6 @@
 export interface Corso {
     corso:string,
+
 }
 
 export interface Slots{
@@ -12,25 +13,21 @@ export interface Slots{
 }
 
 export interface Utente {
-    uid: string,
     nome : string,
     ruolo : number,
     corso: string,
     email: string,
     url?:string,
     in_colloquio?:boolean,
-    id:string;
     bacheca?: string[],
 }
 
 export interface Bacheca {
-  corso: string,
   contenuto: string[],
-  top:[]
+  top:string[]
 }
 
 export interface ListaFile {
-  corso:string,
   lista: File[],
 }
 
