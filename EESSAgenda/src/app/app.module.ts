@@ -21,6 +21,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
+import {MatProgressSpinner, MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 import { LoginComponent } from './components/login/login.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
@@ -52,7 +53,8 @@ import { BachecaComponent } from './components/bacheca/bacheca.component';
     MatNativeDateModule,
     MatToolbarModule,
     MatCardModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatProgressSpinnerModule,
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]

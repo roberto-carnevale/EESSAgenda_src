@@ -75,7 +75,9 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
   }
 
   prendiNomeGuida(email:string):string {
-    return this.nomi_guide.filter( g => g.email == email)[0].nome;
+    let p = this.nomi_guide.filter( g => g.email == email)[0];
+    if (p) return p.nome;
+    return "";
   }
 
   ngOnDestroy(): void {

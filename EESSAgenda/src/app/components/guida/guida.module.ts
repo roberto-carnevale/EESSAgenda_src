@@ -7,6 +7,7 @@ import { GuidaComponent } from './guida.component';
 
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 const Modules = [
@@ -14,6 +15,7 @@ const Modules = [
   GuidaRoutingModule,
   MatButtonModule,
   MatIconModule,
+  MatProgressSpinnerModule
 ]
 
 @NgModule({

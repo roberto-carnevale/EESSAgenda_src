@@ -7,9 +7,7 @@
 <mat-accordion multi="true">
   <ng-container *ngFor="let aggregazione_guida of slot_aggregati">
   <mat-expansion-panel>
-    <mat-expansion-panel-header>{{
-      prendiNomeGuida(aggregazione_guida.guida)
-    }}</mat-expansion-panel-header>
+    <mat-expansion-panel-header> {{prendiNomeGuida(aggregazione_guida.guida)}} </mat-expansion-panel-header>
     <div style="padding-left: 2em">
       <div *ngFor="let slot of aggregazione_guida.slots">
         <span>
@@ -47,4 +45,4 @@
 
 </ng-container>
 
-<ng-container *ngIf="dataOK == false">LOADING</ng-container>
+<ng-container *ngIf="dataOK == false"><mat-spinner></mat-spinner></ng-container>
