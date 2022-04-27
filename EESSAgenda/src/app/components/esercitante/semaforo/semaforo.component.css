@@ -4,8 +4,8 @@
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
   border-radius: 25px;
-  background: rgba(255, 0, 0, 0.3);
-  color:red;
+  background: #cc7eb3;
+  color:#740101;
   text-align: center;
 }
 
@@ -15,7 +15,7 @@
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
   border-radius: 25px;
-  background: rgba(12, 252, 32, 0.3);
+  background: #a2c387;
   color:darkgreen;
   text-align: center;
 }

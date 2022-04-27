@@ -7,6 +7,7 @@ import { Slots, TipoUtente, Utente } from 'src/models/model';
 @Component({
   selector: 'app-prenotazioni-name',
   templateUrl: 'prenotazioni.component.html',
+  styleUrls: ['prenotazioni.component.css']
 })
 export class PrenotazioniComponent implements OnInit, OnDestroy {
   constructor(
@@ -68,7 +69,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
               }
             }
           }
-          console.log("COMPLETED")
+          console.log(this.slot_aggregati)
           this.dataOK = true;
         })
     );

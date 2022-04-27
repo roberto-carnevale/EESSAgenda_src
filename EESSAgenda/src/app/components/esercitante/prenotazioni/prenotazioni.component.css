@@ -1,0 +1,11 @@
+h2, p {
+  color:#2d2f31;
+}
+
+mat-expansion-panel{
+  background-color: #efe9f7;
+}
+
+mat-expansion-panel-header {
+  background-color: #e0d3ee;
+}

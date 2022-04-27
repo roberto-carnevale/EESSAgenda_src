@@ -5,7 +5,7 @@
 <div style="padding-top: 2%;"></div>
 <table style="padding:1em">
 <tr *ngFor="let slot of agendaGuida$ | async">
-  <td style="text-align: right;" [ngStyle]="libero(slot.esercitante)"><span>{{slot.ora}}</span></td><td>{{nomeDaEmailUtente(slot.esercitante)}}</td>
+  <td [ngStyle]="libero(slot.esercitante)"><span>{{slot.ora}}</span></td><td class="eserciatante" *ngIf="slot.esercitante!=''">{{nomeDaEmailUtente(slot.esercitante)}}</td>
 </tr>
 </table>
 

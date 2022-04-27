@@ -5,21 +5,31 @@
 mat-icon {
   font-size:x-large;
   padding: 1ex;
+  color: #2d2f31;
 }
 
 a {
-  color: #515fb4;
+  color: #2d2f31;
 }
 
 span.userLoggedIn {
-  color: #515fb4;
+  color: #2d2f31;
 }
 
 .alert {
-  color:#d9204a;
+  color:#ff007f;
 }
 
 
 .background-alert {
-  background-color:#d9204a;
+  background-color:#ff007f;
+}
+
+mat-toolbar {
+  background-color: #9f7ecc;
+}
+
+div.router-outlet
+{
+  background-color: #d0bde6;
 }

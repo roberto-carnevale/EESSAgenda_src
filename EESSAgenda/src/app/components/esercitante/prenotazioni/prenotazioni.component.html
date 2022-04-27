@@ -1,9 +1,20 @@
 <ng-container *ngIf="dataOK == true">
-
-  <span *ngFor="let aggregazione_guida of slot_aggregati" style="display:inline-flex;padding-left: 2em;padding-top: 1em;padding-bottom: 1em;">
+<!--lista prenotazioni-->
+<h2>Le mie prenotazioni</h2>
+<ng-container *ngFor="let item of slots">
+<p *ngIf="item.occupato==myself.email"><span>
+  {{prendiNomeGuida(item.guida)}}:
+  {{ item.inizio | date: "EE dd MMM h:mm" }}
+  &RightArrowBar;
+  {{ item.fine | date: "h:mm" }}</span
+></p>
+</ng-container>
+<!--Semafori dei padri-->
+<h2>Attuale disponibilità per colloquio</h2>
+<span *ngFor="let aggregazione_guida of slot_aggregati" style="display:inline-flex;padding-left: 2em;padding-top: 1em;padding-bottom: 1em;">
   <app-semaforo [guida]="aggregazione_guida.guida"></app-semaforo>
 </span>
-
+<!--prenotazioni-->
 <mat-accordion multi="true">
   <ng-container *ngFor="let aggregazione_guida of slot_aggregati">
   <mat-expansion-panel>
@@ -26,6 +37,7 @@
           mat-icon-button
           (click)="libera(slot)"
           *ngIf="statoSlot(slot.id) === myself.email"
+          color="accent"
         >
           <mat-icon>alarm_off</mat-icon>
         </button>

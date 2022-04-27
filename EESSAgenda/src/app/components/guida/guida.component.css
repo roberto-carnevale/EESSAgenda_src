@@ -1,0 +1,13 @@
+td {
+  border-style:inset;
+  border-width: 1px;
+  background-color: #cec47c;
+  padding: .72em;
+  text-align: right;
+}
+
+td.eserciatante{
+  border-radius: 10px;
+  background-color: #cec47c;
+  text-align: center;
+}

@@ -14,6 +14,7 @@ import { take, tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: 'guida.component.html',
+  styleUrls: ['guida.component.css']
 })
 export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
   @ViewChild('fab_icon') fab_icon!: any;
@@ -71,7 +72,6 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
         .subscribe()
     );
     this.in_colloquio = this.utente.in_colloquio!;
-    console.log(this.utente);
     this.agendaGuida$ = this.data.leggiAgendaGuida(this.utente);
   }
 
@@ -82,12 +82,11 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
           'airline_seat_recline_normal')
       : (this.fab_icon._elementRef.nativeElement.textContent = 'chair');
     this.utente.in_colloquio = this.in_colloquio;
-    console.log(this.utente);
     this.data.cambiaStato(this.utente);
   }
 
   libero(s: string): any {
-    if (s == '') return { 'background-color': 'lightgreen' };
+    if (s == '') return { 'background-color': '#a2c387' };
   }
 
   nomeDaEmailUtente(email:string):string {
