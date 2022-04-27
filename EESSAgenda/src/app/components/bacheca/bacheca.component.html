@@ -10,7 +10,7 @@
 <ng-container *ngIf="(bacheca_corso$ | async) !== undefined">
   <h1>Bacheca {{ corso }}</h1>
   <ng-container *ngFor="let msg of bacheca_corso$ | async">
-    <mat-card>
+    <mat-card style="background-color: #e0d3ee;">
       <mat-card-content>
         {{ msg }}
       </mat-card-content>
