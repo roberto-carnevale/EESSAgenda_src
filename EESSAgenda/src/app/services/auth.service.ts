@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { TipoUtente, Utente } from 'src/models/model';
+import { Corso, TipoUtente, Utente } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
+import { take, tap, map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -116,5 +117,21 @@ export class AuthService {
 
   resetUser(email: string): void {
     this.authFirebase.sendPasswordResetEmail(email);
+  }
+
+  trovaCorsoConChiave(chiave: string):Promise<string|null> {
+    return new Promise<string>((resolve, reject) => {
+      return this.firestore
+        .collection<Corso>(
+          'corsi',
+          (ref) => ref.where('chiave', '==', chiave)
+        )
+        .valueChanges()
+        .pipe(
+          take(1),
+          map((cc) => { if (cc[0]) {return cc[0].corso} else { return null;}})
+        )
+        .subscribe( (nomeCorso) => { if (nomeCorso) {resolve(nomeCorso)} else {reject(null)}});
+    });
   }
 }

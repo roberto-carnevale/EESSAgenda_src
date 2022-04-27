@@ -21,8 +21,9 @@ import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
-import {MatProgressSpinner, MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+import { SignInComponent } from './components/login/signin/signin.component';
 import { LoginComponent } from './components/login/login.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
 import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
@@ -37,7 +38,8 @@ import { BachecaComponent } from './components/bacheca/bacheca.component';
     PrenotazioniComponent,
     LoginComponent,
     SemaforoComponent,
-    BachecaComponent
+    BachecaComponent,
+    SignInComponent
   ],
   imports: [
     BrowserModule,

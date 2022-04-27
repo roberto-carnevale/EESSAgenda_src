@@ -1,6 +1,7 @@
 export interface Corso {
     corso:string,
-
+    info: string[],
+    chiave: string
 }
 
 export interface Slots{

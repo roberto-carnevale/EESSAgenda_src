@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { Slots, Utente, TipoUtente, Corso } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { map, take, tap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -21,7 +20,6 @@ export class DataService {
 
   constructor(
     private authFirebase: AngularFireAuth,
-    private router: Router,
     private firestore: AngularFirestore
   ) {}
 
@@ -29,9 +27,27 @@ export class DataService {
     this.firestore
       .collection('corsi')
       .doc(nome)
-      .set({ corso: nome, info: [] })
+      .set({ corso: nome, info: [], chiave: this.generaStringCasuale(50) })
       .then()
       .catch();
+  }
+
+  leggiSignInURL(corso: string): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
+      let urlReturn =
+        window.location.protocol + "//" + window.location.host + '/signin/';
+      this.firestore
+        .collection<Corso>('corsi')
+        .doc(corso)
+        .valueChanges()
+        .pipe(
+          take(1),
+          map((d) => d?.chiave)
+        ).subscribe((chiave) => {
+          if (chiave) {resolve(urlReturn+chiave);}
+          else {reject("");}
+        });
+    });
   }
 
   cancellaCorso(corso: string) {
@@ -187,6 +203,33 @@ export class DataService {
       });
   }
 
+  creaEsercitanteDaLink(
+    nome: string,
+    corso: string,
+    email: string,
+    password: string
+  ) {
+    let utente: Utente = {
+      corso: corso,
+      nome: nome,
+      ruolo: TipoUtente.Esercitante,
+      email: email,
+    };
+    this.authFirebase
+      .createUserWithEmailAndPassword(email, password)
+      .then((cred) => {
+        this.firestore
+          .collection('/utenti')
+          .doc(utente.email)
+          .set(utente)
+          .then()
+          .catch();
+      })
+      .catch((err) => {
+        window.alert(err);
+      });
+  }
+
   creaGestore(nome: string, corso: string, email: string, password: string) {
     let utente: Utente = {
       corso: corso,
@@ -269,8 +312,11 @@ export class DataService {
       .subscribe((u) => {
         u?.bacheca?.push(messaggio);
         this.firestore
-        .collection<Utente>('/utenti')
-        .doc(utenteEmail).update(u!).then().catch()
+          .collection<Utente>('/utenti')
+          .doc(utenteEmail)
+          .update(u!)
+          .then()
+          .catch();
       });
   }
 
@@ -283,36 +329,56 @@ export class DataService {
       .subscribe((u) => {
         u!.bacheca! = [];
         this.firestore
-        .collection<Utente>('/utenti')
-        .doc(utenteEmail).update(u!).then().catch()
+          .collection<Utente>('/utenti')
+          .doc(utenteEmail)
+          .update(u!)
+          .then()
+          .catch();
       });
   }
 
   aggiungiMessaggioCorso(corso: string, messaggio: string) {
     this.firestore
-      .collection<{corso:string, info: string[]}>('/corsi')
+      .collection<{ corso: string; info: string[] }>('/corsi')
       .doc(corso)
       .valueChanges()
       .pipe(take(1))
       .subscribe((u) => {
         u?.info?.push(messaggio);
         this.firestore
-        .collection<{corso:string, info: string[]}>('/corsi')
-        .doc(corso).update(u!).then().catch()
+          .collection<{ corso: string; info: string[] }>('/corsi')
+          .doc(corso)
+          .update(u!)
+          .then()
+          .catch();
       });
   }
 
-  cancellaMessaggioCorso(corso: string, msg: string){
+  cancellaMessaggioCorso(corso: string, msg: string) {
     this.firestore
-    .collection<{corso:string, info: string[]}>('/corsi')
-    .doc(corso)
-    .valueChanges()
-    .pipe(take(1))
-    .subscribe((u) => {
-      u!.info! = u!.info!.filter( m => m !== msg);
-      this.firestore
-      .collection<{corso:string, info: string[]}>('/corsi')
-      .doc(corso).update(u!).then().catch()
-    });
+      .collection<{ corso: string; info: string[] }>('/corsi')
+      .doc(corso)
+      .valueChanges()
+      .pipe(take(1))
+      .subscribe((u) => {
+        u!.info! = u!.info!.filter((m) => m !== msg);
+        this.firestore
+          .collection<{ corso: string; info: string[] }>('/corsi')
+          .doc(corso)
+          .update(u!)
+          .then()
+          .catch();
+      });
+  }
+
+  private generaStringCasuale(len: number): string {
+    const data =
+      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const datalen = data.length;
+    let res: string = '';
+    for (let i = 0; i < len; i++) {
+      res += data.charAt(Math.random() * datalen);
+    }
+    return res;
   }
 }

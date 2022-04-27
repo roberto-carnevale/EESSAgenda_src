@@ -1,0 +1,25 @@
+<ng-container *ngIf="!registrazione && corso != '' ">
+<p>Registrazione per il corso {{corso}}</p>
+
+  <mat-form-field>
+  <mat-label>Email</mat-label>
+  <input matInput id="email" #email email required/>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Passord</mat-label>
+  <input matInput id="password" #password type="password" required/>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Passord x2</mat-label>
+  <input matInput id="passwordx2" #passwordx2 type="password" required/>
+</mat-form-field>
+<mat-form-field>
+  <mat-label>Nome</mat-label>
+  <input matInput id="nome" #nome required/>
+</mat-form-field>
+<button mat-raised-button (click)="onSubmit(email.value, password.value, passwordx2.value, nome.value)">
+  Registrati
+</button>
+<div *ngIf="errorValidation"> Controllare i campi</div>
+</ng-container>
+<ng-container *ngIf="registrazione">Registrazione in corso</ng-container>
