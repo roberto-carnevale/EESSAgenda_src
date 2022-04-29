@@ -4,7 +4,6 @@
 https://encycolorpedia.it/9f7ecc
 
 # Funzionalità
-AuthGuard
 Chat Esercitanti?
 
 # Bug
@@ -15,7 +14,6 @@ Spinner colore?
 Split per giornata
 
 ## Gestore
-limitare la visualizzazione al proprio corso
 
 ## Amministratore
 feature per corso
@@ -23,4 +21,3 @@ feature per corso
 ## Generale
 
 # Get Safe!
-Rimuovere da Guida la amminstrazione

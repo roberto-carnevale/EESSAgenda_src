@@ -68,7 +68,10 @@ export class DataService {
   }
 
   leggiUtenti(): Observable<Utente[]> {
-    return this.firestore.collection<Utente>('/utenti').valueChanges();
+    if (this.auth.getUserData().ruolo == TipoUtente.Amministratore)
+      return this.firestore.collection<Utente>('/utenti').valueChanges();
+    else
+      return this.firestore.collection<Utente>('/utenti', ref => ref.where('corso', '==', this.auth.getUserData().corso)).valueChanges();
   }
 
   leggiUtentiCorso(corso: string): Observable<Utente[]> {
