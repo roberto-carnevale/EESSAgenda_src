@@ -6,10 +6,12 @@ import { CreazioneAgendaComponent } from 'src/app/components/admin/creazioneAgen
 import { GestioneUtentiComponent } from 'src/app/components/admin/utenti/gestioneUtenti.component';
 import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 import { AllegatiAdminComponent } from './allegati/allegatiAdmin.component';
+import { HomeAdminComponent } from './corsi/homeCorso.component';
 import { LoginGuard } from 'src/app/services/guard.service';
 
 export const routes: Routes = [
     {path:'corsi', component:CorsiComponent , canActivate: [LoginGuard]},
+    {path:'home/:id', component:HomeAdminComponent , canActivate: [LoginGuard]},
     {path:'utenti', component:GestioneUtentiComponent, canActivate: [LoginGuard]},
     {path:'creazioneAgenda/:id', component:CreazioneAgendaComponent, canActivate: [LoginGuard]},
     {path:'messaggi/:id', component:MessaggiUtentiComponent, canActivate: [LoginGuard]},

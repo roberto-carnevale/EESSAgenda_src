@@ -26,6 +26,8 @@ export class DataService {
   ) {}
 
   creaCorso(nome: string) {
+    this.firestore.collection('chat').doc(nome).set({chat:[]}).then();
+    this.firestore.collection('home').doc(nome).set({contenuto:"<h1>Benvenuto a " + nome + "</h1><p>Questa è la home page di " + nome}).then();
     this.firestore
       .collection('corsi')
       .doc(nome)
@@ -57,6 +59,8 @@ export class DataService {
   }
 
   cancellaCorso(corso: string) {
+    this.firestore.collection('chat').doc(corso).delete();
+    this.firestore.collection('home').doc(corso).delete();
     this.firestore.collection('corsi').doc(corso).delete().then().catch();
   }
 

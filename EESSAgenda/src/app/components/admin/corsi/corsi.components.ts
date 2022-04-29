@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { Corso } from 'src/models/model';
 
 @Component({
   template:`
-  <input #corso /> <button (click)="creaCorso(corso)">OK</button>
+  <span *ngIf="ruolo == 0"><input #corso/> <button (click)="creaCorso(corso)">OK</button></span>
   <div style="padding-left: 2rem">
     <ng-container *ngFor="let corso of lista$ | async">
         {{corso.corso}}
         <button mat-icon-button [routerLink]="['/admin', 'creazioneAgenda', corso.corso]"><mat-icon>edit_calendar</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/admin', 'home', corso.corso]"><mat-icon>home</mat-icon></button>
         <button mat-icon-button [routerLink]="['/admin', 'messaggi', corso.corso]"><mat-icon>assignment</mat-icon></button>
         <button mat-icon-button [routerLink]="['/admin', 'allegati', corso.corso]"><mat-icon>cloud_circle</mat-icon></button>
         <button mat-icon-button (click)="copiaURL(corso.corso);"><mat-icon>link</mat-icon></button>
@@ -23,11 +25,13 @@ import { Corso } from 'src/models/model';
   `
 })
 export class CorsiComponent implements OnInit {
-  constructor(private firestore: DataService, private _snackbar:MatSnackBar) {}
+  constructor(private auth: AuthService, private firestore: DataService, private _snackbar:MatSnackBar) {}
 
   lista$: Observable<Corso[]> = new Observable<Corso[]>();
+  ruolo: number = 3;
 
   ngOnInit(): void {
+    this.ruolo = this.auth.getUserData().ruolo;
     this.lista$ = this.firestore.leggiCorsi();
   }
 

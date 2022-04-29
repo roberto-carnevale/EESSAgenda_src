@@ -20,6 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AllegatiAdminComponent } from './allegati/allegatiAdmin.component';
+import { HomeAdminComponent } from './corsi/homeCorso.component';
 
 
 const Components = [
@@ -28,6 +29,7 @@ const Components = [
   GestioneUtentiComponent,
   MessaggiUtentiComponent,
   AllegatiAdminComponent,
+  HomeAdminComponent,
 ];
 const Modules = [
   CommonModule,
@@ -42,6 +44,7 @@ const Modules = [
   MatNativeDateModule,
   MatCardModule,
   MatSnackBarModule,
+
 ]
 
 @NgModule({

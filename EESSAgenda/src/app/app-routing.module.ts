@@ -10,16 +10,18 @@ import { AllegatiComponent } from './components/esercitante/allegati/allegati.co
 import { LoginGuard } from './services/guard.service';
 import { AdminGuard } from './services/adminGuard.component';
 import { GuidaGuard } from './services/guidaGuard.component';
+import { HomeComponent } from './components/home.component';
 
-const routes: Routes = [{ path:"" , component: PrenotazioniComponent, canActivate: [LoginGuard] },
-  { path:"prenotazioni/:id" , component: PrenotazioniComponent, canActivate: [LoginGuard] },
-{path:'admin', loadChildren: ()=>import('./components/admin/admin.module').then(m => m.AdminModule), canLoad:[AdminGuard]},
-{path:'login', component:LoginComponent},
-{path:'guida', loadChildren: ()=>import('./components/guida/guida.module').then(m=>m.GuidaModule), canLoad:[GuidaGuard]},
-{path:'bacheca', component:BachecaComponent, canActivate: [LoginGuard]},
-{path:'allegati', component:AllegatiComponent, canActivate: [LoginGuard]},
-{path:'signin/:key', component:SignInComponent},
-{path:'**', component:NotFound404Component},
+const routes: Routes = [
+  { path:"" , component: HomeComponent, canActivate: [LoginGuard] },
+  { path:"prenotazioni" , component: PrenotazioniComponent, canActivate: [LoginGuard] },
+  {path:'admin', loadChildren: ()=>import('./components/admin/admin.module').then(m => m.AdminModule), canLoad:[AdminGuard]},
+  {path:'login', component:LoginComponent},
+  {path:'guida', loadChildren: ()=>import('./components/guida/guida.module').then(m=>m.GuidaModule), canLoad:[GuidaGuard]},
+  {path:'bacheca', component:BachecaComponent, canActivate: [LoginGuard]},
+  {path:'allegati', component:AllegatiComponent, canActivate: [LoginGuard]},
+  {path:'signin/:key', component:SignInComponent},
+  {path:'**', component:NotFound404Component},
 ];
 
 @NgModule({
