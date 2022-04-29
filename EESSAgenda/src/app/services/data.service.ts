@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Slots, Utente, TipoUtente, Corso } from 'src/models/model';
+import { Slots, Utente, TipoUtente, Corso, File } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject } from 'rxjs';
 import { map, take, tap } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -20,7 +21,8 @@ export class DataService {
 
   constructor(
     private authFirebase: AngularFireAuth,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private auth: AuthService,
   ) {}
 
   creaCorso(nome: string) {
@@ -35,7 +37,7 @@ export class DataService {
   leggiSignInURL(corso: string): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       let urlReturn =
-        window.location.protocol + "//" + window.location.host + '/signin/';
+        window.location.protocol + '//' + window.location.host + '/signin/';
       this.firestore
         .collection<Corso>('corsi')
         .doc(corso)
@@ -43,9 +45,13 @@ export class DataService {
         .pipe(
           take(1),
           map((d) => d?.chiave)
-        ).subscribe((chiave) => {
-          if (chiave) {resolve(urlReturn+chiave);}
-          else {reject("");}
+        )
+        .subscribe((chiave) => {
+          if (chiave) {
+            resolve(urlReturn + chiave);
+          } else {
+            reject('');
+          }
         });
     });
   }
@@ -55,7 +61,10 @@ export class DataService {
   }
 
   leggiCorsi(): Observable<Corso[]> {
-    return this.firestore.collection<Corso>('/corsi').valueChanges();
+    if (this.auth.getUserData().ruolo == TipoUtente.Amministratore)
+      return this.firestore.collection<Corso>('/corsi').valueChanges();
+    else
+      return this.firestore.collection<Corso>('/corsi', ref => ref.where('corso', '==', this.auth.getUserData().corso)).valueChanges();
   }
 
   leggiUtenti(): Observable<Utente[]> {
@@ -310,7 +319,11 @@ export class DataService {
       .valueChanges()
       .pipe(take(1))
       .subscribe((u) => {
-        u?.bacheca?.push(messaggio);
+        if (u?.bacheca) {
+          u.bacheca.push(messaggio);
+        } else {
+          u!.bacheca! = [messaggio];
+        }
         this.firestore
           .collection<Utente>('/utenti')
           .doc(utenteEmail)
@@ -320,14 +333,14 @@ export class DataService {
       });
   }
 
-  cancellaMessaggi(utenteEmail: string) {
+  cancellaMessaggi(utenteEmail: string, msg: string) {
     this.firestore
       .collection<Utente>('/utenti')
       .doc(utenteEmail)
       .valueChanges()
       .pipe(take(1))
       .subscribe((u) => {
-        u!.bacheca! = [];
+        u!.bacheca! = u!.bacheca!.filter((m) => m !== msg);
         this.firestore
           .collection<Utente>('/utenti')
           .doc(utenteEmail)
@@ -380,5 +393,61 @@ export class DataService {
       res += data.charAt(Math.random() * datalen);
     }
     return res;
+  }
+
+  leggiAllegati(corso: string): Observable<File[] | undefined> {
+    return this.firestore
+      .collection<Corso>('corsi')
+      .doc(corso)
+      .valueChanges()
+      .pipe(map((c) => c?.allegati));
+  }
+
+  aggiungiAllegato(
+    corso: string,
+    nomeFile: string,
+    url: string
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection<Corso>('corsi')
+        .doc(corso)
+        .valueChanges()
+        .pipe(take(1))
+        .subscribe((c) => {
+          const f: File = { nome: nomeFile, url: url };
+          if (!c) reject();
+          c!.allegati ? c!.allegati.push(f) : (c!.allegati = [f]);
+          this.firestore
+            .collection<Corso>('corsi')
+            .doc(corso)
+            .update(c!)
+            .then(() => resolve(true))
+            .catch(() => reject());
+        });
+    });
+  }
+
+  cancellaAllegato(
+    corso: string,
+    nomeFile: string,
+  ): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      this.firestore
+        .collection<Corso>('corsi')
+        .doc(corso)
+        .valueChanges()
+        .pipe(take(1))
+        .subscribe((c) => {
+          if (!c) reject();
+          c!.allegati! = c!.allegati!.filter ( a => a.nome != nomeFile)
+          this.firestore
+            .collection<Corso>('corsi')
+            .doc(corso)
+            .update(c!)
+            .then(() => resolve(true))
+            .catch(() => reject());
+        });
+    });
   }
 }

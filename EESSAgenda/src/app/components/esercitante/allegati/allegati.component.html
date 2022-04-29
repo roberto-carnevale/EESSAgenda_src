@@ -1,0 +1,6 @@
+<h1 style="padding-left: 1rem">Allegati per {{ corso }}</h1>
+<div *ngFor="let allegato of allegati$ | async" style="padding-left: 3rem;padding-bottom: 0.5em;">
+  <a [href]="allegato.url" target="_blank"> {{ allegato.nome }}</a>
+</div>
+<div style="height: 2rem;">
+</div>

@@ -1,49 +1,67 @@
 <mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
+  <mat-expansion-panel style="background-color: #efe9f7">
+    <mat-expansion-panel-header style="background-color: #d0bde6">
       <mat-panel-title> Nuovo Utente </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Nome" #nome>
+      <input matInput placeholder="Nome" #nome />
     </mat-form-field>
     <mat-form-field appearance="outline">
-      <input matInput placeholder="Email" #email>
+      <input matInput placeholder="Email" #email />
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Corso</mat-label>
       <mat-select #corso>
-        <mat-option *ngFor="let c of corsi$ | async" [value]="c.corso">{{ c.corso }}</mat-option>
+        <mat-option *ngFor="let c of corsi$ | async" [value]="c.corso">{{
+          c.corso
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Ruolo</mat-label>
       <mat-select #ruolo>
-        <mat-option *ngFor="let u of listaRuoliConst" [value]="u.id">{{ u.val }}</mat-option>
+        <mat-option *ngFor="let u of listaRuoliConst" [value]="u.id">{{
+          u.val
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-button (click)="newUser(nome, email, ruolo, corso)"><mat-icon>person_add</mat-icon></button>
+    <button mat-button (click)="newUser(nome, email, ruolo, corso)">
+      <mat-icon>person_add</mat-icon>
+    </button>
   </mat-expansion-panel>
 
-  <mat-expansion-panel *ngFor="let utente of utenti$ | async">
-    <mat-expansion-panel-header>
-      <mat-panel-title> {{utente.nome}} &nbsp;&nbsp;&nbsp;&nbsp; [{{utente.corso}}] </mat-panel-title>
+  <mat-expansion-panel
+    *ngFor="let utente of utenti$ | async"
+    style="background-color:#efe9f7 "
+  >
+    <mat-expansion-panel-header style="background-color: #d0bde6">
+      <mat-panel-title>
+        {{ utente.nome }} &nbsp;&nbsp;&nbsp;&nbsp; [{{ utente.corso }}]
+      </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field appearance="fill">
-      <input matInput [value]="utente.nome" readonly>
+      <input matInput [value]="utente.nome" readonly />
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <input matInput [value]="utente.email" readonly>
+      <input matInput [value]="utente.email" readonly />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Corso</mat-label>
-      <mat-select #corso [value]="utente.corso" (valueChange)="cambioCorso(utente.email, $event)">
-        <mat-option *ngFor="let c of corsi$ | async" [value]="c.corso">{{ c.corso }}</mat-option>
+      <mat-select
+        #corso
+        [value]="utente.corso"
+        (valueChange)="cambioCorso(utente.email, $event)"
+      >
+        <mat-option *ngFor="let c of corsi$ | async" [value]="c.corso">{{
+          c.corso
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
-      <input matInput [value]="listaRuoliConst[utente.ruolo].val" readonly>
+      <input matInput [value]="listaRuoliConst[utente.ruolo].val" readonly />
     </mat-form-field>
-      <button mat-button color="accent" (click)="resetPassword(utente.email)">Reset</button>
+    <button mat-button color="accent" (click)="resetPassword(utente.email)">
+      Reset
+    </button>
   </mat-expansion-panel>
-
 </mat-accordion>

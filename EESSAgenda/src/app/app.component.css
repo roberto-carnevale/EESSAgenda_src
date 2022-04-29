@@ -20,7 +20,6 @@ span.userLoggedIn {
   color:#ff007f;
 }
 
-
 .background-alert {
   background-color:#ff007f;
 }
@@ -33,3 +32,15 @@ div.router-outlet
 {
   background-color: #d0bde6;
 }
+
+div.fillin
+{
+  background-color: #efe9f7;
+  width:100%;
+  position:absolute;
+  top:0px;
+  height: 100%;
+  z-index: -10;
+}
+
+

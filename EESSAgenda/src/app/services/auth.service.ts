@@ -9,7 +9,7 @@ import { take, tap, map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   public changedAuth = new Subject<boolean>();
-  public guardedPath: string | null;
+  public guardedPath: string | null = '/';
   private utente: Utente = {
     corso: '',
     nome: '',
@@ -33,12 +33,13 @@ export class AuthService {
           this.retrieveUserData().then((u) => {
             this.utente = u;
             this.changedAuth.next(this.isAuth);
+            this.router.navigate([this.guardedPath])
           });
         }
       });
     });
-    this.guardedPath = null;
   }
+
 
   setUser(user: { email: string; password: string } | null): void {
     if (user) {

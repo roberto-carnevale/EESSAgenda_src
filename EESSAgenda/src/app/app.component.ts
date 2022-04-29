@@ -42,7 +42,6 @@ export class AppComponent implements OnInit {
         this.data
           .leggiBachecaCorso(this.utente.corso)
           .subscribe((bachecaCorso) => {
-            console.log(bachecaCorso)
             bachecaCorso
               ? (this.messaggiCorso = bachecaCorso.length)
               : (this.messaggiCorso = 0);

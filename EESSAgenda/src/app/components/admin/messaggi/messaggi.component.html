@@ -1,28 +1,37 @@
-<h1>{{corso}}</h1>
-<ng-container *ngFor="let messaggi of bacheca_corso$ | async">
-  <p>{{messaggi}}
-  <button mat-icon-button (click)="cancellaMessaggioCorso(messaggi)"><mat-icon>delete</mat-icon></button></p>
-</ng-container>
-<input matInput #in>
-<button mat-button (click)="aggiugiBachecaCorso(corso, in.value)">Invia</button>
+<h1 style="padding-left: 1rem">{{ corso }}</h1>
+<div *ngFor="let messaggi of bacheca_corso$ | async" style="padding-left: 3rem">
+  {{ messaggi }}
+  <button mat-icon-button (click)="cancellaMessaggioCorso(messaggi)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
+<div style="padding-left: 3rem"><mat-form-field  appearance="outline">
+  <input matInput #in type="text" /></mat-form-field>
+  <button mat-button (click)="aggiugiBachecaCorso(corso, in.value)">
+    Invia
+  </button>
+</div>
 
 <ng-container *ngFor="let utente of utentiCorso$ | async">
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>{{utente.nome}}</mat-card-title>
+  <mat-card style="background-color: #efe9f7">
+    <mat-card-header style="background-color: #d0bde6">
+      <mat-card-title>{{ utente.nome }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <hr>
-      <ng-container *ngFor="let msg of utente.bacheca">
-        <div>
-                {{msg}}
-        </div>
-        </ng-container>
+      <hr />
+      <div *ngFor="let msg of utente.bacheca">
+        {{ msg }}  <button mat-icon-button (click)="cancellaMessaggio(utente.email,msg)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <mat-form-field appearance="outline">
+        <input matInput #in type="text" />
+      </mat-form-field>
     </mat-card-content>
     <mat-card-actions>
-      <input matInput #in>
-      <button mat-button (click)="aggiugiBacheca(utente.email, in.value)">Invia</button>
-      <button mat-button (click)="ripulisciBacheca(utente.email)">Cancella</button>
+      <button mat-button (click)="aggiugiBacheca(utente.email, in.value)">
+        Invia
+      </button>
     </mat-card-actions>
-</mat-card>
+  </mat-card>
 </ng-container>

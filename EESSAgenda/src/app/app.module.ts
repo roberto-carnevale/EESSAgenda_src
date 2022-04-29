@@ -28,7 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
 import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
 import { BachecaComponent } from './components/bacheca/bacheca.component';
-
+import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
 
 
 
@@ -39,7 +39,8 @@ import { BachecaComponent } from './components/bacheca/bacheca.component';
     LoginComponent,
     SemaforoComponent,
     BachecaComponent,
-    SignInComponent
+    SignInComponent,
+    AllegatiComponent
   ],
   imports: [
     BrowserModule,

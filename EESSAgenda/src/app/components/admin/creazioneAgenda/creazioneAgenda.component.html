@@ -28,7 +28,7 @@
 
 <button mat-button (click)="conferma()" [disabled]="inibito">OK</button>
 
-<li>
+<li style="background-color: #efe9f7">
   <ul *ngFor="let l of lista$ | async">
     {{l.guida}} {{l.inizio | date:'EE dd MMM h:mm':'it-IT'}} &RightArrowBar; {{l.fine | date:'EE dd MMM h:mm'}} {{l.occupato}}
     <button mat-icon-button (click)="cancellaSlot(l.id)"><mat-icon>delete</mat-icon></button>

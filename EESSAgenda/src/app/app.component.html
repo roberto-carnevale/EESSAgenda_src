@@ -6,9 +6,10 @@
 </mat-toolbar-row>
 <mat-toolbar-row>
 <span class="example-spacer"></span>
-<a [routerLink]="['/admin/corsi']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>settings_applications</mat-icon></a>
-<a [routerLink]="['/admin/utenti']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>manage_accounts</mat-icon></a>
+<a [routerLink]="['/admin/corsi']" *ngIf="ruolo == 0 || ruolo == 3"><mat-icon>settings_applications</mat-icon></a>
+<a [routerLink]="['/admin/utenti']" *ngIf="ruolo == 0 || ruolo == 3"><mat-icon>manage_accounts</mat-icon></a>
 <a [routerLink]="['']"><mat-icon>edit_calendar</mat-icon></a>
+<a [routerLink]="['/allegati']"><mat-icon>cloud_circle</mat-icon></a>
 <a [routerLink]="['/guida']" *ngIf="ruolo == 0 || ruolo == 2"><mat-icon>follow_the_signs</mat-icon></a>
 <a [routerLink]="['/bacheca']" *ngIf="messaggi>0"><span matBadge="{{messaggi}}"><mat-icon>assignment</mat-icon></span></a>
 <a [routerLink]="['/login']" *ngIf="nome===undefined"><mat-icon>login</mat-icon></a>
@@ -18,7 +19,6 @@
 <div class="router-outlet">
 <router-outlet></router-outlet>
 </div>
-<div class="router-outlet" style="height:100%">
+<div class="fillin">
 
 </div>
-<!--#efe9f7-->

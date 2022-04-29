@@ -1,7 +1,8 @@
 export interface Corso {
     corso:string,
     info: string[],
-    chiave: string
+    chiave: string,
+    allegati?: File[],
 }
 
 export interface Slots{
@@ -21,15 +22,6 @@ export interface Utente {
     url?:string,
     in_colloquio?:boolean,
     bacheca?: string[],
-}
-
-export interface Bacheca {
-  contenuto: string[],
-  top:string[]
-}
-
-export interface ListaFile {
-  lista: File[],
 }
 
 export interface File {

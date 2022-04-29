@@ -27,6 +27,7 @@ export class MessaggiUtentiComponent implements OnInit, OnDestroy {
   }
 
   aggiugiBacheca(utenteEmail: string, messaggio: string) {
+    console.log(utenteEmail)
     this.data.aggiungiMessaggio(utenteEmail, messaggio);
   }
 
@@ -34,8 +35,8 @@ export class MessaggiUtentiComponent implements OnInit, OnDestroy {
     this.data.aggiungiMessaggioCorso(corso, messaggio);
   }
 
-  ripulisciBacheca(utenteEmail: string) {
-    this.data.cancellaMessaggi(utenteEmail);
+  cancellaMessaggio(utenteEmail: string, msg:string) {
+    this.data.cancellaMessaggi(utenteEmail, msg);
   }
 
   cancellaMessaggioCorso(msg: string) {

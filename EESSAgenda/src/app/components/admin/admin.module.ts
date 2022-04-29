@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core'
 import { MatCardModule } from '@angular/material/card';
 import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AllegatiAdminComponent } from './allegati/allegatiAdmin.component';
 
 
 const Components = [
@@ -26,6 +27,7 @@ const Components = [
   CreazioneAgendaComponent,
   GestioneUtentiComponent,
   MessaggiUtentiComponent,
+  AllegatiAdminComponent,
 ];
 const Modules = [
   CommonModule,

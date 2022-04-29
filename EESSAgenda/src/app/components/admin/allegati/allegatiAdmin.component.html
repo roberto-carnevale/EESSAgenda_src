@@ -1,0 +1,17 @@
+<h1 style="padding-left: 1rem">Allegati al {{ corso }}</h1>
+<div *ngFor="let allegato of allegati$ | async" style="padding-left: 3rem">
+  {{ allegato.nome }} &RightArrow; {{ allegato.url }}
+  <button mat-icon-button (click)="cancellaAllegato(corso, allegato.nome)">
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>
+<div style="padding-left: 3rem">
+  <mat-form-field appearance="outline">
+    <input matInput #name type="text" placeholder="Nome file" /></mat-form-field
+  ><mat-form-field appearance="outline">
+    <input matInput #url type="text" len="30" placeholder="URL" />
+  </mat-form-field>
+  <button mat-button (click)="aggiugiAllegato(corso, name.value, url.value)">
+    Invia
+  </button>
+</div>

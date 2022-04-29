@@ -12,7 +12,7 @@ import { Corso } from 'src/models/model';
         {{corso.corso}}
         <button mat-icon-button [routerLink]="['/admin', 'creazioneAgenda', corso.corso]"><mat-icon>edit_calendar</mat-icon></button>
         <button mat-icon-button [routerLink]="['/admin', 'messaggi', corso.corso]"><mat-icon>assignment</mat-icon></button>
-        <button mat-icon-button [routerLink]="['/admin', 'messaggi', corso.corso]"><mat-icon>cloud_circle</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/admin', 'allegati', corso.corso]"><mat-icon>cloud_circle</mat-icon></button>
         <button mat-icon-button (click)="copiaURL(corso.corso);"><mat-icon>link</mat-icon></button>
         <button mat-icon-button (click)="cancellaCorso(corso.corso)">
           <mat-icon>delete</mat-icon>
