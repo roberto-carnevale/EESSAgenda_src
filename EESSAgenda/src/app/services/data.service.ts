@@ -24,7 +24,9 @@ export class DataService {
     private firestore: AngularFirestore,
     private auth: AuthService,
   ) {}
-
+  ///////////
+  // UTENTI
+  ///////////
   leggiUtentiCorso(corso: string): Observable<Utente[]> {
     return this.firestore
       .collection<Utente>('/utenti', (ref) => ref.where('corso', '==', corso))
@@ -36,6 +38,32 @@ export class DataService {
       .collection<Utente>('/utenti')
       .doc(utenteEmail)
       .valueChanges();
+  }
+  ///////////
+  // BACHECA
+  ///////////
+  leggiBachecaCorso(corso: string): Observable<string[] | undefined> {
+    return this.firestore
+      .collection<{ corso: string; info: string[] }>('corsi')
+      .doc(corso)
+      .valueChanges()
+      .pipe(map((c) => c?.info));
+  }
+
+  ///////////
+  // GUIDE
+  ///////////
+  statoGuida(guidaEmail: string): Observable<boolean> {
+    return this.firestore
+      .collection<Utente>('utenti', (ref) =>
+        ref.where('email', '==', guidaEmail)
+      )
+      .valueChanges()
+      .pipe(map((u) => u[0].in_colloquio!));
+  }
+
+  cambiaStato(utente: Utente) {
+    this.firestore.collection('utenti').doc(utente.email).update(utente);
   }
 
   leggiAgendaGuida(
@@ -61,29 +89,6 @@ export class DataService {
         });
       })
     );
-  }
-
-  leggiBachecaCorso(corso: string): Observable<string[] | undefined> {
-    return this.firestore
-      .collection<{ corso: string; info: string[] }>('corsi')
-      .doc(corso)
-      .valueChanges()
-      .pipe(map((c) => c?.info));
-  }
-  ///////////
-  // GUIDE
-  ///////////
-  statoGuida(guidaEmail: string): Observable<boolean> {
-    return this.firestore
-      .collection<Utente>('utenti', (ref) =>
-        ref.where('email', '==', guidaEmail)
-      )
-      .valueChanges()
-      .pipe(map((u) => u[0].in_colloquio!));
-  }
-
-  cambiaStato(utente: Utente) {
-    this.firestore.collection('utenti').doc(utente.email).update(utente);
   }
 
   nomeUtente(email: string): Promise<string> {
