@@ -14,6 +14,7 @@ Spinner colore?
 Split per giornata
 
 ## Gestore
+includere nomi invece di mail in creazineAgenda
 
 ## Amministratore
 feature per corso

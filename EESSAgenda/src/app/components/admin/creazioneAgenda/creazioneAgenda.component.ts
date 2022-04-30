@@ -4,8 +4,7 @@ import { Slots, Utente } from 'src/models/model'
 import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, } from '@angular/router';
 import { MatDatepickerInputEvent} from '@angular/material/datepicker';
-
-
+import { AdminDataService } from 'src/app/services/adminData.service';
 
 @Component({
   selector: 'app-creazioneAgenda',
@@ -13,7 +12,7 @@ import { MatDatepickerInputEvent} from '@angular/material/datepicker';
 })
 
 export class CreazioneAgendaComponent implements OnInit, OnDestroy {
-  constructor(private firestore: DataService, private route:ActivatedRoute) {}
+  constructor(private firestore: DataService, private route:ActivatedRoute, private adminData:AdminDataService) {}
   corso = "";
   inibito = true;
   ore = 9;
@@ -29,7 +28,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.componentSubscriptions.add(this.route.params.subscribe( params => {
       this.corso = params['id'];
-      this.guide$ = this.firestore.leggiGuide(this.corso);
+      this.guide$ = this.adminData.leggiGuide(this.corso);
       this.lista$ = this.firestore.leggiSlot(this.corso);
     }));
 
@@ -67,7 +66,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   conferma() {
     const fine = new Date(this.data_effettiva.getTime()+this.durata_colloquio*60000)
     console.log(this.data_effettiva)
-    this.firestore.creaSlot(this.corso ,this.guida, this.data_effettiva.toISOString(), fine.toISOString());
+    this.adminData.creaSlot(this.corso ,this.guida, this.data_effettiva.toISOString(), fine.toISOString());
     this.data_effettiva = fine;
   }
 
@@ -81,7 +80,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   }
 
   cancellaSlot(id:string) {
-    this.firestore.cancellaSlot(id);
+    this.adminData.cancellaSlot(id);
   }
 
 

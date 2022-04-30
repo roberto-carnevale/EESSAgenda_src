@@ -1,14 +1,15 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { AdminDataService } from 'src/app/services/adminData.service';
 import { DataService } from 'src/app/services/data.service';
-import { File, Utente } from 'src/models/model';
+import { File } from 'src/models/model';
 
 @Component({
   templateUrl: 'allegatiAdmin.component.html',
 })
 export class AllegatiAdminComponent implements OnInit {
-  constructor(private data: DataService, private router: ActivatedRoute) {}
+  constructor(private data: DataService, private router: ActivatedRoute, private adminData:AdminDataService) {}
   componentSubscribers: Subscription = new Subscription();
   corso: string = '';
   allegati$: Observable<File[] | undefined> = new Observable<File[] | undefined>();
@@ -20,12 +21,12 @@ export class AllegatiAdminComponent implements OnInit {
 
 
   aggiugiAllegato(corso: string, nomeFile: string, url:string) {
-    this.data.aggiungiAllegato(corso, nomeFile, url);
+    this.adminData.aggiungiAllegato(corso, nomeFile, url);
 
   }
 
   cancellaAllegato(corso: string, nomeFile: string) {
-    this.data.cancellaAllegato(corso, nomeFile);
+    this.adminData.cancellaAllegato(corso, nomeFile);
   }
 
 }

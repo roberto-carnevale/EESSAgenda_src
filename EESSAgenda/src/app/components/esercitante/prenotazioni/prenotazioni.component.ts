@@ -58,7 +58,7 @@ export class PrenotazioniComponent implements OnInit, OnDestroy {
             console.log(ls);
             for (let i = 0; i < ls.length; i++) {
               if (guida_temp != ls[i].guida) {
-                this.dataService.nomeGuida(ls[i].guida).then(g => {this.nomi_guide.push({email:ls[i].guida, nome:g})})
+                this.dataService.nomeUtente(ls[i].guida).then(g => {this.nomi_guide.push({email:ls[i].guida, nome:g})})
                 current_guida_index = this.slot_aggregati.push({
                   guida: ls[i].guida,
                   slots: [ls[i]],

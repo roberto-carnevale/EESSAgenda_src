@@ -4,6 +4,7 @@ import { DataService } from 'src/app/services/data.service';
 import { Observable } from 'rxjs';
 import { MatSelect } from '@angular/material/select';
 import { AuthService } from 'src/app/services/auth.service';
+import { AdminDataService } from 'src/app/services/adminData.service';
 
 
 @Component({
@@ -12,24 +13,24 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 
 export class GestioneUtentiComponent implements OnInit {
-  constructor(private dataService:DataService, private auth:AuthService) { }
+  constructor(private dataService:DataService, private auth:AuthService, private adminData:AdminDataService) { }
   utenti$ = new Observable<Utente[]>();
   listaRuoliConst : {id:number, val:string}[] = [];
   corsi$ = new Observable<Corso[]>();
 
   ngOnInit() {
-    this.utenti$ = this.dataService.leggiUtenti();
-    this.corsi$ = this.dataService.leggiCorsi();
+    this.utenti$ = this.adminData.leggiUtenti();
+    this.corsi$ = this.adminData.leggiCorsi();
     this.listaRuoliConst = this.listaRuoli();
   }
 
   newUser(nome: HTMLInputElement, email: HTMLInputElement, ruolo: MatSelect, corso:MatSelect):void{
     if (ruolo.value == TipoUtente.Esercitante)
-      this.dataService.creaEsercitante(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
+      this.adminData.creaEsercitante(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
     if (ruolo.value == TipoUtente.Guida)
-      this.dataService.creaGuida(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
+      this.adminData.creaGuida(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
     if (ruolo.value == TipoUtente.Gestore)
-      this.dataService.creaGestore(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
+      this.adminData.creaGestore(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
   }
 
   listaRuoli():{id:number, val:string}[]{
@@ -45,7 +46,7 @@ export class GestioneUtentiComponent implements OnInit {
   cambioCorso(email:string, corso:string) {
     console.log(email);
     console.log(corso);
-    this.dataService.cambiaCorso(email, corso);
+    this.adminData.cambiaCorso(email, corso);
   }
   resetPassword(email:string):void {
     this.auth.resetUser(email);

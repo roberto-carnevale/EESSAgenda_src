@@ -1,6 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
+import { AdminDataService } from 'src/app/services/adminData.service';
 import { DataService } from 'src/app/services/data.service';
 import { Utente } from 'src/models/model';
 
@@ -8,7 +9,7 @@ import { Utente } from 'src/models/model';
   templateUrl: 'messaggi.component.html',
 })
 export class MessaggiUtentiComponent implements OnInit, OnDestroy {
-  constructor(private data: DataService, private router: ActivatedRoute) {}
+  constructor(private data: DataService, private router: ActivatedRoute, private adminData:AdminDataService) {}
   componentSubscribers: Subscription = new Subscription();
   corso: string = '';
   utentiCorso$: Observable<Utente[]> = new Observable<Utente[]>();
@@ -28,19 +29,19 @@ export class MessaggiUtentiComponent implements OnInit, OnDestroy {
 
   aggiugiBacheca(utenteEmail: string, messaggio: string) {
     console.log(utenteEmail)
-    this.data.aggiungiMessaggio(utenteEmail, messaggio);
+    this.adminData.aggiungiMessaggio(utenteEmail, messaggio);
   }
 
   aggiugiBachecaCorso(corso: string, messaggio: string) {
-    this.data.aggiungiMessaggioCorso(corso, messaggio);
+    this.adminData.aggiungiMessaggioCorso(corso, messaggio);
   }
 
   cancellaMessaggio(utenteEmail: string, msg:string) {
-    this.data.cancellaMessaggi(utenteEmail, msg);
+    this.adminData.cancellaMessaggi(utenteEmail, msg);
   }
 
   cancellaMessaggioCorso(msg: string) {
-    this.data.cancellaMessaggioCorso(this.corso, msg);
+    this.adminData.cancellaMessaggioCorso(this.corso, msg);
   }
 
 }

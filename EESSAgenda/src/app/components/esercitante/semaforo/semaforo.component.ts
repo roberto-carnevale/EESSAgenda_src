@@ -34,7 +34,7 @@ export class SemaforoComponent implements OnInit, OnDestroy {
   @Input() guida: string = '';
 
   ngOnInit() {
-    this.data.nomeGuida(this.guida).then((g) => {
+    this.data.nomeUtente(this.guida).then((g) => {
           this.nomi_guide = { email: this.guida, nome: g };
     });
     this.componentSubcriptions.add(

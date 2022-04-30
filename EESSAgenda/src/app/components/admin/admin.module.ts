@@ -21,6 +21,7 @@ import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AllegatiAdminComponent } from './allegati/allegatiAdmin.component';
 import { HomeAdminComponent } from './corsi/homeCorso.component';
+import { AdminDataService } from 'src/app/services/adminData.service';
 
 
 const Components = [
@@ -51,6 +52,6 @@ const Modules = [
   imports: Modules,
   exports: Components,
   declarations: Components,
-  providers: [],
+  providers: [ AdminDataService, ],
 })
 export class AdminModule {}

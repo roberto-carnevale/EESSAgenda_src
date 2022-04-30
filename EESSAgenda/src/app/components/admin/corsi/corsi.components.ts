@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
+import { AdminDataService } from 'src/app/services/adminData.service';
 import { Corso } from 'src/models/model';
 
 @Component({
@@ -25,26 +26,26 @@ import { Corso } from 'src/models/model';
   `
 })
 export class CorsiComponent implements OnInit {
-  constructor(private auth: AuthService, private firestore: DataService, private _snackbar:MatSnackBar) {}
+  constructor(private auth: AuthService, private _snackbar:MatSnackBar, private adminData: AdminDataService) {}
 
   lista$: Observable<Corso[]> = new Observable<Corso[]>();
   ruolo: number = 3;
 
   ngOnInit(): void {
     this.ruolo = this.auth.getUserData().ruolo;
-    this.lista$ = this.firestore.leggiCorsi();
+    this.lista$ = this.adminData.leggiCorsi();
   }
 
   creaCorso(corso: HTMLInputElement) {
-    if (corso.value !== '') this.firestore.creaCorso(corso.value);
+    if (corso.value !== '') this.adminData.creaCorso(corso.value);
   }
 
   cancellaCorso(corso: string) {
-    this.firestore.cancellaCorso(corso);
+    this.adminData.cancellaCorso(corso);
   }
 
   copiaURL(corso: string) {
-    this.firestore.leggiSignInURL(corso).then( s => {
+    this.adminData.leggiSignInURL(corso).then( s => {
       console.log(s)
       if (s) navigator.clipboard.writeText(s).then( () => { this._snackbar.open("Indirizzo di registrazione copiato"); setTimeout(() => {
         this._snackbar.dismiss();
@@ -52,4 +53,6 @@ export class CorsiComponent implements OnInit {
     }).catch(() => {console.error("Indirizzo non costruito")});
 
   }
+
+
 }

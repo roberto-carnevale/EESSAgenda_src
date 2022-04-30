@@ -8,8 +8,8 @@ import { SignInComponent } from './components/login/signin/signin.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
 
 import { LoginGuard } from './services/guard.service';
-import { AdminGuard } from './services/adminGuard.component';
-import { GuidaGuard } from './services/guidaGuard.component';
+import { AdminGuard } from './services/adminGuard.service';
+import { GuidaGuard } from './services/guidaGuard.service';
 import { HomeComponent } from './components/home.component';
 
 const routes: Routes = [
