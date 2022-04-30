@@ -16,30 +16,38 @@ export class GestioneUtentiComponent implements OnInit {
   constructor(private dataService:DataService, private auth:AuthService, private adminData:AdminDataService) { }
   utenti$ = new Observable<Utente[]>();
   listaRuoliConst : {id:number, val:string}[] = [];
+  listaRuoliSelect : {id:number, val:string}[] = [];
   corsi$ = new Observable<Corso[]>();
 
   ngOnInit() {
     this.utenti$ = this.adminData.leggiUtenti();
     this.corsi$ = this.adminData.leggiCorsi();
     this.listaRuoliConst = this.listaRuoli();
+    this.listaRuoliSelect = this.listaRuoliRoll();
   }
 
   newUser(nome: HTMLInputElement, email: HTMLInputElement, ruolo: MatSelect, corso:MatSelect):void{
-    if (ruolo.value == TipoUtente.Esercitante)
-      this.adminData.creaEsercitante(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
-    if (ruolo.value == TipoUtente.Guida)
-      this.adminData.creaGuida(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
-    if (ruolo.value == TipoUtente.Gestore)
-      this.adminData.creaGestore(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!");
+      this.adminData.creaUtente(nome.value, corso.value, email.value, "th1s1sAqu1teStr0ng!!", ruolo.value);
   }
 
   listaRuoli():{id:number, val:string}[]{
-    const p = Object.keys(TipoUtente);
-    const half = p.length/2;
-    let res = []
-    for (let i = 0; i<p.length/2; i++) {
-      res.push({ id:Number.parseInt(p[i]),  val:p[i+half]});
-    }
+    const res =[
+      {id:0, val:"Amministratore"},
+      {id:1, val:"Esercitante"},
+      {id:2, val:"Guida"},
+      {id:3, val:"Gestore"},
+      {id:4, val:"GuidaSmart"}
+    ]
+    return res;
+  }
+
+  listaRuoliRoll():{id:number, val:string}[]{
+    const res =[
+      {id:1, val:"Esercitante"},
+      {id:2, val:"Guida"},
+      {id:3, val:"Gestore"},
+      {id:4, val:"GuidaSmart"}
+    ]
     return res;
   }
 

@@ -34,5 +34,6 @@ export enum TipoUtente {
   Esercitante,
   Guida,
   Gestore,
+  GuidaSmart,
 }
 

@@ -30,7 +30,8 @@ export class AdminGuard implements CanLoad {
         .subscribe((u) => {
           if (
             u!.ruolo == TipoUtente.Amministratore ||
-            u!.ruolo == TipoUtente.Gestore
+            u!.ruolo == TipoUtente.Gestore ||
+            u!.ruolo == TipoUtente.GuidaSmart
           ) {
             resolve(true);
           } else {

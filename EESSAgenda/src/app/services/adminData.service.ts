@@ -86,68 +86,17 @@ export class AdminDataService {
       return this.firestore.collection<Utente>('/utenti', ref => ref.where('corso', '==', this.auth.getUserData().corso)).valueChanges();
   }
 
-  creaGuida(nome: string, corso: string, email: string, password: string) {
-    let utente: Utente = {
-      corso: corso,
-      nome: nome,
-      ruolo: TipoUtente.Guida,
-      email: email,
-    };
-    this.authFirebase
-      .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {
-        this.firestore
-          .collection('/utenti')
-          .doc(utente.email)
-          .set(utente)
-          .then(() => {
-            this.authFirebase
-              .sendPasswordResetEmail(email)
-              .then(() => this.authFirebase.signOut());
-          })
-          .catch();
-      })
-      .catch((err) => {
-        window.alert(err);
-      });
-  }
-
-  creaEsercitante(
+  creaUtente(
     nome: string,
     corso: string,
     email: string,
-    password: string
+    password: string,
+    ruolo: number
   ) {
     let utente: Utente = {
       corso: corso,
       nome: nome,
-      ruolo: TipoUtente.Esercitante,
-      email: email,
-    };
-    this.authFirebase
-      .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {
-        this.firestore
-          .collection('/utenti')
-          .doc(utente.email)
-          .set(utente)
-          .then(() => {
-            this.authFirebase
-              .sendPasswordResetEmail(email)
-              .then(() => this.authFirebase.signOut());
-          })
-          .catch();
-      })
-      .catch((err) => {
-        window.alert(err);
-      });
-  }
-
-  creaGestore(nome: string, corso: string, email: string, password: string) {
-    let utente: Utente = {
-      corso: corso,
-      nome: nome,
-      ruolo: TipoUtente.Gestore,
+      ruolo: ruolo,
       email: email,
     };
     this.authFirebase

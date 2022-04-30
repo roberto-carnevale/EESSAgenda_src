@@ -10,11 +10,11 @@ import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { TipoUtente, Utente } from 'src/models/model';
-import { take, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: 'guida.component.html',
-  styleUrls: ['guida.component.css']
+  styleUrls: ['guida.component.css'],
 })
 export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
   @ViewChild('fab_icon') fab_icon!: any;
@@ -32,6 +32,7 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
     new Observable<{ ora: string; esercitante: string }[]>();
   utentiCorso: Utente[] = [];
   constructor(private auth: AuthService, private data: DataService) {}
+  styleFAB = 'background-color:#d9204a;';
 
   ngOnInit() {
     if (this.auth.getUserId() !== '') {
@@ -51,10 +52,13 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
   }
   ngAfterContentChecked(): void {
     if (this.fab_icon) {
-      this.in_colloquio
-        ? (this.fab_icon._elementRef.nativeElement.textContent =
-            'airline_seat_recline_normal')
-        : (this.fab_icon._elementRef.nativeElement.textContent = 'chair');
+      if (this.in_colloquio) {
+        this.fab_icon._elementRef.nativeElement.textContent ='supervisor_account';
+        this.styleFAB="background-color:#d9204a;"
+      } else {
+        this.fab_icon._elementRef.nativeElement.textContent = 'event_seat';
+        this.styleFAB="background-color:#336600;"
+      }
     }
   }
 
@@ -64,7 +68,6 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
       this.data
         .leggiUtentiCorso(this.utente.corso)
         .pipe(
-          take(1),
           tap((lu) => {
             this.utentiCorso = lu;
           })
@@ -77,10 +80,6 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
 
   switch() {
     this.in_colloquio = !this.in_colloquio;
-    this.in_colloquio
-      ? (this.fab_icon._elementRef.nativeElement.textContent =
-          'airline_seat_recline_normal')
-      : (this.fab_icon._elementRef.nativeElement.textContent = 'chair');
     this.utente.in_colloquio = this.in_colloquio;
     this.data.cambiaStato(this.utente);
   }
@@ -89,7 +88,7 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
     if (s == '') return { 'background-color': '#a2c387' };
   }
 
-  nomeDaEmailUtente(email:string):string {
-    return this.utentiCorso.find( u => u.email == email)?.nome!;
+  nomeDaEmailUtente(email: string): string {
+    return this.utentiCorso.find((u) => u.email == email)?.nome!;
   }
 }

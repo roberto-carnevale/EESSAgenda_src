@@ -24,7 +24,6 @@ export class HomeComponent implements OnInit {
       .pipe(take(1))
       .subscribe((s) => {
         this.home.nativeElement.innerHTML = s?.contenuto!;
-        console.log(this.contenuto);
       });
   }
 }

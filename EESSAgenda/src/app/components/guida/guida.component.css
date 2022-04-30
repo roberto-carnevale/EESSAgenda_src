@@ -11,3 +11,12 @@ td.eserciatante{
   background-color: #cec47c;
   text-align: center;
 }
+
+@media (max-width: 600px) {
+  .fabposition {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 120;
+  }
+}
