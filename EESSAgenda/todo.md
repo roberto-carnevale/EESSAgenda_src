@@ -9,6 +9,7 @@ Chat Esercitanti?
 # Bug
 ## Esercitante
 Spinner colore?
+Sistemare self-service signin
 
 ## Guida
 Split per giornata
@@ -20,5 +21,6 @@ includere nomi invece di mail in creazineAgenda
 feature per corso
 
 ## Generale
+Sistemare login page
 
 # Get Safe!
