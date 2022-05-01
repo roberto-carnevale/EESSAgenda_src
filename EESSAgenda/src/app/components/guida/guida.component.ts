@@ -57,7 +57,7 @@ export class GuidaComponent implements OnInit, OnDestroy, AfterContentChecked {
         this.styleFAB="background-color:#d9204a;"
       } else {
         this.fab_icon._elementRef.nativeElement.textContent = 'event_seat';
-        this.styleFAB="background-color:#336600;"
+        this.styleFAB="background-color:#a2c387;"
       }
     }
   }

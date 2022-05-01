@@ -132,7 +132,7 @@ export class DataService {
           .doc(utente.email)
           .set(utente)
           .then()
-          .catch();
+          .catch(err =>window.alert("Errore di creazione"));
       })
       .catch((err) => {
         window.alert(err);

@@ -94,14 +94,14 @@ export class AuthService {
   }
 
   private retrieveUserData(): Promise<Utente> {
-    return new Promise<Utente>((resolve) => {
+    return new Promise<Utente>((resolve, reject) => {
       this.firestore
         .collection<Utente>('utenti')
         .doc(this.email)
         .get()
         .forEach((qs) => {
           resolve({ ...(qs.data() as Utente) });
-        });
+        }).catch((err)=> {window.alert(err); reject(err)});
     });
   }
 
