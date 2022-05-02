@@ -1,0 +1,118 @@
+@use '@angular/material' as mat;
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-violet: (
+    50 : #f3f0f9,
+    100 : #e2d8f0,
+    200 : #cfbfe6,
+    300 : #bca5db,
+    400 : #ad91d4,
+    500 : #9f7ecc,
+    600 : #9776c7,
+    700 : #8d6bc0,
+    800 : #8361b9,
+    900 : #724ead,
+    A100 : #ffffff,
+    A200 : #e7d9ff,
+    A400 : #c6a6ff,
+    A700 : #b68cff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$md-green: (
+    50 : #f5f9f0,
+    100 : #e6f0d8,
+    200 : #d6e6bf,
+    300 : #c5dba5,
+    400 : #b8d491,
+    500 : #accc7e,
+    600 : #a5c776,
+    700 : #9bc06b,
+    800 : #92b961,
+    900 : #82ad4e,
+    A100 : #ffffff,
+    A200 : #edffd9,
+    A400 : #d5ffa6,
+    A700 : #caff8c,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+$md-rosso: (
+    50 : #ffe3e0,
+    100 : #ffb9b3,
+    200 : #ff8b80,
+    300 : #ff5c4d,
+    400 : #ff3926,
+    500 : #ff1600,
+    600 : #ff1300,
+    700 : #ff1000,
+    800 : #ff0c00,
+    900 : #ff0600,
+    A100 : #ffffff,
+    A200 : #fff2f2,
+    A400 : #ffc0bf,
+    A700 : #ffa6a6,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+// mandatory stuff for theming
+$my-primary: mat.define-palette($md-violet,300);
+$my-accent:  mat.define-palette($md-green,700);
+// The "warn" palette is optional and defaults to red if not specified.
+$my-warn: mat.define-palette($md-rosso, 300);
+
+// include the custom theme components into a theme object
+$my-theme: mat.define-light-theme((
+ color: (
+   primary: $my-primary,
+   accent: $my-accent,
+   warn: $my-warn,
+ )
+));
+// include the custom theme object into the angular material theme
+@include mat.all-component-themes($my-theme);
+//@include mat.angular-material-theme($bv-theme);

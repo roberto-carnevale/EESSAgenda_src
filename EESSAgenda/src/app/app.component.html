@@ -7,12 +7,12 @@
 <mat-toolbar-row>
 <span class="example-spacer"></span>
 <a [routerLink]="['/']"><mat-icon>home</mat-icon></a>
-<a [routerLink]="['/admin/corsi']" *ngIf="ruolo == 0 || ruolo == 3 || ruolo == 4"><mat-icon>settings_applications</mat-icon></a>
-<a [routerLink]="['/admin/utenti']" *ngIf="ruolo == 0 || ruolo == 3 || ruolo == 4"><mat-icon>manage_accounts</mat-icon></a>
-<a [routerLink]="['/prenotazioni']"><mat-icon>edit_calendar</mat-icon></a>
-<a [routerLink]="['/allegati']"><mat-icon>cloud_circle</mat-icon></a>
-<a [routerLink]="['/guida']" *ngIf="ruolo == 2 || ruolo == 4"><mat-icon>follow_the_signs</mat-icon></a>
-<a [routerLink]="['/bacheca']" *ngIf="messaggi>0"><span matBadge="{{messaggi}}"><mat-icon>assignment</mat-icon></span></a>
+<a [routerLink]="['/admin/corsi']"*ngIf="ruolo == 0 || ruolo == 3 || ruolo == 4"><mat-icon>settings_applications</mat-icon></a>
+<a [routerLink]="['/admin/utenti']"*ngIf="ruolo == 0 || ruolo == 3 || ruolo == 4"><mat-icon>manage_accounts</mat-icon></a>
+<a [routerLink]="['/prenotazioni']"><mat-icon routerLinkActive="accentcolor" routerLink="/prenotazioni" >edit_calendar</mat-icon></a>
+<a [routerLink]="['/allegati']"><mat-icon routerLinkActive="accentcolor" routerLink="/allegati" >cloud_circle</mat-icon></a>
+<a [routerLink]="['/guida']" *ngIf="ruolo == 2 || ruolo == 4"><mat-icon routerLinkActive="accentcolor" routerLink="/guida" >follow_the_signs</mat-icon></a>
+<a [routerLink]="['/bacheca']" *ngIf="messaggi>0" matBadge="{{messaggi}}"><mat-icon routerLinkActive="accentcolor" routerLink="/bacheca" >assignment</mat-icon></a>
 <a [routerLink]="['/login']" *ngIf="nome===undefined"><mat-icon>login</mat-icon></a>
 </mat-toolbar-row>
 </mat-toolbar>
@@ -21,5 +21,8 @@
 <router-outlet></router-outlet>
 </div>
 <div class="fillin">
+<div class="fillinimage">
 
 </div>
+</div>
+

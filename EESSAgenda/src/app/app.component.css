@@ -40,7 +40,24 @@ div.fillin
   position:absolute;
   top:0px;
   height: 100%;
+  z-index: -30;
+}
+div.fillinimage
+{
+  background: url("../rupnick.jpg") top center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  position: fixed;
+  width:100%;
+  top:50%;
+  height: 50%;
   z-index: -10;
+  opacity: .5;
+  
+}
+
+.accentcolor {
+  color: #b8d491;
 }
 
 

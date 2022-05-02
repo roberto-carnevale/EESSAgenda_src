@@ -1,14 +1,34 @@
-<mat-form-field>
-  <mat-label>Login</mat-label>
-  <input matInput id="login" #login />
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Passord</mat-label>
-  <input matInput id="password" #password type="password" />
-</mat-form-field>
-<button mat-raised-button (click)="onSubmit(login.value, password.value)">
-  Login
-</button>
-<button mat-raised-button (click)="onReset(login.value)">
-  Reset Password
-</button>
+<div
+  style="
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  "
+>
+  <div
+    style="
+      width: fit-content;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    "
+  >
+    <mat-form-field>
+      <mat-label>Login</mat-label>
+      <input matInput id="login" #login />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Passord</mat-label>
+      <input matInput id="password" #password type="password" (keyup.enter)="onSubmit(login.value, password.value)" />
+    </mat-form-field>
+    <div style="display: flex; flex-direction: row; align-items: center">
+      <button mat-raised-button color="accent" (click)="onSubmit(login.value, password.value)">
+        Login
+      </button>
+      <button mat-raised-button (click)="onReset(login.value)">
+        Reset Password
+      </button>
+    </div>
+  </div>
+</div>

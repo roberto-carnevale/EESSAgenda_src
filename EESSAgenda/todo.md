@@ -9,13 +9,15 @@ Chat Esercitanti?
 # Bug
 ## Esercitante
 Spinner colore?
-Sistemare self-service signin
+Sistemare pagina di self-service signin
+Reiscrizione al nuovo corso con self-signing
 
 ## Guida
 Split per giornata
 
 ## Gestore
 includere nomi invece di mail in creazineAgenda
+eliminare il tasto cancella
 
 ## Amministratore
 feature per corso
@@ -24,4 +26,3 @@ feature per corso
 Sistemare login page
 
 # Get Safe!
-Rules!!!!!!!

@@ -1,25 +1,56 @@
-<ng-container *ngIf="!registrazione && corso != '' ">
-<p>Registrazione per il corso {{corso}}</p>
-
-  <mat-form-field>
-  <mat-label>Email</mat-label>
-  <input matInput id="email" #email email required/>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Passord</mat-label>
-  <input matInput id="password" #password type="password" required/>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Passord x2</mat-label>
-  <input matInput id="passwordx2" #passwordx2 type="password" required/>
-</mat-form-field>
-<mat-form-field>
-  <mat-label>Nome</mat-label>
-  <input matInput id="nome" #nome required/>
-</mat-form-field>
-<button mat-raised-button (click)="onSubmit(email.value, password.value, passwordx2.value, nome.value)">
-  Registrati
-</button>
-<div *ngIf="errorValidation"> Controllare i campi</div>
+<ng-container *ngIf="!registrazione && corso != ''">
+  <p>Registrazione per il corso {{ corso }}</p>
+  <div
+    style="
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    "
+  >
+    <div
+      style="
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      "
+    >
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput id="email" #email required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input matInput id="password" #password type="password" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Ripeti Password</mat-label>
+        <input matInput id="passwordx2" #passwordx2 type="password" required />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput id="nome" #nome required />
+      </mat-form-field>
+      <button
+        mat-raised-button color="accent"
+        (click)="
+          onSubmit(email.value, password.value, passwordx2.value, nome.value)
+        "
+      >
+        Registrati
+      </button>
+      <button
+      mat-button
+      (click)="
+        backToLogin();
+      "
+    >
+      Ritorna al Login
+    </button>
+      <div *ngIf="errorValidation" style="color:red; padding:2rem">Controllare i campi</div>
+      <div *ngIf="passwordDiverse" style="color:red; padding:1rem">Le Password devono essere uguali</div>
+    </div>
+  </div>
 </ng-container>
 <ng-container *ngIf="registrazione">Registrazione in corso</ng-container>
