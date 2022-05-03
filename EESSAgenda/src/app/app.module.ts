@@ -31,6 +31,8 @@ import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
 import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
 
+import { HttpClientModule } from '@angular/common/http';
+
 
 
 @NgModule({
@@ -60,6 +62,7 @@ import { CambioCorsoComponent } from './components/login/signin/cambioCorso.comp
     MatCardModule,
     MatBadgeModule,
     MatProgressSpinnerModule,
+    HttpClientModule,
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]

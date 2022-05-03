@@ -19,8 +19,11 @@
 
 <div class="router-outlet">
 <router-outlet></router-outlet>
+<mat-icon *ngIf="!message" (click)="sendMessage()">speaker_notes_off</mat-icon>
+<mat-icon *ngIf="message" (click)="sendMessage()">speaker_notes</mat-icon>
 </div>
 <div class="fillin">
+
 <div class="fillinimage">
 
 </div>
