@@ -8,12 +8,14 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginComponent implements OnInit {
   constructor(private authService:AuthService) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    
+  }
 
   onSubmit(login:string, password:string) {
     this.authService.setUser({email:login, password:password});
   }
-  
+
   onReset(email:string) {
     this.authService.resetUser(email);
   }

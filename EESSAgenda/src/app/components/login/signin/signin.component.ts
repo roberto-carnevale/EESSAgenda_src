@@ -10,6 +10,7 @@ export class SignInComponent implements OnInit {
   errorValidation = false;
   passwordDiverse = false;
   registrazione = false;
+  key = "";
   corso: string = '';
 
   constructor(
@@ -22,9 +23,9 @@ export class SignInComponent implements OnInit {
   ngOnInit() {
     this.auth.setUser(null);
     this.actRoute.params.subscribe((p) => {
-      const key: string = p['key'];
-      if (key) {
-        this.auth.trovaCorsoConChiave(key).then((corso) => {
+      this.key = p['key'];
+      if (this.key) {
+        this.auth.trovaCorsoConChiave(this.key).then((corso) => {
           if (corso) this.corso = corso;
         });
       }
@@ -52,11 +53,8 @@ export class SignInComponent implements OnInit {
     }
 
     if (this.corso) {
-      this.data.creaEsercitanteDaLink(nome, this.corso, email, password);
+      this.data.creaEsercitanteDaLink(nome, this.corso, email, password, this.key);
       this.registrazione = true;
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 5000);
     }
   }
 

@@ -24,7 +24,7 @@ export class DataService {
     private authFirebase: AngularFireAuth,
     private firestore: AngularFirestore,
     private auth: AuthService,
-    private router:Router,
+    private router: Router
   ) {}
   ///////////
   // UTENTI
@@ -118,7 +118,8 @@ export class DataService {
     nome: string,
     corso: string,
     email: string,
-    password: string
+    password: string,
+    key: string
   ) {
     let utente: Utente = {
       corso: corso,
@@ -133,16 +134,49 @@ export class DataService {
           .collection('/utenti')
           .doc(utente.email)
           .set(utente)
-          .then()
-          .catch(err => {console.log(err);});
+          .then(() => {
+            setTimeout(() => {
+              this.router.navigate(['/']);
+            }, 5000);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
-        const errorstring :string = err.toLocaleString();
+        const errorstring: string = err.toLocaleString();
         console.log(errorstring);
-        if (errorstring.indexOf("auth/email-already-in-use")>0) {
-            window.alert("Utente già registrato. Eseguire login.")
-        }
+        this.auth.setUser({ email: email, password: password });
+        this.auth.subscribeAuth().pipe(take(1)).subscribe((isAuth) => {
+          if (isAuth) {
+            this.firestore
+              .collection<Utente>('utenti')
+              .doc(email)
+              .update({ corso: corso });
+            setTimeout(() => {
+              this.router.navigate(['/login']);
+            }, 5000);
+          } else {
+            this.router.navigate(['/cambio', key]);
+          }
+        });
       });
+  }
+  cambiaCorsoSelfService(corso: string, email: string, password: string) {
+    this.auth.setUser({ email: email, password: password });
+    const sub = this.auth.subscribeAuth().pipe(take(1)).subscribe((isAuth) => {
+      if (isAuth) {
+        this.firestore
+          .collection<Utente>('utenti')
+          .doc(email)
+          .update({ corso: corso });
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 5000);
+      } else {
+        window.alert('Errore di autenticazione');
+      }
+    });
   }
 
   ///////

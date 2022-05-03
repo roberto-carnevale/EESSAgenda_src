@@ -29,6 +29,7 @@ import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.co
 import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
 import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
+import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
 
 
 
@@ -40,7 +41,8 @@ import { AllegatiComponent } from './components/esercitante/allegati/allegati.co
     SemaforoComponent,
     BachecaComponent,
     SignInComponent,
-    AllegatiComponent
+    AllegatiComponent,
+    CambioCorsoComponent
   ],
   imports: [
     BrowserModule,

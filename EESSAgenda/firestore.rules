@@ -37,21 +37,25 @@ service cloud.firestore {
       return get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.ruolo in [2,4] &&
         resource.data.corso == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
     }
+    function mioAccount() {
+      return resource.id == request.auth.token.email;
+    }
 
     //Regole per Utenti
     match /utenti/{utente=*} {
       allow create: if request.auth != null && (request.resource.data.ruolo == 1 || isGestoreCorso()) && request.resource.data.ruolo != 0;
       allow read : if request.auth != null;
-      allow update : if request.auth != null && request.resource.data.ruolo != 0 && (isManager() || isGestore() || cambioSemaforo());
+      allow update : if request.auth != null && request.resource.data.ruolo != 0 && (isManager() || isGestore() || cambioSemaforo() || mioAccount());
     }
 		//Regole per Agenda
     match /agenda/{doc=*} {
-      allow read, write: if request.auth != null && ( prenotaSlotCorso() || isManager() );
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && ( prenotaSlotCorso() || isManager() );
     }
 
     //Lettura corsi aperta per autoisrizione
     match /corsi/{doc=*} {
-      allow read: if request.auth != null && (controllaCorso() || isManager());
+      allow read: if request.auth != null;
       allow write : if request.auth != null && (isManager() || isGestoreCorso());
     }
 
@@ -61,12 +65,13 @@ service cloud.firestore {
       allow write : if request.auth != null && isManager();
     }
     match /home/{doc=*} {
-      allow read: if request.auth != null && (controllaCorso() || isManager());
+      allow read: if request.auth != null;
       allow write: if request.auth != null && (controllaCorso() && isGestoreCorso());
     }
 
     match /chat/{doc=*} {
-      allow read, write: if request.auth != null && (controllaCorso() || isManager());
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (controllaCorso() || isManager());
     }
 
   }
