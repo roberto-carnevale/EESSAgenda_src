@@ -10,7 +10,7 @@ rules_version = '2';
 service cloud.firestore {
   /// Function for determining Gestore, GuidaSmart o Amministratore
   match /databases/{database}/documents {
-    
+
     //E' un Amministratore?
     function isManager() {
       return get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.ruolo == 0;
@@ -22,22 +22,27 @@ service cloud.firestore {
     //se sto cambiando il corso di cui sono gestore OK, altrimenti KO
     function isGestoreCorso() {
     	return get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.ruolo in [0,3,4] &&
-      request.resource.id == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
+      resource.id == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
     }
     //se sto facendo qualcosa sul mio corso o correlati del mio corso OK, altrimenti KO
     function controllaCorso() {
-    	return get(/$(request.path)).id == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
+    	return resource.id == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
     }
     //se sto prenotando il mio corso OK, altrimenti KO
     function prenotaSlotCorso() {
-    	return get(/$(request.path)).data.corso == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
+    	return resource.data.corso == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
     }
-    
+    //la guida cambia il suo stato
+    function cambioSemaforo() {
+      return get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.ruolo in [2,4] &&
+        resource.data.corso == get(/databases/$(database)/documents/utenti/$(request.auth.token.email)).data.corso
+    }
+
     //Regole per Utenti
     match /utenti/{utente=*} {
       allow create: if request.auth != null && (request.resource.data.ruolo == 1 || isGestoreCorso()) && request.resource.data.ruolo != 0;
       allow read : if request.auth != null;
-      allow update : if request.auth != null && request.resource.data.ruolo != 0 && (isManager() || isGestore());
+      allow update : if request.auth != null && request.resource.data.ruolo != 0 && (isManager() || isGestore() || cambioSemaforo());
     }
 		//Regole per Agenda
     match /agenda/{doc=*} {
@@ -46,18 +51,18 @@ service cloud.firestore {
 
     //Lettura corsi aperta per autoisrizione
     match /corsi/{doc=*} {
-      allow read: if request.auth != null && (controllaCorso() || isManager()); 
+      allow read: if request.auth != null && (controllaCorso() || isManager());
       allow write : if request.auth != null && (isManager() || isGestoreCorso());
     }
 
     match /home/{doc=*} {
-      allow read: if request.auth != null && (controllaCorso() || isManager()); 
-      allow write: if request.auth != null && (controllaCorso() && isGestoreCorso()); 
+      allow read: if request.auth != null && (controllaCorso() || isManager());
+      allow write: if request.auth != null && (controllaCorso() && isGestoreCorso());
     }
 
     match /chat/{doc=*} {
-      allow read, write: if request.auth != null && (controllaCorso() || isManager()); 
+      allow read, write: if request.auth != null && (controllaCorso() || isManager());
     }
-    
+
   }
 }
