@@ -124,7 +124,7 @@ export class AuthService {
     return new Promise<string>((resolve, reject) => {
       return this.firestore
         .collection<Corso>(
-          'corsi',
+          'signinkey',
           (ref) => ref.where('chiave', '==', chiave)
         )
         .valueChanges()

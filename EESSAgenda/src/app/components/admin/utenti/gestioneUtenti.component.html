@@ -40,7 +40,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field appearance="fill">
-      <input matInput [value]="utente.nome" readonly />
+      <input matInput [value]="utente.nome" #nome/>
     </mat-form-field>
     <mat-form-field appearance="fill">
       <input matInput [value]="utente.email" readonly />
@@ -60,8 +60,11 @@
     <mat-form-field appearance="fill">
       <input matInput [value]="listaRuoliConst[utente.ruolo].val" readonly />
     </mat-form-field>
+    <button mat-button color="accent" (click)="aggiornaNome(utente.email, nome.value)">
+      Conferma Nome
+    </button>
     <button mat-button color="accent" (click)="resetPassword(utente.email)">
-      Reset
+      Reset Password
     </button>
   </mat-expansion-panel>
 </mat-accordion>

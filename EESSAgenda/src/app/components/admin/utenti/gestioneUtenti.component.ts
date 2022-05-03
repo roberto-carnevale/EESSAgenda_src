@@ -56,6 +56,11 @@ export class GestioneUtentiComponent implements OnInit {
     console.log(corso);
     this.adminData.cambiaCorso(email, corso);
   }
+
+  aggiornaNome(email:string, nome:string) {
+    this.adminData.cambiaNome(email, nome);
+  }
+
   resetPassword(email:string):void {
     this.auth.resetUser(email);
   }

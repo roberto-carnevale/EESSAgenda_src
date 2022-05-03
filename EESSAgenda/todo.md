@@ -16,8 +16,6 @@ Reiscrizione al nuovo corso con self-signing
 Split per giornata
 
 ## Gestore
-includere nomi invece di mail in creazineAgenda
-eliminare il tasto cancella
 
 ## Amministratore
 feature per corso

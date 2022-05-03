@@ -5,6 +5,7 @@ import { DataService } from 'src/app/services/data.service';
 import { ActivatedRoute, } from '@angular/router';
 import { MatDatepickerInputEvent} from '@angular/material/datepicker';
 import { AdminDataService } from 'src/app/services/adminData.service';
+import { KeyValue } from '@angular/common';
 
 @Component({
   selector: 'app-creazioneAgenda',
@@ -23,6 +24,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
   lista$ = new Observable<Slots[]>();
   data_effettiva = new Date(new Date().setHours(9,0,0,0));
   durata_colloquio = 15;
+  listaGuide : KeyValue<string, string>[] = [];
 
   componentSubscriptions = new Subscription()
   ngOnInit() {
@@ -31,7 +33,7 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
       this.guide$ = this.adminData.leggiGuide(this.corso);
       this.lista$ = this.firestore.leggiSlot(this.corso);
     }));
-
+    this.componentSubscriptions.add(this.adminData.leggiGuide(this.corso).subscribe( gl => {gl.forEach( g => {this.listaGuide.push({key:g.email, value:g.nome})})}));
   }
 
 
@@ -62,7 +64,13 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
     this.guida = evento as string;
     this.controlla();
   }
-
+  nomeGuida(email:string):string{
+    let res = "";
+    this.listaGuide.forEach(element => {
+      if (element.key == email) {res = element.value}
+    });
+    return res;
+  }
   conferma() {
     const fine = new Date(this.data_effettiva.getTime()+this.durata_colloquio*60000)
     console.log(this.data_effettiva)

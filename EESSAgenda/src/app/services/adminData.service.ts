@@ -21,12 +21,14 @@ export class AdminDataService {
   cancellaCorso(corso: string) {
     this.firestore.collection('chat').doc(corso).delete();
     this.firestore.collection('home').doc(corso).delete();
-    this.firestore.collection('corsi').doc(corso).delete().then().catch();
+    this.firestore.collection('corsi').doc(corso).delete();
+    this.firestore.collection('signinkey').doc(corso).delete();
   }
 
   creaCorso(nome: string) {
     this.firestore.collection('chat').doc(nome).set({chat:[]}).then();
     this.firestore.collection('home').doc(nome).set({contenuto:"<h1>Benvenuto a " + nome + "</h1><p>Questa è la home page di " + nome}).then();
+    this.firestore.collection('signinkey').doc(nome).set({chiave:this.generaStringCasuale(50), corso: nome}).then();
     this.firestore
       .collection('corsi')
       .doc(nome)
@@ -51,7 +53,7 @@ export class AdminDataService {
       let urlReturn =
         window.location.protocol + '//' + window.location.host + '/signin/';
       this.firestore
-        .collection<Corso>('corsi')
+        .collection<Corso>('signinkey')
         .doc(corso)
         .valueChanges()
         .pipe(
@@ -131,6 +133,21 @@ export class AdminDataService {
             .then()
         )
       );
+  }
+
+  cambiaNome(email: string, nome:string) {
+    const id = this.firestore
+    .collection('/utenti', (ref) => ref.where('email', '==', email))
+    .get()
+    .forEach((qs) =>
+      qs.forEach((d) =>
+        this.firestore
+          .collection('/utenti')
+          .doc(d.id)
+          .update({ nome: nome })
+          .then()
+      )
+    );
   }
 
   ///////

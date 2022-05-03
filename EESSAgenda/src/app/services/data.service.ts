@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject } from 'rxjs';
 import { map, take, catchError, tap } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
@@ -23,6 +24,7 @@ export class DataService {
     private authFirebase: AngularFireAuth,
     private firestore: AngularFirestore,
     private auth: AuthService,
+    private router:Router,
   ) {}
   ///////////
   // UTENTI
@@ -132,10 +134,14 @@ export class DataService {
           .doc(utente.email)
           .set(utente)
           .then()
-          .catch(err =>window.alert("Errore di creazione"));
+          .catch(err => {console.log(err);});
       })
       .catch((err) => {
-        window.alert(err);
+        const errorstring :string = err.toLocaleString();
+        console.log(errorstring);
+        if (errorstring.indexOf("auth/email-already-in-use")>0) {
+            window.alert("Utente già registrato. Eseguire login.")
+        }
       });
   }
 

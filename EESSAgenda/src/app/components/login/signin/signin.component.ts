@@ -56,7 +56,7 @@ export class SignInComponent implements OnInit {
       this.registrazione = true;
       setTimeout(() => {
         this.router.navigate(['/']);
-      }, 10);
+      }, 5000);
     }
   }
 
