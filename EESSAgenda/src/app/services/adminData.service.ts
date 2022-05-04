@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Corso, File, Slots, TipoUtente, Utente } from 'src/models/model';
+import { ChatMessage, Corso, File, Slots, TipoUtente, Utente } from 'src/models/model';
 import { AuthService } from './auth.service';
 
 import { map, take } from 'rxjs/operators';
@@ -306,6 +306,15 @@ export class AdminDataService {
             .catch(() => reject());
         });
     });
+  }
+  //////////////
+  //CHAT
+  //////////////
+  cancellaTuttaChat(corso : string){
+    this.firestore
+    .collection<{chat: ChatMessage[]}>('chat')
+    .doc(corso)
+    .update({chat:[]})
   }
 }
 

@@ -12,6 +12,7 @@ import { AdminGuard } from './services/adminGuard.service';
 import { GuidaGuard } from './services/guidaGuard.service';
 import { HomeComponent } from './components/home.component';
 import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
+import { ChatComponent } from './components/esercitante/chat/chat.component';
 
 const routes: Routes = [
   { path:"" , component: HomeComponent, canActivate: [LoginGuard] },
@@ -21,6 +22,7 @@ const routes: Routes = [
   {path:'guida', loadChildren: ()=>import('./components/guida/guida.module').then(m=>m.GuidaModule), canLoad:[GuidaGuard]},
   {path:'bacheca', component:BachecaComponent, canActivate: [LoginGuard]},
   {path:'allegati', component:AllegatiComponent, canActivate: [LoginGuard]},
+  {path:'chat', component:ChatComponent, canActivate: [LoginGuard]},
   {path:'signin/:key', component:SignInComponent},
   {path:'cambio/:key', component:CambioCorsoComponent},
   {path:'**', component:NotFound404Component},

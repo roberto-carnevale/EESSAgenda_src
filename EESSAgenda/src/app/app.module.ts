@@ -30,7 +30,7 @@ import { PrenotazioniComponent } from './components/esercitante/prenotazioni/pre
 import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
 import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
-
+import { ChatComponent } from './components/esercitante/chat/chat.component';
 
 
 @NgModule({
@@ -42,7 +42,8 @@ import { CambioCorsoComponent } from './components/login/signin/cambioCorso.comp
     BachecaComponent,
     SignInComponent,
     AllegatiComponent,
-    CambioCorsoComponent
+    CambioCorsoComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

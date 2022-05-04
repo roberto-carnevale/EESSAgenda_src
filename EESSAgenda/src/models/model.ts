@@ -29,6 +29,12 @@ export interface File {
   url: string,
 }
 
+export interface ChatMessage {
+  user:string,
+  date:string,
+  msg:string
+}
+
 export enum TipoUtente {
   Amministratore,
   Esercitante,

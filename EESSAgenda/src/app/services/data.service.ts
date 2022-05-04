@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Slots, Utente, TipoUtente, Corso, File } from 'src/models/model';
+import { Slots, Utente, TipoUtente, Corso, File, ChatMessage } from 'src/models/model';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable, Subject } from 'rxjs';
@@ -205,5 +205,28 @@ export class DataService {
       .doc(corso)
       .valueChanges()
       .pipe(map((c) => c?.allegati));
+  }
+  ///////
+  //CHAT
+  ///////
+  leggiChat(corso : string) : Observable<ChatMessage[] | undefined>{
+    return this.firestore
+    .collection<{chat: ChatMessage[]}>('chat')
+    .doc(corso)
+    .valueChanges().pipe( map (c => c?.chat!))
+  }
+
+  mandaChat(corso : string, msgObj :ChatMessage){
+    this.firestore
+    .collection<{chat: ChatMessage[]}>('chat')
+    .doc(corso)
+    .valueChanges().pipe( take(1) ).subscribe( c => {
+      c?.chat.unshift(msgObj);
+      this.firestore
+        .collection<{chat: ChatMessage[]}>('chat')
+        .doc(corso)
+        .update(c!)
+    })
+
   }
 }
