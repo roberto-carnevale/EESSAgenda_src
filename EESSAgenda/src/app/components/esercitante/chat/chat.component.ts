@@ -7,7 +7,7 @@ import { ChatMessage } from 'src/models/model';
 
 @Component({
   selector: 'selector-name',
-  template: `<p>Chat di gruppo, i messaggi saranni inviati a tutti.<p>
+  template: `<p>Chat di gruppo, i messaggi saranno inviati a tutti.<p>
   <mat-form-field style="padding:1rem;">
     <input matInput  #msg size="90" />
   </mat-form-field>
