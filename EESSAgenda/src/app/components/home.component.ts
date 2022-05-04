@@ -5,7 +5,7 @@ import { AuthService } from '../services/auth.service';
 import { take } from 'rxjs/operators';
 
 @Component({
-  template: `<div #home></div>
+  template: `<div #home style="padding-left:5rem;padding-right:5rem"></div>
     <div
       style="background-color: #d0bde6;padding-bottom: 3rem; width: 100%;"
     ></div>

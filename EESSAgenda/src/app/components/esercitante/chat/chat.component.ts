@@ -7,14 +7,16 @@ import { ChatMessage } from 'src/models/model';
 
 @Component({
   selector: 'selector-name',
-  template: `<mat-form-field style="padding:1rem;">
+  template: `<p>Chat di gruppo, i messaggi saranni inviati a tutti.<p>
+  <mat-form-field style="padding:1rem;">
     <input matInput  #msg size="90" />
   </mat-form-field>
     <button mat-icon-button (click)="addMsg(msg.value)"><mat-icon>send</mat-icon></button>
-    <hr>
-    <span *ngFor="let msgItem of msg$ | async">
-      {{JSON.parse(msgItem.date)|date:'dd/MM hh:mm' }} || {{msgItem.user}} || {{msgItem.msg}}<br/>
-    </span> `,
+    <div style="background-color: #efe9f7; padding-top:2rem;padding-bottom:1rem;padding-left:2rem">
+    <table>
+    <ng-container *ngFor="let msgItem of msg$ | async" >
+      <tr><td>{{JSON.parse(msgItem.date)|date:'dd/MM hh:mm' }} || {{msgItem.user}} </td><td style="padding-left:1em"> {{msgItem.msg}} </td></tr>
+    </ng-container></table></div>`,
 })
 export class ChatComponent implements OnInit {
   constructor(private auth: AuthService, private data: DataService) { this.JSON = JSON;}
