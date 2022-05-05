@@ -157,7 +157,7 @@ export class AdminDataService {
   leggiGuide(corso: string): Observable<Utente[]> {
     return this.firestore
       .collection<Utente>('/utenti', (ref) =>
-        ref.where('corso', '==', corso).where('ruolo', '==', 2)
+        ref.where('corso', '==', corso).where('ruolo', 'in', [2,4])
       )
       .valueChanges();
   }

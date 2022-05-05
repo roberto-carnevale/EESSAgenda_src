@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { AdminDataService } from 'src/app/services/adminData.service';
@@ -16,6 +16,7 @@ export class MessaggiUtentiComponent implements OnInit, OnDestroy {
   bacheca_corso$: Observable<string[] | undefined> = new Observable<
     string[] | undefined
   >();
+  @ViewChild('in') inInput:any;
 
   ngOnInit() {
     this.corso = this.router.snapshot.params['id'];
@@ -28,11 +29,12 @@ export class MessaggiUtentiComponent implements OnInit, OnDestroy {
   }
 
   aggiugiBacheca(utenteEmail: string, messaggio: string) {
-    console.log(utenteEmail)
+    this.inInput.nativeElement.value="";
     this.adminData.aggiungiMessaggio(utenteEmail, messaggio);
   }
 
   aggiugiBachecaCorso(corso: string, messaggio: string) {
+    this.inInput.nativeElement.value="";
     this.adminData.aggiungiMessaggioCorso(corso, messaggio);
   }
 
