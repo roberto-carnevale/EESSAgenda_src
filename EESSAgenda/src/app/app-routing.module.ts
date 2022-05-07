@@ -25,6 +25,7 @@ const routes: Routes = [
   {path:'chat', component:ChatComponent, canActivate: [LoginGuard]},
   {path:'signin/:key', component:SignInComponent},
   {path:'cambio/:key', component:CambioCorsoComponent},
+  {path:'help', loadChildren: () => import('./components/help/help.module').then(m=>m.HelpModule)},
   {path:'**', component:NotFound404Component},
 ];
 

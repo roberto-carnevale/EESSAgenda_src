@@ -1,0 +1,53 @@
+<span style="display: flex; flex-direction: row;">
+<span style="width: 10%;"></span>
+<span style="width: 80%;">
+<!--Help generale-->
+<h2>Benvenuto/e nella piattaforma per corsi di Esercizi e Convegni</h2>
+<ng-container *ngIf="login">
+Questa pagina illustra le funzionalità della piattaforma disponibili agli partecipanti, agli esercitanti,alle guide e ai gestori.<br/>
+Nell'angolo in alto a destra della <span style="background-color: #9f7ecc">barra viola</span> trovate le icone con i vari servizi della piattaforma:
+<ul>
+    <li class="icon"><mat-icon>help</mat-icon> questa guida,</li>
+    <li class="icon"><mat-icon>home</mat-icon> corrisponde alla home page dove sono esposte le informazioni generali,</li>
+    <li class="icon"><mat-icon>edit_calendar</mat-icon>il calendario dà la possibilità di prenotare i colloqui con le guide,</li>
+    <li class="icon"><mat-icon>cloud_circle</mat-icon> sono presenti gli allegati utili al corso di Esercizi o al Convengo,</li>
+    <li class="icon"><mat-icon>assignment</mat-icon> con il numero nella bolla di notifica dà informazioni personalizzate o estemporanee per cambiamenti in corso d'opera</li>
+    <li class="icon"><mat-icon>chat_bubble</mat-icon> infine è una chat comune ove tutti possono scrivere.</li>
+</ul>
+
+
+</ng-container>
+<ng-container *ngIf="ruolo==Guida || ruolo==GuidaSmart">
+Inoltre come guida avrai accesso a questa area:
+<ul>
+  <li class="icon"><mat-icon>follow_the_signs</mat-icon> qui si trova l'agenda dei colloqui</li>
+</ul>
+</ng-container>
+
+<ng-container *ngIf="ruolo==Gestore || ruolo==GuidaSmart">
+Infine come gesotre avrai accesso a questa area:
+<ul>
+  <li class="icon"><mat-icon>settings_applications</mat-icon> dove trovi il parametraggio del Convegno o del Corso di Esercizi,</li>
+  <li class="icon"><mat-icon>manage_accounts</mat-icon> dove trovi gli utenti iscritti e la possibilità di inviare messaggi personali</li>
+</ul>
+</ng-container>
+<!--
+
+-->
+
+<ng-container *ngIf="!login">
+<p>Se hai ricevuto una mail con un link di autoregistrazione come questo "https://eess-agendas.web.app/signin/XXXXXXXXXXXXXXXXXXXXXXX"<br/>
+registrati alla piattaforma per accedere al Convegno o al corso di Esercizi a cui sei invitato.
+Se sei già registrato, puoi accedere con login e password da <a [routerLink]="['/login']">questa pagina</a></p>
+<p>Nella piattaforma puoi trovare</p><ul><li>l'agenda per colloqui,</li> <li>una bacheca per le comunicazioni di servizio,</li><li>... e molto altro</li> </ul>
+<p>Tutto il codice sorgente di questa web app è scritto in Angular, RxJS e ospitato su Firebase.<br/>A questo indirizzo di GitHub trovate il sorgente <code>https://github.com/roberto-carnevale/EESSAgenda_src</code></p>
+<p>Per richiedere un accesso e provare la piattaforma per un Convegno o un corso di Esercizi Spirituali scrivere a kn35roby CHIOCCHILA gmail.com</p>
+<p>If you are a <b>non-Italian speaker</b> I'll be happy to help anyway. Let's keep in touch by e-mail kn35roby AT gmail.com.</p>
+<p>Spero possiate giovarne,<br>
+Roberto<br/>
+(Ideatore, Programmatore e Amministratore della piattaforma)</p>
+</ng-container>
+
+</span>
+<span style="width: 10%;"></span>
+ </span>

@@ -29,7 +29,8 @@ export class GuidaGuard implements CanLoad {
         .pipe(take(1))
         .subscribe((u) => {
           if (
-            u!.ruolo == TipoUtente.Guida
+            u!.ruolo == TipoUtente.Guida ||
+            u!.ruolo == TipoUtente.GuidaSmart
           ) {
             resolve(true);
           } else {
