@@ -1,3 +1,26 @@
 li.icon {
   list-style-type: none;
 }
+
+.reddot {
+  height: 30px;
+  width: 30px;
+  background-color: #d9204a;;
+  border-radius: 50%;
+  display: inline-block;
+  align-content: center;
+}
+
+.greendot {
+  height: 30px;
+  width: 30px;
+  background-color: #a2c387;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.ruolo{
+  color: #d9204a;
+  text-decoration: underline;
+  font-weight: bolder;
+}
