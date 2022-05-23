@@ -1,0 +1,5 @@
+<div style="padding-left:3rem;">
+<ng-container *ngFor="let num of pluto">
+<p><mat-checkbox (change)="changeVal($event)" [value]="num.toString(10)" color="primary">{{pippo[num]}}</mat-checkbox></p>
+</ng-container>
+</div>

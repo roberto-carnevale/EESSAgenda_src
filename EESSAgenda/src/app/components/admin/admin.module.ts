@@ -17,9 +17,11 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core'
 import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AllegatiAdminComponent } from './allegati/allegatiAdmin.component';
+import { OpzioniAdminComponent } from './opzioni/opzioni.component';
 import { HomeAdminComponent } from './corsi/homeCorso.component';
 import { AdminDataService } from 'src/app/services/adminData.service';
 
@@ -31,6 +33,7 @@ const Components = [
   MessaggiUtentiComponent,
   AllegatiAdminComponent,
   HomeAdminComponent,
+  OpzioniAdminComponent,
 ];
 const Modules = [
   CommonModule,
@@ -45,7 +48,7 @@ const Modules = [
   MatNativeDateModule,
   MatCardModule,
   MatSnackBarModule,
-
+  MatCheckboxModule,
 ]
 
 @NgModule({

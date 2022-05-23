@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ChatMessage, Corso, File, Slots, TipoUtente, Utente } from 'src/models/model';
+import { ChatMessage, Corso, File, Slots, TipoUtente, Utente, OpzioniPiattaforma } from 'src/models/model';
 import { AuthService } from './auth.service';
 
 import { map, take } from 'rxjs/operators';
@@ -32,7 +32,16 @@ export class AdminDataService {
     this.firestore
       .collection('corsi')
       .doc(nome)
-      .set({ corso: nome, info: [], chiave: this.generaStringCasuale(50) })
+      .set({ corso: nome, info: [], chiave: this.generaStringCasuale(50)})
+      .then()
+      .catch();
+  }
+  
+  opzioniCorso(nome: string, opzioni:number[]) {
+    this.firestore
+      .collection('corsi')
+      .doc(nome)
+      .update({ opzioni: opzioni})
       .then()
       .catch();
   }

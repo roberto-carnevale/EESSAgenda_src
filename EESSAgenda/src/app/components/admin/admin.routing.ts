@@ -6,6 +6,7 @@ import { CreazioneAgendaComponent } from 'src/app/components/admin/creazioneAgen
 import { GestioneUtentiComponent } from 'src/app/components/admin/utenti/gestioneUtenti.component';
 import { MessaggiUtentiComponent } from './messaggi/messaggiUtenti.component';
 import { AllegatiAdminComponent } from './allegati/allegatiAdmin.component';
+import { OpzioniAdminComponent } from './opzioni/opzioni.component';
 import { HomeAdminComponent } from './corsi/homeCorso.component';
 import { LoginGuard } from 'src/app/services/guard.service';
 
@@ -15,7 +16,8 @@ export const routes: Routes = [
     {path:'utenti', component:GestioneUtentiComponent, canActivate: [LoginGuard]},
     {path:'creazioneAgenda/:id', component:CreazioneAgendaComponent, canActivate: [LoginGuard]},
     {path:'messaggi/:id', component:MessaggiUtentiComponent, canActivate: [LoginGuard]},
-    {path:'allegati/:id', component:AllegatiAdminComponent, canActivate: [LoginGuard]}
+    {path:'allegati/:id', component:AllegatiAdminComponent, canActivate: [LoginGuard]},
+    {path:'opzioni/:id', component:OpzioniAdminComponent, canActivate: [LoginGuard]}
 ]
 @NgModule({
   imports: [RouterModule.forChild(routes)],
