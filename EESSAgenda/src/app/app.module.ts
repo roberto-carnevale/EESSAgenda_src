@@ -14,19 +14,16 @@ import { environment } from '../environments/environment';
 
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
-import { MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 
 import { SignInComponent } from './components/login/signin/signin.component';
 import { LoginComponent } from './components/login/login.component';
-import { SemaforoComponent } from './components/esercitante/semaforo/semaforo.component';
-import { PrenotazioniComponent } from './components/esercitante/prenotazioni/prenotazioni.component';
 import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
 import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
@@ -36,9 +33,7 @@ import { ChatComponent } from './components/esercitante/chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
-    PrenotazioniComponent,
     LoginComponent,
-    SemaforoComponent,
     BachecaComponent,
     SignInComponent,
     AllegatiComponent,
@@ -53,14 +48,12 @@ import { ChatComponent } from './components/esercitante/chat/chat.component';
     AngularFirestoreModule,
     MatButtonModule,
     MatIconModule,
-    MatExpansionModule,
     MatFormFieldModule,
     MatInputModule,
     MatNativeDateModule,
     MatToolbarModule,
     MatCardModule,
     MatBadgeModule,
-    MatProgressSpinnerModule,
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],
   bootstrap: [AppComponent]

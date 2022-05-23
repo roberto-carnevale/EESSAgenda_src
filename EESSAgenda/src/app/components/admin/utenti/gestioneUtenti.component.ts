@@ -61,6 +61,10 @@ export class GestioneUtentiComponent implements OnInit {
     this.adminData.cambiaNome(email, nome);
   }
 
+  aggiornaUrl(email:string, url:string) {
+    this.adminData.cambiaUrl(email, url);
+  }
+
   resetPassword(email:string):void {
     this.auth.resetUser(email);
   }

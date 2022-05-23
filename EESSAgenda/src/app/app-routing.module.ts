@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { PrenotazioniComponent } from 'src/app/components/esercitante/prenotazioni/prenotazioni.component'
 import { NotFound404Component } from './404.component';
 import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { LoginComponent } from './components/login/login.component';
@@ -16,7 +15,7 @@ import { ChatComponent } from './components/esercitante/chat/chat.component';
 
 const routes: Routes = [
   { path:"" , component: HomeComponent, canActivate: [LoginGuard] },
-  { path:"prenotazioni" , component: PrenotazioniComponent, canActivate: [LoginGuard] },
+  { path:"prenotazioni" , loadChildren: ()=>import('./components/esercitante/prenotazioni/prenotazioni.module').then(m => m.PrenotazioniModule) },
   {path:'admin', loadChildren: ()=>import('./components/admin/admin.module').then(m => m.AdminModule), canLoad:[AdminGuard]},
   {path:'login', component:LoginComponent},
   {path:'guida', loadChildren: ()=>import('./components/guida/guida.module').then(m=>m.GuidaModule), canLoad:[GuidaGuard]},

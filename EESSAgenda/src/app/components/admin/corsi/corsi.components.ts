@@ -16,6 +16,7 @@ import { Corso } from 'src/models/model';
         <button mat-icon-button [routerLink]="['/admin', 'home', corso.corso]"><mat-icon>home</mat-icon></button>
         <button mat-icon-button [routerLink]="['/admin', 'messaggi', corso.corso]"><mat-icon>assignment</mat-icon></button>
         <button mat-icon-button [routerLink]="['/admin', 'allegati', corso.corso]"><mat-icon>cloud_circle</mat-icon></button>
+        <button mat-icon-button [routerLink]="['/admin', 'opzioni', corso.corso]"><mat-icon>tune</mat-icon></button>
         <button mat-icon-button (click)="copiaURL(corso.corso);"><mat-icon>link</mat-icon></button>
         <button mat-icon-button (click)="cancellaChat(corso.corso);"><mat-icon>speaker_notes_off</mat-icon></button>
         <button mat-icon-button (click)="cancellaCorso(corso.corso)" *ngIf="ruolo==0">

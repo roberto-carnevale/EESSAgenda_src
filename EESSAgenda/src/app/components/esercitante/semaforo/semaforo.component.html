@@ -1,0 +1,10 @@
+<ng-container *ngIf="statoGuida == true">
+  <div [ngClass]="classeCSS"  [matTooltip]="nomi_guide.unsafeUrl">{{ prendiNomeGuida(guida) }}</div>
+</ng-container>
+<ng-container *ngIf="statoGuida == false && url != undefined">
+  <a [href]="nomi_guide.url">
+    <div [ngClass]="classeCSS" [matTooltip]="nomi_guide.unsafeUrl">
+      {{ prendiNomeGuida(guida) }}
+    </div>
+  </a>
+</ng-container>

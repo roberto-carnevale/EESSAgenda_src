@@ -150,6 +150,21 @@ export class AdminDataService {
     );
   }
 
+  cambiaUrl(email: string, url:string) {
+    const id = this.firestore
+    .collection('/utenti', (ref) => ref.where('email', '==', email))
+    .get()
+    .forEach((qs) =>
+      qs.forEach((d) =>
+        this.firestore
+          .collection('/utenti')
+          .doc(d.id)
+          .update({ url:url })
+          .then()
+      )
+    );
+  }
+
   ///////
   //GESTIONE GUIDE
   ///////

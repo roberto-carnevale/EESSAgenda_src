@@ -111,6 +111,24 @@ export class DataService {
     });
   }
 
+  urlGuida(email: string): Promise<string | undefined> {
+    return new Promise((resolve) => {
+      return this.firestore
+        .collection<Utente>('/utenti')
+        .doc(email)
+        .valueChanges()
+        .pipe(
+          take(1),
+          map((lu) => {
+            return lu!.url;
+          })
+        )
+        .subscribe((n) => {
+          resolve(n);
+        });
+    });
+  }
+
   /////////////
   // SELF-SERVICE SIGNIN
   ////////////

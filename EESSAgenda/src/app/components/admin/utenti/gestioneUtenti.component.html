@@ -32,7 +32,7 @@
 
   <mat-expansion-panel
     *ngFor="let utente of utenti$ | async"
-    style="background-color:#efe9f7 "
+    style="background-color: #efe9f7"
   >
     <mat-expansion-panel-header style="background-color: #d0bde6">
       <mat-panel-title>
@@ -40,7 +40,7 @@
       </mat-panel-title>
     </mat-expansion-panel-header>
     <mat-form-field appearance="fill">
-      <input matInput [value]="utente.nome" #nome/>
+      <input matInput [value]="utente.nome" #nome />
     </mat-form-field>
     <mat-form-field appearance="fill">
       <input matInput [value]="utente.email" readonly />
@@ -60,7 +60,24 @@
     <mat-form-field appearance="fill">
       <input matInput [value]="listaRuoliConst[utente.ruolo].val" readonly />
     </mat-form-field>
-    <button mat-button color="accent" (click)="aggiornaNome(utente.email, nome.value)">
+    <ng-container *ngIf="utente.ruolo == 2 || utente.ruolo == 4">
+      <mat-form-field appearance="fill">
+        <mat-label>Link per connessione remota</mat-label>
+        <input matInput [value]="utente.url" #url />
+      </mat-form-field>
+      <button
+      mat-button
+      color="accent"
+      (click)="aggiornaUrl(utente.email, url.value)"
+    >
+      Conferma Link Remoto
+    </button>
+    </ng-container>
+    <button
+      mat-button
+      color="accent"
+      (click)="aggiornaNome(utente.email, nome.value)"
+    >
       Conferma Nome
     </button>
     <button mat-button color="accent" (click)="resetPassword(utente.email)">

@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HelpComponent } from './help.components';
 
 @NgModule({
-  imports: [CommonModule, HelpRoutingModule,MatIconModule],
+  imports: [CommonModule, HelpRoutingModule, MatIconModule],
   exports: [HelpComponent, HelpRoutingModule],
   declarations: [HelpComponent],
   providers: [AngularFirestore],
