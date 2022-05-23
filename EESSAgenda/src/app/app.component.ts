@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   messaggiCorso = 0;
   messaggiPersonali = 0;
   private utente: Utente | undefined = undefined;
+  opzioni:number[] = [];
 
   ngOnInit(): void {
     this.auth.subscribeAuth().subscribe((loggedIn) => {
@@ -47,6 +48,7 @@ export class AppComponent implements OnInit {
               : (this.messaggiCorso = 0);
             this.messaggi = this.messaggiCorso+this.messaggiPersonali;
           });
+        this.data.leggiOpzioniCorso(this.utente.corso).then( (vals) => this.opzioni = vals).catch(() => this.opzioni=[]);
       } else {
         this.utente = undefined;
         this.ruolo = undefined;

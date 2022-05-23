@@ -36,7 +36,7 @@ export class AdminDataService {
       .then()
       .catch();
   }
-  
+
   opzioniCorso(nome: string, opzioni:number[]) {
     this.firestore
       .collection('corsi')
@@ -84,7 +84,6 @@ export class AdminDataService {
     else
       return this.firestore.collection<Corso>('/corsi', ref => ref.where('corso', '==', this.auth.getUserData().corso)).valueChanges();
   }
-
 
   ///////
   //GESTIONE UTENTI

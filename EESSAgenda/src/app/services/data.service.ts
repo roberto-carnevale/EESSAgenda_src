@@ -29,17 +29,28 @@ export class DataService {
   ///////////
   // UTENTI
   ///////////
-  leggiUtentiCorso(corso: string): Observable<Utente[]> {
-    return this.firestore
-      .collection<Utente>('/utenti', (ref) => ref.where('corso', '==', corso))
-      .valueChanges();
-  }
 
   cercaUtente(utenteEmail: string): Observable<Utente | undefined> {
     return this.firestore
       .collection<Utente>('/utenti')
       .doc(utenteEmail)
       .valueChanges();
+  }
+
+  leggiUtentiCorso(corso: string): Observable<Utente[]> {
+    return this.firestore
+      .collection<Utente>('/utenti', (ref) => ref.where('corso', '==', corso))
+      .valueChanges();
+  }
+
+  leggiOpzioniCorso(corso:string): Promise<number[]>{
+    return new Promise<number[]>( (resolve, reject) => {
+      let vals :number[] | undefined = [];
+      this.firestore
+        .collection<Corso>('/corsi').doc(corso).valueChanges().pipe( take(1) ).subscribe( (v) => {vals = v?.opzioni}, () => (reject([])));
+      if( vals.length > 0 ) resolve([]);
+      else resolve(vals);
+    })
   }
   ///////////
   // BACHECA
