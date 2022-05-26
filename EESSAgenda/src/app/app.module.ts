@@ -18,7 +18,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core'
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
 import { MatBadgeModule } from '@angular/material/badge';
 
 
@@ -52,7 +51,6 @@ import { ChatComponent } from './components/esercitante/chat/chat.component';
     MatInputModule,
     MatNativeDateModule,
     MatToolbarModule,
-    MatCardModule,
     MatBadgeModule,
   ],
   providers: [ AuthService, DataService, {provide: MAT_DATE_LOCALE, useValue: 'it-IT'} ],

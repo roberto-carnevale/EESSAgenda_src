@@ -93,7 +93,7 @@ export class AdminDataService {
       let urlReturn =
         window.location.protocol + '//' + window.location.host + '/signin/';
       this.firestore
-        .collection<{chiave: string, corso:string}>('signinkey')
+        .collection<{ chiave: string; corso: string }>('signinkey')
         .doc(corso)
         .valueChanges()
         .pipe(
@@ -147,20 +147,18 @@ export class AdminDataService {
       nome: nome,
       ruolo: ruolo,
       email: email,
+      in_colloquio: false
     };
-    this.authFirebase
-      .createUserWithEmailAndPassword(email, password)
-      .then((cred) => {
-        this.firestore
-          .collection('/utenti')
-          .doc(utente.email)
-          .set(utente)
-          .then(() => {
-            this.authFirebase
-              .sendPasswordResetEmail(email)
-              .then(() => this.authFirebase.signOut());
-          })
-          .catch();
+    this.firestore
+      .collection('/utenti')
+      .doc(utente.email)
+      .set(utente)
+      .then(() => {
+        this.authFirebase
+          .createUserWithEmailAndPassword(email, password)
+          .then((cred) => {
+            this.authFirebase.signOut();
+          });
       })
       .catch((err) => {
         window.alert(err);

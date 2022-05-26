@@ -43,7 +43,7 @@ service cloud.firestore {
 
     //Regole per Utenti
     match /utenti/{utente=*} {
-      allow create: if request.auth != null && (request.resource.data.ruolo == 1 || isGestoreCorso()) && request.resource.data.ruolo != 0;
+      allow create: if request.auth != null && ((request.resource.data.ruolo == 1 || isGestoreCorso()) || request.resource.data.ruolo != 0);
       allow read : if request.auth != null;
       allow update : if request.auth != null && request.resource.data.ruolo != 0 && (isManager() || isGestore() || cambioSemaforo() || mioAccount());
     }

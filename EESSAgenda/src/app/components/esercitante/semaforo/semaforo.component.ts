@@ -29,6 +29,7 @@ export class SemaforoComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.data.nomeUtente(this.guida).then((g) => {
       this.data.urlGuida(this.guida).then((u) => {
+        if (u === undefined) {u=""}
         this.nomi_guide = { email: this.guida, nome: g, url: this.sanitizer.bypassSecurityTrustResourceUrl(u!), unsafeUrl:u! };
       });
     });
@@ -45,7 +46,6 @@ export class SemaforoComponent implements OnInit, OnDestroy {
   }
 
   prendiNomeGuida(email: string): string {
-    let nome = '';
     return this.nomi_guide.nome;
   }
 }
