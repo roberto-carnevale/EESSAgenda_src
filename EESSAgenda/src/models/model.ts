@@ -1,9 +1,8 @@
 export interface Corso {
     corso:string,
     info: string[],
-    chiave: string,
     allegati?: File[],
-    opzioni?: number[]
+    opzioni: number[]
 }
 
 export interface Slots{
@@ -48,6 +47,5 @@ export enum OpzioniPiattaforma {
   Chat,
   Prenotazioni,
   File,
-  Bacheca
 }
 

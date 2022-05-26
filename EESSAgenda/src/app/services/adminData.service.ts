@@ -2,18 +2,27 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ChatMessage, Corso, File, Slots, TipoUtente, Utente, OpzioniPiattaforma } from 'src/models/model';
+import {
+  ChatMessage,
+  Corso,
+  File,
+  Slots,
+  TipoUtente,
+  Utente,
+  OpzioniPiattaforma,
+} from 'src/models/model';
 import { AuthService } from './auth.service';
 
 import { map, take } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AdminDataService {
-  constructor(    private authFirebase: AngularFireAuth,
+  constructor(
+    private authFirebase: AngularFireAuth,
     private firestore: AngularFirestore,
-    private auth: AuthService,) { }
-
+    private auth: AuthService
+  ) {}
 
   //////
   //GESTIONE CORSI
@@ -26,22 +35,44 @@ export class AdminDataService {
   }
 
   creaCorso(nome: string) {
-    this.firestore.collection('chat').doc(nome).set({chat:[]}).then();
-    this.firestore.collection('home').doc(nome).set({contenuto:"<h1>Benvenuto a " + nome + "</h1><p>Questa è la home page di " + nome}).then();
-    this.firestore.collection('signinkey').doc(nome).set({chiave:this.generaStringCasuale(50), corso: nome}).then();
+    this.firestore.collection('chat').doc(nome).set({ chat: [] }).then();
+    this.firestore
+      .collection('home')
+      .doc(nome)
+      .set({
+        contenuto:
+          '<h1>Benvenuto a ' +
+          nome +
+          '</h1><p>Questa è la home page di ' +
+          nome,
+      })
+      .then();
+    this.firestore
+      .collection('signinkey')
+      .doc(nome)
+      .set({ chiave: this.generaStringCasuale(50), corso: nome })
+      .then();
     this.firestore
       .collection('corsi')
       .doc(nome)
-      .set({ corso: nome, info: [], chiave: this.generaStringCasuale(50)})
+      .set({
+        corso: nome,
+        info: [],
+        opzioni: [
+          OpzioniPiattaforma.Chat,
+          OpzioniPiattaforma.File,
+          OpzioniPiattaforma.Prenotazioni,
+        ],
+      })
       .then()
       .catch();
   }
 
-  opzioniCorso(nome: string, opzioni:number[]) {
+  opzioniCorso(nome: string, opzioni: number[]) {
     this.firestore
       .collection('corsi')
       .doc(nome)
-      .update({ opzioni: opzioni})
+      .update({ opzioni: opzioni })
       .then()
       .catch();
   }
@@ -62,7 +93,7 @@ export class AdminDataService {
       let urlReturn =
         window.location.protocol + '//' + window.location.host + '/signin/';
       this.firestore
-        .collection<Corso>('signinkey')
+        .collection<{chiave: string, corso:string}>('signinkey')
         .doc(corso)
         .valueChanges()
         .pipe(
@@ -82,7 +113,11 @@ export class AdminDataService {
     if (this.auth.getUserData().ruolo == TipoUtente.Amministratore)
       return this.firestore.collection<Corso>('/corsi').valueChanges();
     else
-      return this.firestore.collection<Corso>('/corsi', ref => ref.where('corso', '==', this.auth.getUserData().corso)).valueChanges();
+      return this.firestore
+        .collection<Corso>('/corsi', (ref) =>
+          ref.where('corso', '==', this.auth.getUserData().corso)
+        )
+        .valueChanges();
   }
 
   ///////
@@ -93,7 +128,11 @@ export class AdminDataService {
     if (this.auth.getUserData().ruolo == TipoUtente.Amministratore)
       return this.firestore.collection<Utente>('/utenti').valueChanges();
     else
-      return this.firestore.collection<Utente>('/utenti', ref => ref.where('corso', '==', this.auth.getUserData().corso)).valueChanges();
+      return this.firestore
+        .collection<Utente>('/utenti', (ref) =>
+          ref.where('corso', '==', this.auth.getUserData().corso)
+        )
+        .valueChanges();
   }
 
   creaUtente(
@@ -143,34 +182,34 @@ export class AdminDataService {
       );
   }
 
-  cambiaNome(email: string, nome:string) {
+  cambiaNome(email: string, nome: string) {
     const id = this.firestore
-    .collection('/utenti', (ref) => ref.where('email', '==', email))
-    .get()
-    .forEach((qs) =>
-      qs.forEach((d) =>
-        this.firestore
-          .collection('/utenti')
-          .doc(d.id)
-          .update({ nome: nome })
-          .then()
-      )
-    );
+      .collection('/utenti', (ref) => ref.where('email', '==', email))
+      .get()
+      .forEach((qs) =>
+        qs.forEach((d) =>
+          this.firestore
+            .collection('/utenti')
+            .doc(d.id)
+            .update({ nome: nome })
+            .then()
+        )
+      );
   }
 
-  cambiaUrl(email: string, url:string) {
+  cambiaUrl(email: string, url: string) {
     const id = this.firestore
-    .collection('/utenti', (ref) => ref.where('email', '==', email))
-    .get()
-    .forEach((qs) =>
-      qs.forEach((d) =>
-        this.firestore
-          .collection('/utenti')
-          .doc(d.id)
-          .update({ url:url })
-          .then()
-      )
-    );
+      .collection('/utenti', (ref) => ref.where('email', '==', email))
+      .get()
+      .forEach((qs) =>
+        qs.forEach((d) =>
+          this.firestore
+            .collection('/utenti')
+            .doc(d.id)
+            .update({ url: url })
+            .then()
+        )
+      );
   }
 
   ///////
@@ -180,7 +219,7 @@ export class AdminDataService {
   leggiGuide(corso: string): Observable<Utente[]> {
     return this.firestore
       .collection<Utente>('/utenti', (ref) =>
-        ref.where('corso', '==', corso).where('ruolo', 'in', [2,4])
+        ref.where('corso', '==', corso).where('ruolo', 'in', [2, 4])
       )
       .valueChanges();
   }
@@ -308,10 +347,7 @@ export class AdminDataService {
     });
   }
 
-  cancellaAllegato(
-    corso: string,
-    nomeFile: string,
-  ): Promise<boolean> {
+  cancellaAllegato(corso: string, nomeFile: string): Promise<boolean> {
     return new Promise((resolve, reject) => {
       this.firestore
         .collection<Corso>('corsi')
@@ -320,7 +356,7 @@ export class AdminDataService {
         .pipe(take(1))
         .subscribe((c) => {
           if (!c) reject();
-          c!.allegati! = c!.allegati!.filter ( a => a.nome != nomeFile)
+          c!.allegati! = c!.allegati!.filter((a) => a.nome != nomeFile);
           this.firestore
             .collection<Corso>('corsi')
             .doc(corso)
@@ -333,14 +369,12 @@ export class AdminDataService {
   //////////////
   //CHAT
   //////////////
-  cancellaTuttaChat(corso : string){
+  cancellaTuttaChat(corso: string) {
     this.firestore
-    .collection<{chat: ChatMessage[]}>('chat')
-    .doc(corso)
-    .update({chat:[]})
+      .collection<{ chat: ChatMessage[] }>('chat')
+      .doc(corso)
+      .update({ chat: [] });
   }
 }
-
-
 
 //

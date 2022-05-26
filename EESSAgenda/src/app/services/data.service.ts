@@ -43,15 +43,6 @@ export class DataService {
       .valueChanges();
   }
 
-  leggiOpzioniCorso(corso:string): Promise<number[]>{
-    return new Promise<number[]>( (resolve, reject) => {
-      let vals :number[] | undefined = [];
-      this.firestore
-        .collection<Corso>('/corsi').doc(corso).valueChanges().pipe( take(1) ).subscribe( (v) => {vals = v?.opzioni}, () => (reject([])));
-      if( vals.length > 0 ) resolve([]);
-      else resolve(vals);
-    })
-  }
   ///////////
   // BACHECA
   ///////////
@@ -61,6 +52,12 @@ export class DataService {
       .doc(corso)
       .valueChanges()
       .pipe(map((c) => c?.info));
+  }
+  leggiCorso(corso: string): Observable<Corso | undefined> {
+    return this.firestore
+      .collection<Corso>('corsi')
+      .doc(corso)
+      .valueChanges();
   }
 
   ///////////

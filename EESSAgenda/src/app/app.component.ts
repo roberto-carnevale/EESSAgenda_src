@@ -41,14 +41,14 @@ export class AppComponent implements OnInit {
         });
 
         this.data
-          .leggiBachecaCorso(this.utente.corso)
-          .subscribe((bachecaCorso) => {
-            bachecaCorso
-              ? (this.messaggiCorso = bachecaCorso.length)
+          .leggiCorso(this.utente.corso)
+          .subscribe((corso) => {
+            corso?.info
+              ? (this.messaggiCorso = corso.info.length)
               : (this.messaggiCorso = 0);
             this.messaggi = this.messaggiCorso+this.messaggiPersonali;
+            this.opzioni = corso?.opzioni!
           });
-        this.data.leggiOpzioniCorso(this.utente.corso).then( (vals) => this.opzioni = vals).catch(() => this.opzioni=[]);
       } else {
         this.utente = undefined;
         this.ruolo = undefined;
