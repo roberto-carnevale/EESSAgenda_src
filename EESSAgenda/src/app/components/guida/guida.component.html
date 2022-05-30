@@ -1,12 +1,14 @@
-
 <button mat-fab (click)="switch()" [style]="styleFAB" class="fabposition">
-    <mat-icon #fab_icon>event_seat</mat-icon>
+  <mat-icon #fab_icon>event_seat</mat-icon>
 </button>
-<div style="padding-top: 2%;"></div>
-<table style="padding:1em">
-<tr *ngFor="let slot of agendaGuida$ | async">
-  <td [ngStyle]="libero(slot.esercitante)"><span>{{slot.ora}}</span></td><td class="eserciatante" *ngIf="slot.esercitante!=''">{{nomeDaEmailUtente(slot.esercitante)}}</td>
-</tr>
+<div style="padding-top: 2%"></div>
+<table style="padding: 1em">
+  <tr *ngFor="let slot of agendaGuida$ | async">
+    <td [ngStyle]="libero(slot.esercitante)">
+      <span>{{ slot.ora }}</span>
+    </td>
+    <td class="eserciatante" *ngIf="slot.esercitante != ''">
+      {{ nomeDaEmailUtente(slot.esercitante) }}<br/>({{slot.esercitante}})
+    </td>
+  </tr>
 </table>
-
-

@@ -43,6 +43,8 @@ export class AuthService {
 
   setUser(user: { email: string; password: string } | null): void {
     if (user) {
+      user.email=user.email.trim();
+      user.email=user.email.toLocaleLowerCase();
       this.authFirebase.setPersistence('local').then(() => {
         this.authFirebase
           .signInWithEmailAndPassword(user.email, user.password)

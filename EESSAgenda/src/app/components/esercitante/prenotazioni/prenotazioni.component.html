@@ -24,9 +24,9 @@
     <div style="padding-left: 2em">
       <div *ngFor="let slot of aggregazione_guida.slots">
         <span>
-          {{ slot.inizio | date: "EE dd MMM h:mm" }}
+          {{ slot.inizio | date: "EE dd MMM HH:mm" }}
           &RightArrowBar;
-          {{ slot.fine | date: "h:mm" }}</span
+          {{ slot.fine | date: "HH:mm" }}</span
         >
         <button
           mat-icon-button

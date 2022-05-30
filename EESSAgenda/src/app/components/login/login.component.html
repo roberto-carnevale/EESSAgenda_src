@@ -24,11 +24,11 @@
     "
   >
     <mat-form-field>
-      <mat-label>Login</mat-label>
+      <mat-label>Email</mat-label>
       <input matInput id="login" #login />
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Passord</mat-label>
+      <mat-label>Password</mat-label>
       <input matInput id="password" #password type="password" (keyup.enter)="onSubmit(login.value, password.value)" />
     </mat-form-field>
     <div style="display: flex; flex-direction: row; align-items: center">
@@ -39,5 +39,6 @@
         Reset Password
       </button>
     </div>
+    <div *ngIf="resetSent==true" style="padding-top:1rem;"><p style="color:red">Ti &egrave; stata inviata una mail. Controlla la mail e clicca sul link ricevuto.</p></div>
   </div>
 </div>

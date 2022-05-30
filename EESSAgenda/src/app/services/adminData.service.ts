@@ -149,6 +149,8 @@ export class AdminDataService {
       email: email,
       in_colloquio: false
     };
+    utente.email=utente.email.trim();
+    utente.email=utente.email.toLocaleLowerCase();
     this.firestore
       .collection('/utenti')
       .doc(utente.email)
