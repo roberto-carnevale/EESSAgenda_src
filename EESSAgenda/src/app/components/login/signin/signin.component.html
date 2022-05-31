@@ -1,7 +1,9 @@
 <ng-container *ngIf="!registrazione && corso != ''">
-  <div style="padding-left: 3rem;padding-right: 3rem;">
-  <h2>Registrazione per {{ corso }}</h2>
-  <p>Indica il tuo nome, l'email che userai per accedere e scegli una password.</p>
+  <div style="padding-left: 3rem; padding-right: 3rem">
+    <h2>Registrazione per {{ corso }}</h2>
+    <p>
+      Indica il tuo nome, l'email che userai per accedere e scegli una password.
+    </p>
   </div>
   <div
     style="
@@ -37,23 +39,26 @@
       </mat-form-field>
 
       <button
-        mat-raised-button color="accent"
+        mat-raised-button
+        color="accent"
         (click)="
           onSubmit(email.value, password.value, passwordx2.value, nome.value)
         "
       >
         Registrati
       </button>
-      <button
-      mat-button
-      (click)="
-        backToLogin();
-      "
-    >
-      Ritorna al Login
-    </button>
-      <div *ngIf="errorValidation" style="color:red; padding:2rem">Controllare i campi</div>
-      <div *ngIf="passwordDiverse" style="color:red; padding:1rem">Le Password devono essere uguali</div>
+      <div *ngIf="errorValidation" style="color: red; padding: 2rem">
+        Controllare i campi
+      </div>
+      <div *ngIf="passwordDiverse" style="color: red; padding: 1rem">
+        Le Password devono essere uguali
+      </div>
+      <div *ngIf="resSignIn==1"> <p>Sei già registrato con un altra password.<br/><span style="color: red;">Premi il pulsante "Reset Password" e controlla la tua mail</span></p>
+        <button mat-button (click)="resetPassword(email.value)">
+          Reset Password
+        </button>
+      </div>
+      <div *ngIf="resSignIn==-1"> <p><span style="color: red;">Errore di registrazione</span></p></div>
     </div>
   </div>
 </ng-container>

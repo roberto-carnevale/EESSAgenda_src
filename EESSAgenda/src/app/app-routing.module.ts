@@ -10,7 +10,6 @@ import { LoginGuard } from './services/guard.service';
 import { AdminGuard } from './services/adminGuard.service';
 import { GuidaGuard } from './services/guidaGuard.service';
 import { HomeComponent } from './components/home.component';
-import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
 import { ChatComponent } from './components/esercitante/chat/chat.component';
 
 const routes: Routes = [
@@ -23,7 +22,6 @@ const routes: Routes = [
   {path:'allegati', component:AllegatiComponent, canActivate: [LoginGuard]},
   {path:'chat', component:ChatComponent, canActivate: [LoginGuard]},
   {path:'signin/:key', component:SignInComponent},
-  {path:'cambio/:key', component:CambioCorsoComponent},
   {path:'help', loadChildren: () => import('./components/help/help.module').then(m=>m.HelpModule)},
   {path:'**', component:NotFound404Component},
 ];
