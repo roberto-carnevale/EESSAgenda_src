@@ -21,7 +21,7 @@ const routes: Routes = [
   {path:'bacheca', component:BachecaComponent, canActivate: [LoginGuard]},
   {path:'allegati', component:AllegatiComponent, canActivate: [LoginGuard]},
   {path:'chat', component:ChatComponent, canActivate: [LoginGuard]},
-  {path:'signin/:key', component:SignInComponent},
+  {path:'signin/:key', loadChildren:()=>import('./components/login/signin/signin.module').then(m => m.SignInModule)},
   {path:'help', loadChildren: () => import('./components/help/help.module').then(m=>m.HelpModule)},
   {path:'**', component:NotFound404Component},
 ];

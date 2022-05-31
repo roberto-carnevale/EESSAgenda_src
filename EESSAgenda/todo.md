@@ -7,8 +7,6 @@ https://encycolorpedia.it/9f7ecc
 
 # Bug
 ## Esercitante
-Spinner colore?
-
 
 ## Guida
 

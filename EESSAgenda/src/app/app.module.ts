@@ -21,7 +21,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatBadgeModule } from '@angular/material/badge';
 
 
-import { SignInComponent } from './components/login/signin/signin.component';
 import { LoginComponent } from './components/login/login.component';
 import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
@@ -33,7 +32,6 @@ import { ChatComponent } from './components/esercitante/chat/chat.component';
     AppComponent,
     LoginComponent,
     BachecaComponent,
-    SignInComponent,
     AllegatiComponent,
     ChatComponent
   ],
