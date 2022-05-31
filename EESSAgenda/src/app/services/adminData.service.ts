@@ -230,6 +230,9 @@ export class AdminDataService {
   cancellaSlot(slotId: string) {
     this.firestore.collection<Slots>('/agenda').doc(slotId).delete();
   }
+  pulisciSlot(slotId: string) {
+    this.firestore.collection<Slots>('/agenda').doc(slotId).update({occupato:""});
+  }
 
   creaSlot(corso: string, guida: string, inizio: string, fine: string) {
     const s: Slots = {

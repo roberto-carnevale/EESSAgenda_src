@@ -91,5 +91,9 @@ export class CreazioneAgendaComponent implements OnInit, OnDestroy {
     this.adminData.cancellaSlot(id);
   }
 
+  pulisciSlot(id:string) {
+    this.adminData.pulisciSlot(id);
+  }
+
 
 }
