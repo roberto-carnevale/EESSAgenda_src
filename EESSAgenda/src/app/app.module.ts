@@ -25,7 +25,6 @@ import { SignInComponent } from './components/login/signin/signin.component';
 import { LoginComponent } from './components/login/login.component';
 import { BachecaComponent } from './components/bacheca/bacheca.component';
 import { AllegatiComponent } from './components/esercitante/allegati/allegati.component';
-import { CambioCorsoComponent } from './components/login/signin/cambioCorso.component';
 import { ChatComponent } from './components/esercitante/chat/chat.component';
 
 
@@ -36,7 +35,6 @@ import { ChatComponent } from './components/esercitante/chat/chat.component';
     BachecaComponent,
     SignInComponent,
     AllegatiComponent,
-    CambioCorsoComponent,
     ChatComponent
   ],
   imports: [

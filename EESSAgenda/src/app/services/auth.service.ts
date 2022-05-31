@@ -33,18 +33,17 @@ export class AuthService {
           this.retrieveUserData().then((u) => {
             this.utente = u;
             this.changedAuth.next(this.isAuth);
-            this.router.navigate([this.guardedPath])
+            this.router.navigate([this.guardedPath]);
           });
         }
       });
     });
   }
 
-
   setUser(user: { email: string; password: string } | null): void {
     if (user) {
-      user.email=user.email.trim();
-      user.email=user.email.toLocaleLowerCase();
+      user.email = user.email.trim();
+      user.email = user.email.toLocaleLowerCase();
       this.authFirebase.setPersistence('local').then(() => {
         this.authFirebase
           .signInWithEmailAndPassword(user.email, user.password)
@@ -103,7 +102,11 @@ export class AuthService {
         .get()
         .forEach((qs) => {
           resolve({ ...(qs.data() as Utente) });
-        }).catch((err)=> {window.alert(err); reject(err)});
+        })
+        .catch((err) => {
+          window.alert(err);
+          reject(err);
+        });
     });
   }
 
@@ -122,19 +125,149 @@ export class AuthService {
     this.authFirebase.sendPasswordResetEmail(email);
   }
 
-  trovaCorsoConChiave(chiave: string):Promise<string|null> {
+  trovaCorsoConChiave(chiave: string): Promise<string | null> {
     return new Promise<string>((resolve, reject) => {
       return this.firestore
-        .collection<Corso>(
-          'signinkey',
-          (ref) => ref.where('chiave', '==', chiave)
+        .collection<Corso>('signinkey', (ref) =>
+          ref.where('chiave', '==', chiave)
         )
         .valueChanges()
         .pipe(
           take(1),
-          map((cc) => { if (cc[0]) {return cc[0].corso} else { return null;}})
+          map((cc) => {
+            if (cc[0]) {
+              return cc[0].corso;
+            } else {
+              return null;
+            }
+          })
         )
-        .subscribe( (nomeCorso) => { if (nomeCorso) {resolve(nomeCorso)} else {reject(null)}});
+        .subscribe((nomeCorso) => {
+          if (nomeCorso) {
+            resolve(nomeCorso);
+          } else {
+            reject(null);
+          }
+        });
     });
+  }
+
+  ////////////////////////
+  //SELF-SERVICE - SIGIN//
+  ////////////////////////
+  /*
+  1. Se già autenticato e appartenente allo stesso corso=> manda alla home || cambia corso
+  2. Se l'utente non esiste lo crea
+  3. Controllare che l'utente si autentichi e sia del corso in singin => Autenticato
+  4. Se l'utente esite propone cambio pwd => Attiva bottone
+  5. Se si sta registrando ad un'altro corso => Autenticato
+  */
+
+  controllaPreSignIn(corso: string) {
+    this.authFirebase.currentUser
+      .then((u) => {
+        if (u) {
+          this.retrieveUserData().then((utente) => {
+            if (utente.corso != corso) {
+              //se il corso è diverso lo cambio
+              utente.corso = corso;
+              this.firestore
+                .collection('/utenti')
+                .doc(utente.email)
+                .update({ corso: corso })
+                .then(() => {
+                  this.sendToHome(utente);
+                });
+            }
+          });
+        }
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  }
+
+  creaEsercitanteDaLink(
+    nome: string,
+    corso: string,
+    email: string,
+    password: string,
+    key: string
+  ): Promise<number> {
+    let utente: Utente = {
+      corso: corso,
+      nome: nome,
+      ruolo: TipoUtente.Esercitante,
+      email: email,
+    };
+    ////NUOVA PROCEDURE
+    return new Promise<number>((resolve, reject) => {
+      //cerca l'utente ( ***PASSO 2.***)
+      this.authFirebase.fetchSignInMethodsForEmail(email).then((r) => {
+        console.log(r);
+        if (r.length == 0) {
+          //non trova un utente e lo crea
+          this.authFirebase
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              utente.corso = corso;
+              //scrive nel DB i dati utente
+              this.firestore
+                .collection('/utenti')
+                .doc(utente.email)
+                .set(utente)
+                .then(() => {
+                  //autenticato internamente e indirizzato alla home
+
+                  this.sendToHome(utente);
+                  resolve(0);
+                });
+            });
+        } else {
+          /// trova l'utente e cerca di autenticarlo con la prima password
+          let user = { email: email, password: password };
+          //prova ad autenticare
+          this.authFirebase.setPersistence('local').then(() => {
+            this.authFirebase
+              .signInWithEmailAndPassword(user.email, user.password)
+              .then(() => {
+                // è autenticato
+                this.email = email;
+                this.retrieveUserData().then((u) => {
+                  if (u.corso != corso) {
+                    u.corso = corso;
+                    //se il corso è diverso lo cambio
+                    this.firestore
+                      .collection('/utenti')
+                      .doc(utente.email)
+                      .update({ corso: corso })
+                      .then(() => {
+                        //spedisce alla home e imposta l'utente
+                        this.sendToHome(u);
+                        resolve(0);
+                      });
+                  }
+                });
+              })
+              .catch((error) => {
+                //password errata o errore generico
+                resolve(1);
+              });
+          });
+        }
+      });
+      resolve(-1);
+    });
+  }
+
+  sendToHome(u: Utente) {
+    this.utente = u;
+    this.isAuth = true;
+    // Autenticato e reindirizzato alla home
+    localStorage.setItem('userId', u.email);
+    setTimeout(() => {
+      this.router.navigate(['/']);
+      this.changedAuth.next(this.isAuth);
+    }, 300);
   }
 }

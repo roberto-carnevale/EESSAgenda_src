@@ -7,10 +7,10 @@ https://encycolorpedia.it/9f7ecc
 
 # Bug
 ## Esercitante
-Sistemare pagina di self-service signin
+Spinner colore?
+
 
 ## Guida
-Split per giornata
 
 ## Gestore
 
